@@ -1,0 +1,27 @@
+<!-- <van-nav-bar
+  title="连接蓝牙"
+  left-arrow
+  title-class="title_bar"
+  custom-class="title_bar"
+  bind:click-left="onClickLeft"
+/> -->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+  bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">连接蓝牙
+</custom-parts>
+<view class="rewu">
+<!-- <view class="rewu" style="margin-top:calc({{statusHeight}}px + 20rpx);"> -->
+
+  <button class="btn" bindtap="startSearch" loading='{{isScanning}}'> 开始搜索 </button>
+    <view  wx:for="{{list}}" wx:for-item="item" 
+          data-title="{{item.deviceId}}" 
+          data-name="{{item.name}}" 
+          data-advertisData="{{item.advertisServiceUUIDs}}" 
+          wx:key="{{item.deviceId}}"
+          bindtap="bindViewTap">
+        <view  class="item">
+        <div class="deviceId block">{{item.deviceId}}</div>
+        <div class="name block">{{item.name}}</div>
+      </view>    
+  </view>  
+</view> 
+ 

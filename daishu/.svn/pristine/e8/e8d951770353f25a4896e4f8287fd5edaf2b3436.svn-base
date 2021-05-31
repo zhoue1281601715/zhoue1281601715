@@ -1,0 +1,65 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+<import src="../../pages/components/common/textarea.wxml" />
+
+<!-- 信息提示 -->
+<i-toast id="toast" />
+
+<!-- 模态框 -->
+<i-modal title="{{modal.tips}}" isHide="{{modal.ishide}}" bind:ok="{{modal.ok}}" bind:cancel="{{modal.cancel}}"
+    bind:plateBg="cancel">
+    <view>{{modal.message}}</view>
+</i-modal>
+
+<!----------------------------------------- 下面请开始你的表演 SHOW TIME ---------------------------------->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+    bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">地址管理
+</custom-parts>
+<view class="main">
+    <view class="info_wrap" hover-class="none" hover-stop-propagation="false">
+        <view class="my_self_cell">
+            <text class="my_self_lable" selectable="false" space="false" decode="false">姓名</text>
+            <input type="text" placeholder="请输入姓名" value="{{name}}" data-type="name" placeholder-class="tips" bindinput="assignment" auto-focus />
+        </view>
+        <view class="my_self_cell">
+            <text class="my_self_lable" selectable="false" space="false" decode="false">手机号码</text>
+            <input type="text" focus="{{phoneFocus}}" placeholder="请输入手机号" value="{{phone}}" data-type="phone" placeholder-class="tips" bindinput="assignment" auto-focus />
+        </view>
+        <view class="my_self_cell">
+            <text class="my_self_lable" selectable="false" space="false" decode="false">所在地区</text>
+            <view class="picker" hover-class="none" hover-stop-propagation="false" bindtap="selectCity" wx:if="{{region.length > 0}}">{{region}}</view>
+            <view class="picker-default" wx:else>请选择地址</view>
+            <view class="right-arrow">
+                <image class="right-arrow-icon" src="/images/more_icon.png" mode="heightFix"></image>
+            </view>
+        </view>
+        <view class="my_self_cell">
+            <text class="my_self_lable" selectable="false" space="false" decode="false">详细地址</text>
+            <template is="wx_textarea" data="{{ ...text_area_obj }}"></template>
+        </view>
+    </view>
+    <view class="save_btn" hover-class="none" hover-stop-propagation="false" bindtap="saveAddress">保存地址</view>
+</view>
+<van-popup show="{{ vantPopup }}" position="bottom" round bind:close="onClose" custom-style="padding: 0rpx 30rpx 0rpx 30rpx; height: calc(100% - 390rpx); box-sizing: border-box;">
+    <view class="popup_title" hover-class="none" hover-stop-propagation="false">
+        <text selectable="false" space="false" decode="false">请选择所在地区</text>
+        <view class="img_box" bindtap="onClose">
+            <image src="../../images/close_icon.png" mode="aspectFit|aspectFill|widthFix" lazy-load="false" binderror="" bindload=""></image>
+        </view>
+    </view>
+    <view class="tab_wrap">
+        <text class="{{tabIndex==0?'tabAct':''}}" data-tab="0" bindtap="switchTab" selectable="false" space="false" decode="false">{{region[0]}}</text>
+        <text class="{{tabIndex==1?'tabAct':''}}" data-tab="1" bindtap="switchTab" selectable="false" space="false" decode="false">{{region[1]}}</text>
+        <text class="{{tabIndex==2?'tabAct':''}}" wx:if="{{street}}" data-tab="2" bindtap="switchTab" selectable="false" space="false" decode="false">{{region[2]}}</text>
+    </view>
+    <web-select-city wx:if="{{tabIndex==0}}" data="{{city}}" binddetail="choose_city" config="{{config}}"></web-select-city>
+    <!--区域选择-->
+    <scroll-view wx:if="{{tabIndex==1 || tabIndex==2}}" class="choose_region" scroll-x="false" scroll-y="false" upper-threshold="50" lower-threshold="50" scroll-top="0" scroll-left="0" scroll-into-view="" scroll-with-animation="false" enable-back-to-top="false">
+        <view class="area_item" wx:for="{{otherList}}" wx:key="index" hover-class="none" hover-stop-propagation="false" data-name="{{item.name}}" bindtap="chooseOther">{{item.name}}</view>
+    </scroll-view>
+</van-popup>
+
+<!------------------------------------------------ 你触碰到我的底线了  W(￣_￣)W ---------------------------------->
+
+<!-- 分页组件 -->
+<!-- <page-parts options="{{page}}" bind:start="pageStart" bind:success="pageSuccess" bind:fail="pageFail"  /> -->

@@ -1,0 +1,162 @@
+.share {
+  padding: 10rpx 30rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.shareLeft {
+  display: flex;
+  align-items: center;
+  color: #FF5500;
+}
+
+.share image {
+  width: 20rpx;
+}
+
+.nav {
+  padding: 0 20rpx;
+  height: 140rpx;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  line-height: 140rpx;
+  background: #FF5500;
+  color: #FFFFFF;
+  font-size: 26rpx;
+  white-space: nowrap;
+  z-index: 99;
+}
+
+.nav-item {
+  width: 15%;
+  display: inline-block;
+  text-align: center;
+}
+
+.nav-item:last-child {
+  width: 25%;
+}
+
+.nav-item.active {
+  font-size: 38rpx;
+}
+
+.header_view_hide {
+  display: none;
+}
+
+.wareDetails {
+  padding: 14rpx 10rpx 108rpx;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.wareContent {
+  width: 360rpx;
+  position: relative;
+  margin-bottom: 8rpx;
+}
+
+.wareContent image {
+  width: 100%;
+  vertical-align: bottom;
+}
+
+.wareContent:nth-child(even) {
+  margin-right: 0;
+}
+
+.wareText {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #fff;
+}
+
+.wareTextTop {
+  width: 360rpx;
+  height: 250rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.wareTextTop .wareMoney {
+  font-size: 64rpx;
+  font-family: AlibabaPuHuiTiB;
+  font-weight: bold;
+  color: #FFFFFF;
+}
+
+.wareTextTop .wareMoney text {
+  font-size: 32rpx;
+  font-family: AlibabaPuHuiTiB;
+  font-weight: bold;
+  color: #FFFFFF;
+}
+
+.wareTextTop .wareName {
+  font-size: 24rpx;
+  color: #FEFEFE;
+}
+
+.wareTextTop .month {
+  margin-top: 10rpx;
+  font-size: 22rpx;
+  color: #BABABA;
+}
+
+.wareBottom {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  padding: 0 20rpx 0 28rpx;
+  height: 102rpx;
+  box-sizing: border-box;
+}
+
+.paymentMoney {
+  font-size: 40rpx;
+  color: #FF5500;
+}
+
+.paymentMoney text {
+  font-size: 22rpx;
+}
+
+.surplus {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.surplusNum {
+  font-size: 20rpx;
+  color:  #BABABA;
+}
+
+.clickPayment {
+  border: 2rpx solid #FF5500;
+  font-family: AlibabaPuHuiTiR;
+  font-size: 24rpx;
+  color: #FF5500;
+  padding: 0 16rpx;
+  height: 30rpx;
+  line-height: 26rpx;
+  border-radius: 15rpx;
+  box-sizing: border-box;
+}
+
+.nodata {
+  padding: 50rpx 0;
+  text-align: center;
+  font-size: 28rpx;
+  color: #818181;
+}

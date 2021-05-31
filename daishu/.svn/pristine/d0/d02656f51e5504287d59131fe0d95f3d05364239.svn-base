@@ -1,0 +1,89 @@
+page {
+  background-color: #FFFFFF;
+}
+
+.main {
+  padding: 0 36rpx;
+  width: 750rpx;
+  box-sizing: border-box;
+}
+
+.tip {
+  height: 74rpx;
+  line-height: 74rpx;
+  font-size: 24rpx;
+  color: #FF7900;
+  text-indent: 30rpx;
+}
+
+.picture-area {
+  width: 100%;
+  border: 2rpx dashed #FF7900;
+}
+
+.picture-item {
+  position: relative;
+  width: 100%;
+}
+
+.remove {
+  position: absolute;
+  top: 20rpx;
+  right: 20rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50rpx;
+  height: 50rpx;
+  background-color: rgba(0, 0, 0, .35);
+  border-radius: 25rpx;
+  z-index: 9;
+}
+
+.remove-icon {
+  width: 26rpx;
+}
+
+.picture {
+  width: 100%;
+  vertical-align: bottom;
+}
+
+.upload-picture {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 186rpx;
+  font-size: 24rpx;
+  color: #696969;
+}
+
+.submit-btn {
+  margin: 46rpx auto 0;
+  padding: 0;
+  width: 646rpx;
+  height: 84rpx;
+  line-height: 84rpx;
+  font-size: 34rpx;
+  color: #FFFFFF;
+  text-align: center;
+  border-radius: 42rpx;
+  background: linear-gradient(90deg, #FF7900, #FF4B00);
+}
+
+.difficulty-tip {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 72rpx;
+  font-size: 24rpx;
+  color: #000000;
+}
+
+.call-service {
+  margin: 0;
+  padding: 0;
+  font-size: 24rpx;
+  color: #FF5400;
+  background: transparent;
+}

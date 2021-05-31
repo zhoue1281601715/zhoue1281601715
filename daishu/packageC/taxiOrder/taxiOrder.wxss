@@ -1,0 +1,71 @@
+.nav-list {
+  width: 750rpx;
+  display: flex;
+  justify-content: space-between;
+  background-color: #FFFFFF;
+}
+
+.nav-item {
+  width: 296rpx;
+  height: 76rpx;
+  line-height: 74rpx;
+  font-size: 24rpx;
+  text-align: center;
+  color: #000000;
+  border-bottom: 2rpx solid #FFFFFF;
+}
+
+.nav-activity {
+  color: #FF5201;
+  border-color: #FF5201;
+}
+
+.order-list {
+  padding: 30rpx 16rpx;
+  width: 750rpx;
+  box-sizing: border-box;
+}
+
+.order-item {
+  margin-bottom: 26rpx;
+  padding: 0 24rpx;
+  width: 100%;
+  background-color: #FFFFFF;
+  border-radius: 6rpx;
+  box-sizing: border-box;
+}
+
+.order-item:last-child {
+  margin: 0;
+}
+
+.order-title, .order-val {
+  padding: 0 12rpx;
+  height: 76rpx;
+  line-height: 74rpx;
+  font-size: 28rpx;
+  color: #010101;
+  border-bottom: 2rpx solid #E5E5E5;
+  box-sizing: border-box;
+}
+
+.order-val {
+  font-size: 24rpx;
+}
+
+.order-btn-area {
+  display: flex;
+  justify-content: flex-end;
+  padding: 24rpx 16rpx;
+  box-sizing: border-box;
+}
+
+.order-btn {
+  padding: 0 52rpx;
+  height: 58rpx;
+  line-height: 54rpx;
+  font-size: 30rpx;
+  color: #FF5202;
+  border: 2rpx solid #FF5202;
+  border-radius: 29rpx;
+}

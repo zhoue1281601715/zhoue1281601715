@@ -1,0 +1,34 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<!-- 信息提示 -->
+<i-toast id="toast" />
+
+<!-- 模态框 -->
+<i-modal title="{{modal.tips}}" isHide="{{modal.ishide}}" bind:ok="{{modal.ok}}" bind:cancel="{{modal.cancel}}"
+    bind:plateBg="cancel">
+    <view>{{modal.message}}</view>
+</i-modal>
+
+<!----------------------------------------- 下面请开始你的表演 SHOW TIME ---------------------------------->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}" bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">转出到结算余额</custom-parts>
+
+<view class="onLine">
+    <form catchsubmit="handleTransferOut">
+        <view class="fillMoney">
+            <!-- <view class="moneyText">
+                <view>¥1000.00</view>
+                <image src="/images/cx.png" mode="widthFix" style="margin-left: 26rpx;width: 46rpx;height: 46rpx;"></image>
+            </view> -->
+            <input type="number" name="money" value="{{onlineMoney}}" placeholder="请输入转出金额(元)" placeholder-style="color: #6B6969;" />
+            <image src="/images/cx.png" mode="widthFix" style="margin-left: 26rpx;width: 46rpx;height: 46rpx;"></image>
+        </view>
+        <button class="recharge" formType="submit">立即转出</button>
+    </form>
+</view>
+<toast parameter="{{toastParameter}}"></toast>
+<tabbar activeIdx="{{activeIdx}}"></tabbar>
+<!------------------------------------------------ 你触碰到我的底线了  W(￣_￣)W ---------------------------------->
+
+<!-- 分页组件 -->
+<!-- <page-parts options="{{page}}" bind:start="pageStart" bind:success="pageSuccess" bind:fail="pageFail"  /> -->

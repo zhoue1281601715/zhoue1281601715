@@ -1,0 +1,157 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<!-- 信息提示 -->
+<i-toast id="toast" />
+
+<!-- 模态框 -->
+<i-modal title="{{modal.tips}}" isHide="{{modal.ishide}}" bind:ok="{{modal.ok}}" bind:cancel="{{modal.cancel}}"
+    bind:plateBg="cancel">
+    <view>{{modal.message}}</view>
+</i-modal>
+
+<!----------------------------------------- 下面请开始你的表演 SHOW TIME ---------------------------------->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+    bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">查看详情</custom-parts>
+
+<swiper indicator-dots="{{false}}" class="goods-picture-list" >
+    <swiper-item class="goods-picture-item" wx:for="{{slider_image}}">
+        <image class="goods-picture" src="{{item}}" mode="aspectFill"></image>
+    </swiper-item>
+</swiper>
+<view class="main">
+    <view class="goods-data">
+        <view class="goods-data-top">
+            <view class="goods-price">
+                <text class="yuan">￥</text>
+                <text>{{shoppingDetails.price}}</text>
+            </view>
+            <view class="set-meal" catchtap="handleProductWindowShow">
+                <text>套餐</text>
+                <icon class="iconfont icon-youjiantou"></icon>
+            </view>
+        </view>
+        <view class="goods-data-middle">
+            <!-- <view>全场269包邮</view> -->
+            <view class="goods-info">{{shoppingDetails.store_info}}</view>
+            <view>月销{{shoppingDetails.sales}}</view>
+        </view>
+        <view class="goods-name">{{shoppingDetails.store_name}}</view>
+    </view>
+    <view wx:if="{{shoppingComment.length==0}}" class="comments">暂无评价</view>
+    <view class="comment" wx:else>
+        <view class="comment-total-area">
+            <view class="comment-total">用户点评（{{shoppingComment.length > 0 ? shoppingComment.length : 0}}）</view>
+            <url-parts url="/packageA/allComments/index?id={{shoppingDetails.id}}" class="see-more-comment">
+                <text>查看全部</text>
+                <icon class="iconfont icon-youjiantou"></icon>
+            </url-parts>
+        </view>
+        <view class="comment-list" wx:if="{{shoppingComment.length > 0}}">
+            <view class="comment-item" wx:for="{{shoppingComment}}" wx:key="{{item.id}}">
+                <view class="user-data">
+                    <view class="avatar">
+                        <image class="user-avatar" src="{{item.user.avatar}}" mode="aspectFill"></image>
+                    </view>
+                    <view class="user-area">
+                        <view class="username">{{item.user.nickname}}</view>
+                        <view class="comment-date">{{item.add_time}}</view>
+                    </view>
+                </view>
+                <view class="comment-content">{{item.comment}}</view>
+                <view class="comment-picture-list">
+                    <view class="comment-picture-item" wx:for="{{commentPic}}">
+                        <image class="comment-picture" src="{{item}}" mode="aspectFill"></image>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class="nodata" wx:else>没有查找到数据</view>
+    </view>
+    <view class="goods-details">
+        <view class="goods-details-title">商品详情</view>
+        <view class="goods-details-list">
+            <parser html="{{shoppingDetails.description}}" />
+        </view>
+    </view>
+</view>
+<view class="btn-area">
+    <view class="function-btn-area">
+        <button class="function-btn-item" open-type="contact" bindcontact="handleContact">
+            <image class="function-icon" src="/images/kf_icon.png" mode="heightFix"></image>
+            <text>客服</text>
+        </button>
+        <navigator url="/packageA/shoppingCar/index" class="function-btn-item">
+            <image class="function-icon" src="/images/shopping_car.png" mode="heightFix"></image>
+            <text>购物车</text>
+        </navigator>
+    </view>
+    <view class="buy-btn-area">
+        <button class="join-btn" catchtap="handleJoinShoppingCar">加入购物车</button>
+    </view>
+</view>
+<view class="product-window-area" style="display: {{productWindowFlag}};" catchtap="handleProductWindowHide">
+    <view class="product-window" style="bottom: {{productWindowPositionBottom}}rpx;" catchtap="handleStopBubbing">
+        <view class="product-window-top">
+            <view class="product-picture-area">
+                <image class="product-picture" src="{{image || shoppingDetails.image}}" mode="aspectFill"></image>
+            </view>
+            <view class="product-data">
+                <view class="product-name">{{shoppingDetails.store_name}}</view>
+                <view class="product-price-stock">
+                    <text class="yuan">￥</text>
+                    <text class="product-price">{{price||shoppingDetails.price}}</text>
+                    <text class="product-stock">库存：{{stock}}</text>
+                </view>
+            </view>
+        </view>
+        <view class="specs">
+            <view class="specs-title">套餐</view>
+            <view class="specs-list">
+                <block 
+                    wx:for="{{specsList}}" 
+                    wx:key="index"
+                >
+                    <view 
+                        class="specs-item {{specs_index === index ? 'specs-item-activity' : ''}}" 
+                        catchtap="handleChangeSpecs" 
+                        data-specs_index="{{index}}" 
+                        data-price="{{item.price}}" 
+                        data-stock="{{item.stock}}" 
+                        data-image="{{item.image}}" 
+                        data-goods_id="{{goods_id}}" 
+                        data-unique="{{item.unique}}" 
+                        data-pecifications="{{item.suk}}" 
+                        wx:if="{{item.stock > 0}}" 
+                    >{{item.suk}}</view>
+                    <view class="specs-item specs-item-disabled" wx:else>{{item.suk}}</view>
+                </block>
+            </view>
+        </view>
+        <view class="product-num-area">
+            <view class="product-num-title">数量</view>
+            <view class="product-num" wx:if="{{stock > 0}}">
+                <view class="operator" catchtap="handleReduceGoodsNum">-</view>
+                <view class="product-num-input-area">
+                    <input class="product-num-input" value="{{goodsNum}}" type="number" bindblur="handleInputBlur"></input>
+                </view>
+                <view class="operator add" catchtap="handleAddGoodsNum">+</view>
+            </view>
+            <view class="product-num" wx:else>
+                <view class="operator operator-disabled">-</view>
+                <view class="product-num-input-area product-num-input-area-disabled">
+                    <input class="product-num-input product-num-input-disabled" value="0" disabled="{{true}}"></input>
+                </view>
+                <view class="operator operator-disabled">+</view>
+            </view>
+        </view>
+        <view class="close-product-window" catchtap="handleProductWindowHide">
+            <image src="/images/close_icon.png" mode="widthFix"></image>
+        </view>
+    </view>
+</view>
+<toast parameter="{{toastParameter}}"></toast>
+<!------------------------------------------------ 你触碰到我的底线了  W(￣_￣)W ---------------------------------->
+
+<!-- 分页组件 -->
+<!-- <page-parts options="{{page}}" bind:start="pageStart" bind:success="pageSuccess" bind:fail="pageFail"  /> -->

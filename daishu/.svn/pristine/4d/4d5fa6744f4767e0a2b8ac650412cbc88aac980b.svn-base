@@ -1,0 +1,70 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<!-- 信息提示 -->
+<i-toast id="toast" />
+
+<!-- 模态框 -->
+<i-modal title="{{modal.tips}}" isHide="{{modal.ishide}}" bind:ok="{{modal.ok}}" bind:cancel="{{modal.cancel}}"
+    bind:plateBg="cancel">
+    <view>{{modal.message}}</view>
+</i-modal>
+
+<!----------------------------------------- 下面请开始你的表演 SHOW TIME ---------------------------------->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+    bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">充值
+</custom-parts>
+<view class="nav">
+    <block wx:for="{{arr}}">
+        <block wx:if="{{index < 2}}">
+            <view class="tab {{currentTab === index ? 'red' : 'default'}}" catchtap='tabOn' data-index='{{index}}'>{{item}}</view>
+        </block>
+        <block wx:else>
+            <navigator class="tab default" url="/packageA/rechargeRecord/index">{{item}}</navigator>
+        </block>
+    </block>
+</view>
+<view wx:if='{{ currentTab == 0 }}' class="onLine">
+    <form catchsubmit="handleOnlineRecharge">
+        <view class="fillMoney">
+            <!-- <view class="moneyText">
+                <view>¥1000.00</view>
+                <image src="/images/cx.png" mode="widthFix" style="margin-left: 26rpx;width: 46rpx;height: 46rpx;"></image>
+            </view> -->
+            <input type="text" name="money" value="{{onlineMoney}}" placeholder="请输入充值金额(元)" placeholder-style="color: #6B6969;" />
+            <image src="/images/cx.png" mode="widthFix" style="margin-left: 26rpx;width: 46rpx;height: 46rpx;"></image>
+        </view>
+        <button class="recharge" formType="submit">立即充值</button>
+    </form>
+</view>
+<view wx:if='{{ currentTab == 1}}' class="onLine">
+    <form catchsubmit="handleOfflineRecharge">
+        <view class="fillMoney">
+            <!-- <view class="moneyText">
+                <view>¥1000.00</view>
+                <image src="/images/cx.png" style="margin-left: 26rpx;width: 46rpx;height: 46rpx;"></image>
+            </view> -->
+            <input type="text" name="money" value="{{offlineMoney}}" placeholder="请输入充值金额(元)" placeholder-style="color: #6B6969;" />
+            <image src="/images/cx.png" mode="widthFix" style="margin-left: 26rpx;width: 46rpx;height: 46rpx;"></image>
+        </view>
+        <view class="tip">请上传证明</view>
+        <view class="picture-area">
+            <block wx:if="{{pay_img.length > 0}}">
+                <view class="picture-item">
+                    <view class="remove" catchtap="handleDeleteImage" wx:if="{{removeIconFlag}}">
+                        <image class="remove-icon" src="/images/close_white_icon.png" mode="widthFix"></image>
+                    </view>
+                    <image class="picture" src="{{pay_img}}" mode="widthFix"></image>
+                </view>
+            </block>
+            <view class="upload-picture" catchtap="handleChooseImage" wx:else>+上传图片</view>
+        </view>
+        <button class="submit-btn" formType="submit">提交</button>
+    </form>
+</view>
+<toast parameter="{{toastParameter}}"></toast>
+<tabbar activeIdx="{{activeIdx}}"></tabbar>
+<!------------------------------------------------ 你触碰到我的底线了  W(￣_￣)W ---------------------------------->
+
+<!-- 分页组件 -->
+<!-- <page-parts options="{{page}}" bind:start="pageStart" bind:success="pageSuccess" bind:fail="pageFail"  /> -->

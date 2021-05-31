@@ -1,0 +1,41 @@
+<!-- 信息提示 toast -->
+<i-toast id="toast" />
+
+<view class="img-area">
+  <view class="phone-row" style="padding: 0 {{padding}}rpx;">
+    
+    <view  wx:if="{{position == 'start' && add}}" class="img-btn" bind:tap="uploadImg" style="{{radius ? 'border-radius: 10rpx;' : ''}};  width:{{width}}rpx; height:{{height}}rpx; border-color: {{btnBorderColor}};">
+      <block wx:if="{{btnBg}}">
+        <view class="img-icon" style="background:{{btnBgColor}};">
+            <img-parts url="{{btnBg}}" width="{{width}}" height="{{height}}" />
+        </view>
+      </block>
+      <block wx:else>
+          <view class="img-icon" style="background:{{btnBgColor}};">
+              <img-parts url="/pages/components/photos-parts/add.png" width="50" height="50" />
+              <view class="p" style="color:{{btnColor}}; font-size:{{fontSize}}rpx;">{{tips}}</view>
+          </view>
+        </block>
+    </view>
+    <block wx:for="{{allList}}" wx:key="{{index}}">
+      <view class="phone-col" bind:tap="prevCur" data-index="{{index}}"  style="{{radius ? 'border-radius: 10rpx;' : ''}};  width:{{width}}rpx; height:{{height}}rpx; margin-left:{{itemMarginLeft}}rpx; margin-bottom:{{itemMarginBottom}}rpx;">
+        <view class="close" catch:tap="closeCurr" data-index="{{index}}"></view>
+        <img-parts url="{{item}}" width="{{width}}" height="{{height}}" />
+      </view>
+    </block>
+    <view wx:if="{{position == 'end' && add}}" class="img-btn" bind:tap="uploadImg" style="{{radius ? 'border-radius: 10rpx;' : ''}}; width:{{width}}rpx; height:{{height}}rpx; border-color: {{btnBorderColor}};">
+      <block wx:if="{{btnBg}}">
+        <view class="img-icon" style="background:{{btnBgColor}};">
+            <img-parts url="{{btnBg}}" width="{{width}}" height="{{height}}" />
+        </view>
+      </block>
+      <block wx:else>
+          <view class="img-icon"  style="background:{{btnBgColor}};">
+              <img-parts url="/pages/components/photos-parts/add.png" width="50" height="50" />
+              <view class="p" style="color:{{btnColor}}; font-size:{{fontSize}}rpx;">{{tips}}</view>
+          </view>
+        </block>
+    </view>
+  </view>
+</view>
+    

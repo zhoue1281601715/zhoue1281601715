@@ -1,0 +1,10 @@
+<block wx:if="{{isbackground}}">
+	<view id="img-parts" style="width:{{width}}rpx; height:{{height}}rpx; background: url({{url}}) no-repeat center; background-size: cover;"></view>
+</block>
+<block wx:else>
+	<view id="img-parts" style="width:{{width}}rpx; height:{{height}}rpx; position: relative; overflow: hidden;">
+		<view style='width:{{imgWidth}}rpx; height:{{imgHeight}}rpx; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);'>
+      		<image src="{{url}}" style="width:{{imgWidth}}rpx; display:block; height: {{imgHeight}}rpx;" class='images' binderror="imgError" bind:load="imgLoad" />
+    	</view>
+	</view>
+</block>

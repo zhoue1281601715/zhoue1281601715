@@ -1,0 +1,20 @@
+@import 'utils/tpl/template.wxss';
+@import "utils/tpl/icon.wxss";
+@import 'utils/tpl/animate.wxss';
+@import "utils/tpl/colorui.wxss";
+@import "utils/tpl/animation.wxss";
+@import 'utils/utils.wxss';
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+
+page{
+  background: #f2f2f2;
+  font-size: 28rpx;
+  font-family: AlibabaPuHuiTiR;
+  font-weight: normal;
+  color: #010101;
+}

@@ -1,0 +1,122 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+  bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">司机资料验证
+</custom-parts>
+<view class="main">
+  <view class="user-info">
+    <view class="user-avatar" catchtap="handleChooseImage4">
+      <image class="avatar" src="{{head_img}}"  mode="aspectFill"></image>
+    </view>
+    <view class="login-register">
+      <view class="login-tip">
+        温馨提示： 新用户首次登录需填资料验证
+      </view>
+      <view class="logout-area">
+        <view class="delivery-item">
+          <view class="delivery-item-left">姓名：</view>
+          <view class="delivery-item-right">
+            <input class="delivery-input" type="text" bindinput="inputDriverName" value="{{driverName}}"
+              placeholder="请输入姓名" />
+          </view>
+        </view>
+        <view class="delivery-item">
+          <view class="delivery-item-left">身份证号：</view>
+          <view class="delivery-item-right">
+            <input class="delivery-input" bindinput="inputnumberId" type="text" value="{{numberId}}"
+              placeholder="请输入身份证号" />
+          </view>
+        </view>
+        <view class="delivery-item">
+          <view class="delivery-item-left">联系人电话：</view>
+          <view class="delivery-item-right">
+            <input class="delivery-input" bindinput="inputcontactName" type="text" value="{{contactName}}"
+              placeholder="请输入联系人" />
+          </view>
+        </view>
+        <view class="delivery-item">
+          <view class="delivery-item-left">车牌号码：</view>
+          <view class="delivery-item-right">
+            <input class="delivery-input" bindinput="inputcarNumber" type="text" value="{{carNumber}}"
+              placeholder="请输入车牌号码" />
+          </view>
+        </view>
+        <view>
+
+        </view>
+      </view>
+      <!-- 司机照片上传 -->
+      <view class="logout-area">
+        <view class="carzf">
+          <view class="car tietlName">上传驾驶证正、页</view>
+            <view class="picture-area">
+              <block>
+                <view class="picture-item" wx:if="{{!removeIconFlag}}">
+                  <view class="remove" catchtap="handleDeleteImage">
+                    <image class="remove-icon" src="/images/close_white_icon.png" mode="widthFix"></image>
+                  </view>
+                  <view class="section__ctn">
+                    <image style="height: 200px; background-color: #eeeeee;" src="{{front_image}}"
+                      mode="aspectFit"></image>
+                  </view>
+
+                </view>
+              </block>
+              <view class="upload-picture" catchtap="handleChooseImage" wx:if="{{removeIconFlag}}">+驾照正面</view>
+            </view>
+
+
+            <view class="picture-area marginTop">
+              <block>
+                <view class="picture-item" wx:if="{{!removeIconFlagf}}">
+                  <view class="remove" catchtap="handleDeleteImage1">
+                    <image class="remove-icon" src="/images/close_white_icon.png" mode="widthFix"></image>
+                  </view>
+                  <view class="section__ctn">
+                    <image style="height: 200px; background-color: #eeeeee;" src="{{back_image}}"
+                      mode="aspectFit"></image>
+                  </view>
+                  <view class="clear"></view>
+                </view>
+              </block>
+              <view class="upload-picture " catchtap="handleChooseImage1" wx:if="{{removeIconFlagf}}">+驾照反面</view>
+            </view>
+            <view class="car tietlName marginTop">身份证驾驶证正、反</view>
+            <view class="picture-area ">
+              <block>
+                <view class="picture-item" wx:if="{{!removeIconFlagf2}}">
+                  <view class="remove" catchtap="handleDeleteImage2">
+                    <image class="remove-icon" src="/images/close_white_icon.png" mode="widthFix"></image>
+                  </view>
+                  <view class="section__ctn">
+                    <image style="height: 200px; background-color: #eeeeee;" src="{{front_card}}"
+                      mode="aspectFit"></image>
+                  </view>
+                  <view class="clear"></view>
+                </view>
+              </block>
+              <view class="upload-picture " catchtap="handleChooseImage2" wx:if="{{removeIconFlagf2}}">+身份证正面</view>
+            </view>
+            <view class="picture-area marginTop">
+              <block>
+                <view class="picture-item" wx:if="{{!removeIconFlagf3}}">
+                  <view class="remove" catchtap="handleDeleteImage3">
+                    <image class="remove-icon" src="/images/close_white_icon.png" mode="widthFix"></image>
+                  </view>
+                  <view class="section__ctn">
+                    <image style="height: 200px; background-color: #eeeeee;" src="{{back_card}}"
+                      mode="aspectFit"></image>
+                  </view>
+                  <view class="clear"></view>
+                </view>
+              </block>
+              <view class="upload-picture" catchtap="handleChooseImage3" wx:if="{{removeIconFlagf3}}">+身份证反面</view>
+            </view>
+        </view>
+      </view>
+      <view>
+        <view class="logout" bindtap="login">提交资料登录</view>
+      </view>
+    </view>
+  </view>
+</view>

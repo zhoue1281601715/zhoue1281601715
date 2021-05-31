@@ -1,0 +1,130 @@
+page {
+  background: linear-gradient(180deg, #FFFFFF, #F2F2F2);
+  padding-bottom: 94rpx;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  width: 750rpx;
+  height: 76rpx;
+  background: #FFFFFF;
+}
+
+.default {
+  flex: 1;
+  height: 76rpx;
+  line-height: 74rpx;
+  font-size: 24rpx;
+  text-align: center;
+  color: #1E1E1E;
+  border-bottom: 2rpx solid #FFFFFF;
+}
+
+.red {
+  flex: 1;
+  height: 76rpx;
+  line-height: 74rpx;
+  font-size: 24rpx;
+  text-align: center;
+  color: #FF4B00;
+  border-bottom: 2rpx solid #FF4B00;
+}
+
+.onLine {
+  padding: 20rpx 34rpx;
+  width: 100%;
+  box-sizing: border-box;
+  padding-bottom: 150rpx;
+}
+
+.fillMoney {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 14rpx 32rpx 18rpx;
+  width: 100%;
+  box-sizing: border-box;
+  border-bottom: 2rpx solid #E9E9E9;
+}
+
+.moneyText {
+  display: flex;
+  align-items: center;
+  font-size: 54rpx;
+  font-family: AlibabaPuHuiTiM;
+  font-weight: bold;
+  color: #010101;
+}
+
+.fillMoney input {
+  height: 52rpx;
+  font-size: 24rpx;
+  color: #010101;
+}
+
+.recharge {
+  margin-top: 62rpx;
+  background-image: linear-gradient(to right, #FF7900, #FF4B00);
+  font-size: 34rpx;
+  color: #FFFFFF;
+  border-radius: 42rpx;
+}
+
+.tip {
+  margin-top: 32rpx;
+  height: 76rpx;
+  line-height: 76rpx;
+  font-size: 34rpx;
+  color: #000000;
+}
+
+.picture-area {
+  width: 100%;
+  border: 2rpx dashed #FF7900;
+}
+
+.picture-item {
+  position: relative;
+  width: 100%;
+}
+
+.remove {
+  position: absolute;
+  top: 20rpx;
+  right: 20rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50rpx;
+  height: 50rpx;
+  background-color: rgba(0, 0, 0, .35);
+  border-radius: 25rpx;
+  z-index: 9;
+}
+
+.remove-icon {
+  width: 26rpx;
+}
+
+.picture {
+  width: 100%;
+  vertical-align: bottom;
+}
+
+.upload-picture {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 186rpx;
+  font-size: 24rpx;
+  color: #696969;
+}
+
+.submit-btn {
+  margin-top: 126rpx;
+  background-image: linear-gradient(to right, #FF7900, #FF4B00);
+  font-size: 34rpx;
+  color: #FFFFFF;
+  border-radius: 42rpx;
+}

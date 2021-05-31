@@ -1,0 +1,60 @@
+
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+  bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">订单
+</custom-parts>
+<view class="main-nav" style="top: {{CustomBar}}px;">
+    <view class="main-nav-item {{sectionShow === index ? 'main-nav-activity' : ''}}" data-index="{{index}}" catchtap="handleChangeSection" wx:for="{{appointmentSection}}"
+        wx:key="index">{{item}}</view>
+</view>
+
+
+<view class="receipt-list">
+  <view class="receipt-item" wx:if="{{driverList.length==0}}">无数据</view>
+    <view wx:if="{{sectionShow == 0}}">
+        <view class="receipt-item" wx:if="{{item.state==0}}" wx:for="{{driverList}}" key="{{item.id}}">
+        <view class="receipt-data" >
+            <view class="receipt-data-item">
+                <view class="receipt-data-item-left">预约单号：{{item.code}}</view>
+                <view class="receipt-data-item-right">仓库名称：{{item.warehouse_name}}</view>
+            </view>
+            <view class="receipt-data-item">
+                <view class="receipt-data-item-left">入仓单号：{{item.bill_code}}</view>
+            </view>
+            <view class="receipt-data-item">
+                <view class="receipt-data-item-left">车牌号：{{item.plate}}</view>
+                <view class="receipt-data-item-right">司机名称：{{item.driver}}</view>
+            </view>
+            <view class="receipt-data-item">
+                <view class="receipt-data-item-left">电话：{{item.phone}}</view>
+                <view class="receipt-data-item-right">时间段：{{item.time}}</view>
+            </view>
+        </view>
+        <view class="receipt-remarks">备注：{{item.remark}}</view>
+        <view class="receipt-remarks seehw" data-index="{{index}}" bindtap="detailedOrder">查看</view>
+    </view>
+    </view>
+    <view wx:if="{{sectionShow == 1}}" >
+        <view class="receipt-item" wx:if="{{item.state==1}}"  wx:for="{{driverList}}" key="{{item.id}}" >
+        <view class="receipt-data" >
+            <view class="receipt-data-item" >
+                <view class="receipt-data-item-left">仓库名称：{{item.warehouse_name}}</view>
+                <view class="receipt-data-item-right">预约单号：{{item.code}}</view>
+            </view>
+            <view class="receipt-data-item">
+                <view class="receipt-data-item-left">入仓单号：{{item.bill_code}}</view>
+            </view>
+            <view class="receipt-data-item">
+                <view class="receipt-data-item-left">车牌号：{{item.plate}}</view>
+                <view class="receipt-data-item-right">司机名称：{{item.driver}}</view>
+            </view>
+            <view class="receipt-data-item">
+                <view class="receipt-data-item-left">电话：{{item.phone}}</view>
+                <view class="receipt-data-item-right">时间段：{{item.time}}</view>
+            </view>
+        </view>
+        <view class="receipt-remarks">备注：{{item.remark}}</view>
+    </view>
+    </view>
+</view>

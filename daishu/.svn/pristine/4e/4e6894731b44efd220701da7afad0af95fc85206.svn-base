@@ -1,0 +1,453 @@
+const app = getApp()
+
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    modal : {
+			tips : '提示',
+			message : '模态框说明',
+			ok : 'modalOk',
+			cancel : 'modalCancel',
+			ishide : true
+    },
+		activeIdx: -1, // tabbar当前下标
+		CustomBar: 0, // 自定义导航栏高度
+		warehousingCheckTotal: 0, // 选中的商品数量
+		allChecked: false, // 是否全选
+    warehousingList: [], // 准备入仓商品列表
+    warehousingPopupShow: false, // 入仓弹窗是否显示
+    warehousingID: '', // 选中的入仓商品ID
+    warehousingDetails: '', // 选中的入仓商品详情
+    oneKindWarehousingTotal: '', // 用户填写的单种商品的入仓总数
+    warehousingPackageNum: '', // 用户填写的入仓箱数
+    warehousingStockNum: '', // 用户填写的入仓瓶数
+    warehousingBatch1: '', // 用户填写的入仓批次号1
+    warehousingBatch2: '', // 用户填写的入仓批次号2
+    warehousingProductionDate: '', // 入仓生产日期
+    warehousingExpireDate: '', // 入仓到期日期
+    warehousingRemark: '', // 用户填写的入仓备注
+    warehousingTotal: '', // 用户入仓所有商品的入仓总数
+	},
+	
+	/**
+	 * 用户点击自定义checkbox，选中/取消 该选项
+	 */
+	handleCheckboxChange (e) {
+		const that = this
+		let warehousingList = that.data.warehousingList
+		const warehousingListLen = warehousingList.length
+		const itemIndex = e.currentTarget.dataset.index
+		const itemChecked = !warehousingList[itemIndex].checked // 先用一个变量存储该商品选项的checked，并取反
+		warehousingList[itemIndex].checked = itemChecked // 修改该商品选项的checked状态
+		const warehousingCheckTotal = itemChecked ? ++that.data.warehousingCheckTotal : --that.data.warehousingCheckTotal // 购物车商品选项选中总数
+		const allChecked = warehousingCheckTotal === warehousingListLen ? true : false // 判断选中总数是否等于列表长度，如果是，代表全部选中，如果不是，则代表还未全部选中
+		that.setData({
+			warehousingList,
+			warehousingCheckTotal,
+			allChecked
+		})
+	},
+
+	/**
+	 * 全选/全不选
+	 */
+	handleCheckedAllChange () {
+		const that = this
+		const allChecked = !that.data.allChecked
+		const warehousingList = that.data.warehousingList // 购物车列表
+		let warehousingCheckTotal = 0 // 购物车商品选项选中选项总数
+		if (allChecked) {
+			warehousingCheckTotal = warehousingList.length
+			warehousingList.forEach(item => {
+				item.checked = true
+			})
+			that.setData({
+				allChecked,
+				warehousingList,
+				warehousingCheckTotal,
+			})
+		} else {
+			warehousingList.forEach(item => {
+				item.checked = false
+			})
+			that.setData({
+				allChecked,
+				warehousingList,
+				warehousingCheckTotal,
+			})
+		}
+	},
+
+  /**
+   * 打开入仓弹窗
+   */
+  handleOpenWarehousingPopup(e) {
+    const that = this
+    const id = e.currentTarget.dataset.id
+    const { warehousingID, warehousingDetails, warehousingList } = that.data
+    const warehousingListLen = warehousingList.length
+    if (warehousingID === id) {
+      this.setData({
+        warehousingPopupShow: true,
+        warehousingBatch1: warehousingDetails.batch1,
+        warehousingBatch2: warehousingDetails.batch2,
+        warehousingRemark: warehousingDetails.remark
+      })
+    } else {
+      if (warehousingListLen > 0) {
+        for (let i = 0; i < warehousingListLen; i++) {
+          if (warehousingList[i].id === id) {
+            that.setData({
+              warehousingID: warehousingList[i].id,
+              warehousingDetails: warehousingList[i],
+              oneKindWarehousingTotal: warehousingList[i].totalNum,
+              warehousingPackageNum: warehousingList[i].packageNum,
+              warehousingStockNum: warehousingList[i].stockNum,
+              warehousingBatch1: warehousingList[i].batch1,
+              warehousingBatch2: warehousingList[i].batch2,
+              warehousingProductionDate: warehousingList[i].production_date,
+              warehousingExpireDate: warehousingList[i].expiration_date,
+              warehousingRemark: warehousingList[i].remark,
+              warehousingPopupShow: true
+            })
+            break;
+          }
+        }
+      }
+    }
+	},
+
+	/**
+	 * 用户删除入仓单
+	 */
+	handleDeleteWarehousingReceipt(e) {
+		const that = this
+		wx.showModal({
+			title: '提示',
+			content: '确认删除此商品？',
+			success(res) {
+				if (res.confirm) {
+					const id = e.currentTarget.dataset.id
+					const { warehousingList } = that.data
+					const warehousingListLen = warehousingList.length
+					for (let i = 0; i < warehousingListLen; i++) {
+						if (warehousingList[i].id === id) {
+              warehousingList.splice(i, 1)
+              if (warehousingList.length > 0) {
+                let warehousingCheckTotal = 0
+                warehousingList.forEach(item => {
+                  if (item.checked) {
+                    warehousingCheckTotal += 1
+                  }
+                })
+                const allChecked = warehousingCheckTotal === warehousingList.length ? true : false // 判断选中总数是否等于列表长度，如果是，代表全部选中，如果不是，则代表还未全部选中
+                that.setData({
+                  warehousingList,
+                  warehousingCheckTotal,
+                  allChecked
+                })
+              } else {
+                that.setData({
+                  warehousingList,
+                  allChecked: false
+                })
+              }
+              wx.setStorageSync('warehousingList', warehousingList)
+							break;
+						}
+					}
+				}
+			}
+		})
+	},
+
+	/**
+   * 用户填写单种商品的入仓总数
+   */
+  handleOneKindWarehousingTotal(e) {
+    const that = this
+    let { oneKindWarehousingTotal, warehousingPackageNum, warehousingStockNum } = that.data
+    const { multiple } = that.data.warehousingDetails
+    const value = Number(e.detail.value)
+    oneKindWarehousingTotal = value
+    warehousingPackageNum = Math.floor(value / multiple)
+    warehousingStockNum = value >= multiple ? (value % multiple) : value
+    that.setData({
+      oneKindWarehousingTotal,
+      warehousingPackageNum,
+      warehousingStockNum
+    })
+  },
+
+  /**
+   * 用户填写入仓箱数
+   */
+  handleWarehousingPackageNumInput(e) {
+    const that = this
+    let { oneKindWarehousingTotal, warehousingPackageNum, warehousingStockNum } = that.data
+    const { multiple } = that.data.warehousingDetails
+    const value = Number(e.detail.value)
+    oneKindWarehousingTotal = value * multiple + warehousingStockNum
+    warehousingPackageNum = value
+    that.setData({
+      oneKindWarehousingTotal,
+      warehousingPackageNum
+    })
+  },
+
+  /**
+   * 用户填写入仓瓶数
+   */
+  handleWarehousingStockNumInput(e) {
+    const that = this
+    let { oneKindWarehousingTotal, warehousingPackageNum, warehousingStockNum } = that.data
+    const { multiple } = that.data.warehousingDetails
+    const value = Number(e.detail.value)
+    oneKindWarehousingTotal = warehousingPackageNum * multiple + value
+    warehousingStockNum = value
+    that.setData({
+      oneKindWarehousingTotal,
+      warehousingStockNum
+    })
+	},
+	
+	/**
+   * 选择入仓生产日期
+   * @param {*} e 
+   */
+  bindWarehousingProductionDateChange(e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      warehousingProductionDate: e.detail.value
+    })
+  },
+
+  /**
+   * 选择入仓到期日期
+   * @param {*} e 
+   */
+  bindWarehousingExpireDateChange(e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      warehousingExpireDate: e.detail.value
+    })
+  },
+
+  /**
+   * 关闭入仓弹窗
+   */
+  handleCloseWarehousingPopup() {
+    this.setData({
+      warehousingPopupShow: false
+    })
+  },
+
+  /**
+   * 阻止冒泡
+   */
+  stopBubbling() {},
+
+  /**
+   * 用户填写单种商品的入仓总数
+   */
+  handleOneKindWarehousingTotal(e) {
+    const that = this
+    let { oneKindWarehousingTotal, warehousingPackageNum, warehousingStockNum } = that.data
+    const { multiple } = that.data.warehousingDetails
+    const value = Number(e.detail.value)
+    oneKindWarehousingTotal = value
+    warehousingPackageNum = Math.floor(value / multiple)
+    warehousingStockNum = value >= multiple ? (value % multiple) : value
+    that.setData({
+      oneKindWarehousingTotal,
+      warehousingPackageNum,
+      warehousingStockNum
+    })
+  },
+
+  /**
+   * 用户填写入仓箱数
+   */
+  handleWarehousingPackageNumInput(e) {
+    const that = this
+    let { oneKindWarehousingTotal, warehousingPackageNum, warehousingStockNum } = that.data
+    const { multiple } = that.data.warehousingDetails
+    const value = Number(e.detail.value)
+    oneKindWarehousingTotal = value * multiple + warehousingStockNum
+    warehousingPackageNum = value
+    that.setData({
+      oneKindWarehousingTotal,
+      warehousingPackageNum
+    })
+  },
+
+  /**
+   * 用户填写入仓瓶数
+   */
+  handleWarehousingStockNumInput(e) {
+    const that = this
+    let { oneKindWarehousingTotal, warehousingPackageNum, warehousingStockNum } = that.data
+    const { multiple } = that.data.warehousingDetails
+    const value = Number(e.detail.value)
+    oneKindWarehousingTotal = warehousingPackageNum * multiple + value
+    warehousingStockNum = value
+    that.setData({
+      oneKindWarehousingTotal,
+      warehousingStockNum
+    })
+  },
+
+  /**
+   * 用户填写入仓备注
+   */
+  handleWarehousingRemarkInput(e) {
+    const that = this
+    const remark = e.detail.value
+    that.setData({
+      warehousingRemark: remark
+    })
+  },
+
+  /**
+   * 用户点击"添加到入仓"按钮
+   */
+  warehousingFormSubmit(e) {
+    console.log('e', e)
+    const that = this
+    let { warehousingID, warehousingDetails, warehousingList, warehousingProductionDate, warehousingExpireDate } = that.data
+    const { totalNum, packageNum, stockNum, batch1, batch2, remark } = e.detail.value
+    warehousingDetails.totalNum = totalNum
+    warehousingDetails.packageNum = packageNum
+    warehousingDetails.stockNum = stockNum
+    warehousingDetails.batch1 = batch1
+    warehousingDetails.batch2 = batch2
+    warehousingDetails.production_date = warehousingProductionDate
+    warehousingDetails.expiration_date = warehousingExpireDate
+    warehousingDetails.remark = remark
+    const warehousingListLen = warehousingList.length
+    if (warehousingListLen > 0) {
+      for (let i = 0; i < warehousingListLen; i++) {
+        if (warehousingList[i].id === warehousingID) {
+          console.log('warehousingList[i].id', warehousingList[i].id)
+          console.log('warehousingID', warehousingID)
+          warehousingList.splice(i, 1, warehousingDetails)
+          break;
+        } else {
+          if (i === (warehousingListLen - 1)) {
+            warehousingList.push(warehousingDetails)
+          }
+        }
+      }
+    } else {
+      warehousingList.push(warehousingDetails)
+    }
+    that.setData({
+      warehousingList,
+      warehousingDetails
+    }, () => {
+      let warehousingTotal = 0
+      warehousingList.forEach(item => {
+        warehousingTotal += Number(item.totalNum)
+      })
+      that.setData({
+        warehousingTotal,
+        warehousingPopupShow: false
+      })
+    })
+	},
+	
+	/**
+   * 用户点击立即下单
+   */
+  handleOrderNow() {
+    const that = this
+		const { warehousingList } = that.data
+		let warehousingCheckedList = []
+		warehousingList.forEach(item => {
+			if (item.checked) {
+				warehousingCheckedList.push(item)
+			}
+		})
+    if (warehousingCheckedList.length === 0) {
+      wx.showToast({
+        title: '请选择入仓的商品',
+        icon: 'none',
+        duration: 1500
+      })
+    } else {
+      wx.setStorageSync('warehousingCheckedList', warehousingCheckedList)
+      wx.navigateTo({
+        url: '/packageB/shippingInformation/index',
+      })
+    }
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    const that = this
+		const warehousingList = wx.getStorageSync('warehousingList')
+		const CustomBar = app.store.custom.CustomBar
+		warehousingList.forEach(item => {
+			item.checked = false // 默认所有选项的选中状态都是未选中
+		})
+		that.setData({
+			warehousingList,
+			CustomBar
+		})
+		console.log('warehousingList', warehousingList)
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
+  }
+})

@@ -1,0 +1,75 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<!-- 信息提示 -->
+<i-toast id="toast" />
+
+<!-- 模态框 -->
+<i-modal title="{{modal.tips}}" isHide="{{modal.ishide}}" bind:ok="{{modal.ok}}" bind:cancel="{{modal.cancel}}"
+    bind:plateBg="cancel">
+    <view>{{modal.message}}</view>
+</i-modal>
+
+<!----------------------------------------- 下面请开始你的表演 SHOW TIME ---------------------------------->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+    bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">填写送货信息
+</custom-parts>
+
+<view class="information">
+    <view class="warehousing-form">
+        <view class="warehousing-item">
+            <view class="warehousing-item-left">送货公司</view>
+            <view class="warehousing-item-right">
+                <input class="warehousing-input" type="text" placeholder="请输入送货公司名称" value="{{shippingOffice}}" bindinput="handleShippingOfficeInput" />
+            </view>
+        </view>
+        <view class="warehousing-item">
+            <view class="warehousing-item-left">送货车牌</view>
+            <view class="warehousing-item-right">
+                <input class="warehousing-input" type="text" placeholder="请填写送货车牌号码" value="{{deliveryLicensePlate}}" bindinput="handleDeliveryLicensePlateInput" />
+            </view>
+        </view>
+        <view class="warehousing-item remarks">
+            <view class="warehousing-item-left">备注信息</view>
+        </view>
+        <view class="textarea-area">
+            <textarea value="{{warehousingRemark}}" maxlength="200" placeholder="请填写备注信息" bindinput="handleWarehousingRemarkInput"></textarea>
+            <view class="textarea-val-len">
+                <text class="not-full" wx:if="{{warehousingRemark.length < 200}}">{{warehousingRemark.length}}/</text>
+                <text class="full" wx:else>200/</text>
+                <text class="full">200</text>
+            </view>
+        </view>
+    </view>
+    <view class="queryTitle">入仓产品信息</view>
+    <view class="receipt-list">
+        <view class="receipt-item" wx:for="{{warehousingCheckedList}}" wx:key="{{item.id}}">
+            <view class="receipt-name">{{item.name}}</view>
+            <view class="receipt-data">
+                <view class="receipt-data-item">
+                    <view class="receipt-data-item-left">产品编号：{{item.code}}</view>
+                    <view class="receipt-data-item-right">规格：{{item.spec}}{{item.stock_unit}}</view>
+                </view>
+                <view class="receipt-data-item">
+                    <view class="receipt-data-item-left">入仓数量：{{item.totalNum}}</view>
+                </view>
+                <view class="receipt-data-item">
+                    <view class="receipt-data-item-left">批次号1：{{item.batch1}}</view>
+                    <view class="receipt-data-item-right">批次号2：{{item.batch2}}</view>
+                </view>
+                <view class="receipt-data-item">
+                    <view class="receipt-data-item-left">生产日期：{{item.production_date}}</view>
+                    <view class="receipt-data-item-right">到期日期：{{item.expiration_date}}</view>
+                </view>
+            </view>
+            <view class="receipt-remarks">备注：{{item.remark}}</view>
+        </view>
+    </view>
+    <view class="submit-btn" catchtap="handleConfirmOrder">确认下单</view>
+</view>
+<tabbar activeIdx="{{activeIdx}}"></tabbar>
+
+<!------------------------------------------------ 你触碰到我的底线了  W(￣_￣)W ---------------------------------->
+
+<!-- 分页组件 -->
+<!-- <page-parts options="{{page}}" bind:start="pageStart" bind:success="pageSuccess" bind:fail="pageFail"  /> -->

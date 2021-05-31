@@ -1,0 +1,122 @@
+var utils = {
+	differ : function (d, date){
+		var distance = date + d * 3600 * 24 * 1000;
+		var newDate = getDate(distance);
+		//console.log()
+		var result = {};
+
+		var year = newDate.getFullYear();
+		var month = newDate.getMonth() + 1
+		var day = newDate.getDate()
+
+		result.year = year
+		result.month = month
+		result.day = day
+
+		result.timeString = year + '-' + month + '-' + day
+
+		var week = newDate.getDay()
+		var semantics = '今天'
+		
+		switch(week){
+			case 0 :
+				week = '星期日';
+			break;
+			case 1 :
+				week = '星期一';
+			break;
+			case 2 :
+				week = '星期二';
+			break;
+			case 3 :
+				week = '星期三';
+			break;
+			case 4 :
+				week = '星期四';
+			break;
+			case 5 :
+				week = '星期五';
+			break;
+			case 6 :
+				week = '星期六';
+			break;
+			default :
+		}
+
+		switch(d){
+			case '-1' :
+				semantics = '昨天';
+			break;
+			case 0 :
+				semantics = '今天';
+			break;
+			case 1 :
+				semantics = '明天';
+			break;
+			default : 
+				semantics = week;
+			break;
+		}
+
+		result.week = week
+		result.semantics = semantics
+
+		return result
+		
+	},
+	prase : function (str){
+		var a = getRegExp("<\?[^>]*>", "g");
+		
+		var c = getRegExp("&nbsp;", "ig");
+		var d = getRegExp("<br>");
+
+		str = str.replace(a,''); //去除HTML tag
+       
+            //str = str.replace(/\n[\s| | ]*\r/g,'\n'); //去除多余空行
+        str=str.replace(c,'');//去掉&nbsp;
+        str=str.replace(d,'');//去掉&nbsp;
+        
+        return str;
+
+	},
+
+	getarr : function (str){
+		return str.slice(0, 10)
+	},
+	num2arr : function (num){
+		var result = []
+		for(var i=0; i <= num; i++){
+			result.push(i);
+		}
+
+		return result;
+	},
+	getarr2 : function (str, s){
+		str = str.toString()
+		var a = str.split(s);
+		//console.log(a)
+		return a;
+	},
+
+	getInt : function (number){
+		return parseInt(number)
+	},
+	getString : function(arr, s){
+    s = s || '';
+		return arr.join(s)
+	},
+
+	getIndexof : function (array, value){
+		if(!array) return false;
+
+		var result = array.indexOf(value);
+		//console.log(value, result)
+		if(result >= 0){
+			return true
+		}
+
+		return false
+	}
+}
+
+module.exports = utils

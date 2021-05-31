@@ -1,0 +1,166 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<!-- 信息提示 -->
+<i-toast id="toast" />
+
+<!-- 模态框 -->
+<i-modal title="{{modal.tips}}" isHide="{{modal.ishide}}" bind:ok="{{modal.ok}}" bind:cancel="{{modal.cancel}}"
+  bind:plateBg="cancel">
+  <view>{{modal.message}}</view>
+</i-modal>
+
+<custom-parts isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+  bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">代叔共享仓</custom-parts>
+<movable-area class="movable-area">
+  <!-- banner图开始 -->
+  <view class="banner">
+    <swiper indicator-dots="{{false}}" autoplay="{{true}}" interval="5000" loop="{{true}}" circular="{{true}}"
+      duration="500">
+      <block wx:for="{{indexData.banner}}" wx:key="{{item.id}}">
+        <swiper-item>
+          <navigator url="{{item.value.url.value}}" class="swiper-item" wx:if="{{index < indexData.banner.length - 1}}">
+            <image class="banner-img" src="{{item.value.pic.value}}" mode="aspectFill"></image>
+          </navigator>
+          <navigator url="/packageA/onlineNotice/onlineNotice" class="swiper-item" wx:else>
+            <image class="banner-img" src="{{item.value.pic.value}}" mode="aspectFill"></image>
+          </navigator>
+        </swiper-item>
+      </block>
+    </swiper>
+    <!-- banner图右边"了解代叔"按钮结束 -->
+  </view>
+  <view class="main">
+    <!-- 主体内容开始 -->
+    <view class="content">
+      <!-- 运单查询开始 -->
+      <view class="search-content">
+        <!-- 运单查询 输入框模块 开始 -->
+        <view class="search-content-top">
+          <view class="search-title">物流查询</view>
+          <view class="search-input-content">
+            <image class="search-icon" src="/images/ss.png" mode="widthFix"></image>
+            <input class="search-input" value="{{orderNum}}" placeholder-class="input-placeholder" placeholder="请输入运单" bindinput="handleInput" type="number"></input>
+            <view class="clear-icon-area" catchtap="handleDeleteOrderNum" wx:if="{{orderNum !== ''}}">
+              <image class="clear-icon" src="/images/close_icon.png" mode="widthFix"></image>
+            </view>
+            <button class="search-btn" catchtap="handleSearch">查询</button>
+          </view>
+        </view>
+        <!-- 运单查询 代叔快讯模块 开始 -->
+        <view class="message-content">
+          <view class="message-content-left">
+            <image class="message-icon" src="/images/xx.png" mode="widthFix"></image>
+            <view class="message-title">代叔快讯：</view>
+            <!-- 运单查询 代叔快讯-轮播快讯-->
+            <view class="message-swiper">
+              <swiper indicator-dots="{{false}}" vertical="{{true}}" autoplay="{{true}}" circular="{{true}}"
+                interval="5000" duration="500">
+                <swiper-item wx:for="{{indexData.new}}" wx:key="{{item.id}}">
+                  <view class="message-swiper-item">{{item.value.info.value}}</view>
+                </swiper-item>
+              </swiper>
+            </view>
+          </view>
+        
+        </view>
+
+      </view>
+      <!-- 运单查询结束 -->
+
+      <!-- 导航栏开始 -->
+      <view class="nav-content">
+        <view class="nav-item-line">
+          <navigator url="/pages/me/me" open-type="switchTab" class="nav-item">
+            <view class="nav-item-left">
+              <image class="nav-item-icon" src="/images/yun.png" mode="widthFix"></image>
+            </view>
+            <view class="nav-item-right">
+              <view class="nav-item-name">代叔共享仓</view>
+              <view class="nav-item-slogan">省33%以上仓配成本</view>
+            </view>
+          </navigator>
+          <navigator url="/packageA/warehouseTicket/index" class="nav-item">
+            <view class="nav-item-left">
+              <image class="nav-item-icon" src="/images/jp.png" mode="widthFix"></image>
+            </view>
+            <view class="nav-item-right">
+              <view class="nav-item-name">代叔袋金票</view>
+              <view class="nav-item-slogan">一票通用 成本更低</view>
+            </view>
+          </navigator>
+        </view>
+        <view class="nav-item-line">
+          <navigator class="nav-item" open-type="reLaunch" catchtap="handleNavigatorToDelivery">
+            <view class="nav-item-left">
+              <image class="nav-item-icon" src="/images/ps.png" mode="widthFix"></image>
+            </view>
+            <view class="nav-item-right">
+              <view class="nav-item-name">代叔集贸仓</view>
+              <view class="nav-item-slogan">开发中</view>
+            </view>
+          </navigator>
+          <navigator url="/packageA/shopping/index" class="nav-item">
+            <view class="nav-item-left">
+              <image class="nav-item-icon" src="/images/gc.png" mode="widthFix"></image>
+            </view>
+            <view class="nav-item-right">
+              <view class="nav-item-name">代叔仓储商城</view>
+              <view class="nav-item-slogan">仓储用品 一站采购</view>
+            </view>
+          </navigator>
+        </view>
+        <view class="nav-item-line">
+          <view class="nav-item" catchtap="handleNavigatorToDelivery">
+            <view class="nav-item-left">
+              <image class="nav-item-icon" src="/images/ky.png" mode="widthFix"></image>
+            </view>
+            <view class="nav-item-right">
+              <view class="nav-item-name">代叔集配</view>
+              <view class="nav-item-slogan">开发中</view>
+            </view>
+          </view>
+          <navigator class="nav-item" catchtap="handleNavigatorToDelivery">
+            <view class="nav-item-left">
+              <image class="nav-item-icon" src="/images/qb.png" mode="widthFix"></image>
+            </view>
+            <view class="nav-item-right">
+              <view class="nav-item-name">代叔合伙</view>
+              <view class="nav-item-slogan">开发中</view>
+            </view>
+          </navigator>
+        </view>
+        <view class="nav-item-line">
+          <view class="nav-item" catchtap="handleNavigatorToDelivery">
+            <view class="nav-item-left">
+              <image class="nav-item-icon" src="/images/cWarehouse.png" mode="widthFix"></image>
+            </view>
+            <view class="nav-item-right">
+              <view class="nav-item-name">代叔 C仓</view>
+              <view class="nav-item-slogan">开发中</view>
+            </view>
+          </view>
+          <navigator class="nav-item" catchtap="handleNavigatorToDelivery">
+            <view class="nav-item-left">
+              <image class="nav-item-icon" src="/images/ecoPartner.png" mode="widthFix"></image>
+            </view>
+            <view class="nav-item-right">
+              <view class="nav-item-name">生态伙伴</view>
+              <view class="nav-item-slogan">开发中</view>
+            </view>
+          </navigator>
+        </view>
+      </view>
+    </view>
+
+    <!-- <!-- 分享优惠租仓 -->
+    <view class="share-reward">
+      <navigator url="/packageA/uploadImg/index">
+        <image class="share-btn-bg" src="/images/understand.png" mode="widthFix"></image>
+      </navigator>
+      
+    </view>
+  </view>
+ 
+</movable-area>
+<tabbar activeIdx="{{activeIdx}}"></tabbar>

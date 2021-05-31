@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "van-nav-bar": "../@vant/weapp/nav-bar",
+    "print":"../../components/BLE_printing/BLE_printing"
+  }
+}

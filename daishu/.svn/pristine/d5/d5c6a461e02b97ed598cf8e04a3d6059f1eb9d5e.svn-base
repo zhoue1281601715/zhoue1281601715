@@ -1,0 +1,9 @@
+<view class="toast-area {{toastShowFlag ? '' : 'toast-hide'}}">
+	<view class="toast">
+		<image class="toast-bg" src="/images/toast_bg.png" mode="widthFix"></image>
+    <view class="toast-content">
+		  <image class="toast-icon" src="/images/success_icon.png" mode="widthFix" wx:if="{{parameterObj.icon === 'success'}}"></image>
+		  <view class="toast-tip">{{parameterObj.content}}</view>
+    </view>
+	</view>
+</view>

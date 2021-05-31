@@ -1,0 +1,130 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<!-- 信息提示 -->
+<i-toast id="toast" />
+
+<!-- 模态框 -->
+<i-modal title="{{modal.tips}}" isHide="{{modal.ishide}}" bind:ok="{{modal.ok}}" bind:cancel="{{modal.cancel}}"
+    bind:plateBg="cancel">
+    <view>{{modal.message}}</view>
+</i-modal>
+
+<!----------------------------------------- 下面请开始你的表演 SHOW TIME ---------------------------------->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}" bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">购物车</custom-parts>
+
+<view class="main">
+    <view class="shopping-car-list">
+        <block wx:if="{{shoppingCarList.length > 0}}">
+            <view class="shopping-car-edit-area">
+                <view class="shopping-car-edit" catchtap="handleEdit">
+                    <text wx:if="{{!editFlag}}">编辑</text>
+                    <text wx:else>完成</text>
+                </view>
+            </view>
+            <view class="shopping-car-item" wx:for="{{shoppingCarList}}" wx:key="{{item.id}}">
+                <!-- 自定义checkbox开始 -->
+                <view class="shopping-car-checkbox {{item.checked ? 'shopping-car-checked' : ''}}" catchtap="handleCheckboxChange" data-index="{{index}}" data-item_total_price="{{(item.truePrice * 100000) * item.cart_num / 100000}}"></view>
+                <!-- 自定义checkbox结束 -->
+                <view class="goods-picture-area">
+                    <image class="goods-picture" src="{{item.productInfo.image}}" mode="aspectFill"></image>
+                </view>
+                <view class="goods-data">
+                    <view class="goods-name">{{item.productInfo.store_name}}</view>
+                    <view class="set-meal-type">{{item.productInfo.attrInfo.suk}}</view>
+                    <view class="goods-price-area">
+                        <view class="goods-price">
+                            <text class="yuan">￥</text>
+                            <text>{{item.truePrice}}</text>
+                        </view>
+                        <view class="goods-num" wx:if="{{!item.edit}}" data-index="{{index}}" catchtap="handleEditGoodsNum">x{{item.cart_num}}</view>
+                        <view class="goods-num-area" wx:else>
+                            <!-- <view class="goods-num">x{{item.cart_num}}</view> -->
+                            <view 
+                                class="operator {{item.cart_num > 1 ? '' : 'operator-disabled'}}" 
+                                catchtap="handleReduceGoodsNum" 
+                                data-cart_id="{{item.id}}" 
+                                data-cart_num="{{item.cart_num}}" 
+                                data-index="{{index}}" 
+                            >-</view>
+                            <view class="goods-num-input-area">
+                                <input 
+                                    class="goods-num-input" 
+                                    value="{{item.cart_num}}" 
+                                    data-cart_id="{{item.id}}" 
+                                    data-index="{{index}}" 
+                                    data-stock="{{item.productInfo.attrInfo.stock}}" 
+                                    bindblur="handleInputBlur" 
+                                    type="number" 
+                                ></input>
+                            </view>
+                            <view 
+                                class="operator {{item.cart_num < item.productInfo.attrInfo.stock ? '' : 'operator-disabled'}}" 
+                                catchtap="handleAddGoodsNum" 
+                                data-cart_id="{{item.id}}" 
+                                data-cart_num="{{item.cart_num}}" 
+                                data-index="{{index}}" 
+                                data-stock="{{item.productInfo.attrInfo.stock}}" 
+                            >+</view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </block>
+        <view class="nodata" wx:else>购物车竟然是空的</view>
+    </view>
+    <view class="division-area">
+        <image class="division-line" src="/images/left_line.png" mode="widthFix"></image>
+        <text class="division-tip">你可能还喜欢</text>
+        <image class="division-line" src="/images/right_line.png" mode="widthFix"></image>
+    </view>
+    <view class="goods-list">
+        <url-parts url="/packageA/viewDetails/index?id={{item.id}}" class="goods-item" wx:for="{{goodsList}}" wx:key="{{item.id}}">
+            <view class="goods-picture-area">
+                <image class="goods-picture" src="{{item.image}}" mode="widthFix"></image>
+            </view>
+            <view class="goods-data">
+                <view class="goods-name">
+                    <text class="goods-label">代叔力推</text>
+                    <text class="goods-name">{{item.store_name}}</text>
+                </view>
+                <view class="goods-price-area">
+                    <text class="yuan">￥</text>
+                    <text class="goods-price">{{item.price}}</text>
+                    <text class="payment-num">{{item.sales}}人付款</text>
+                </view>
+                <view class="more">
+                    <text>…</text>
+                </view>
+            </view>
+        </url-parts>
+    </view>
+    <view class="btn-area">
+        <view class="btn-area-left">
+            <view class="checkbox {{allChecked ? 'checked' : ''}}" catchtap="handleCheckedAllChange"></view>
+            <view class="checked-num">全选</view>
+        </view>
+        <view class="btn-area-right" wx:if="{{!editFlag}}">
+            <view class="total-area">
+                <text>合计：</text>
+                <text class="total-val">￥{{totalPrice > 0 ? totalPrice : '--'}}</text>
+            </view>
+            <view class="btn-content" catchtap="handleSettlement">
+                <image class="btn-bg" src="/images/xd.png" mode="widthFix"></image>
+                <view class="buy-btn">结算</view>
+            </view>
+        </view>
+        <view class="delete-btn-area" wx:else>
+            <view class="btn-content">
+                <image class="btn-bg" src="/images/xd.png" mode="widthFix"></image>
+                <view class="delete-btn" catchtap="handleDeleteGoods">删除</view>
+            </view>
+        </view>
+    </view>
+</view>
+<toast parameter="{{toastParameter}}"></toast>
+<tabbar activeIdx="{{activeIdx}}"></tabbar>
+<!------------------------------------------------ 你触碰到我的底线了  W(￣_￣)W ---------------------------------->
+
+<!-- 分页组件 -->
+<!-- <page-parts options="{{page}}" bind:start="pageStart" bind:success="pageSuccess" bind:fail="pageFail"  /> -->

@@ -1,0 +1,241 @@
+
+/**
+ * 如果位目录层数大于两级需要修改路径
+ */
+const { $Toast, $Message } = require('../../utils/iview/base/index');
+import Tools from '../../utils/modules/Tools';
+import Config from '../../config';
+import utils from '../../utils/utils';
+
+const app = getApp();
+
+Page({
+	data: {
+		code: "",
+		modal: {
+			tips: '提示',
+			message: '模态框说明',
+			ok: 'modalOk',
+			cancel: 'modalCancel',
+			ishide: true
+		},
+
+		// --  分页配置数据  -------- 
+		page: {
+			url: '/',
+			data: {
+				page: 1,
+			}
+		},
+		isEnd: false,
+		// ------------------------- 
+
+	},
+	onLoad(query) {
+		app.setTitle('填个标题吧');
+	},
+	onShow() {
+
+	},
+
+	/**
+		 * 获取用户基本信息并登录
+		 */
+	/**
+	 * 获取用户基本信息并登录
+	 */
+	onGotUserInfo(e) {
+		console.log(e, 'userInfoData')
+		let _this = this
+		// 获取微信小程序code
+		wx.login({
+			success: function (res) {
+				console.log(res)
+				// 登录
+				_this.setData({
+					code: res.code
+				})
+				wx.getUserInfo({
+					success: (result) => {
+						console.log(result)
+						_this.openAsk()
+						wx.setStorageSync("nickName", result.userInfo.nickName)
+						wx.setStorageSync("avatarUrl", result.userInfo.avatarUrl)
+					}
+
+				})
+
+			},
+
+		})
+
+	},
+	getPhoneNumber(e) {
+		console.log('phone', e)
+		// if (e.detail.errMsg == 'getPhoneNumber:ok') {
+		wx.showLoading({
+			title: '登录中'
+		});
+		wx.login({
+			success: res => {
+				console.log(res, 'res.login');
+				let data = {};
+				if (res.code) {
+					data.code = res.code;
+				}
+				data.iv = e.detail.iv;
+				data.encryptedData = e.detail.encryptedData;
+				data.nickname = wx.getStorageSync('nickName')
+				data.avatar = wx.getStorageSync('avatarUrl')
+				console.log('iv', data.iv)
+				console.log('encryptedData', data.encryptedData)
+				console.log('nickname', data.nickname)
+				console.log('avatar', data.avatar)
+				app.http({
+					config: {
+						url: 'api/v1/wx_login', data: data, method: 'POST'
+					},
+					isAuth: false
+				}).then((r) => {
+					console.log(r.data.code, r.data.data.token)
+					wx.setStorageSync("token", r.data.data.token)
+					if (r.data.code == 200) {
+						var token = wx.getStorageSync('token')
+						app.http({
+							config: {
+								url: 'api/v1/user_info',
+								data: {
+									token,
+								},
+								method: 'POST'
+							},
+							isAuth: false
+						}).then((rs1) => {
+							console.log( rs1.data.data)
+							wx.setStorageSync("phone", rs1.data.data.phone)
+							wx.setStorageSync('user_info', rs1.data.data)
+							if (r.data.code == 200) {
+								var phone = wx.getStorageSync('phone')
+								app.https({
+									config: {
+										url: 'xcx/user/login_mobile',
+										data: {
+											mobile: phone
+										},
+										method: 'POST'
+									},
+									isAuth: false
+								}).then((rs2) => {
+									console.log('rs2', rs2)
+									wx.setStorageSync("warehouse_id", rs2.data.data.warehouse_id)
+									wx.setStorageSync("warehouse_name", rs2.data.data.warehouse_name)
+									wx.setStorageSync("company_id", rs2.data.data.company_id)
+									wx.setStorageSync("customer_id", rs2.data.data.customer_id)
+									wx.setStorageSync("mobile", rs2.data.data.mobile)
+									wx.setStorageSync("table_num", rs2.data.data.table_num)
+									wx.setStorageSync('currentUserInfo', rs2.data.data)
+									console.log(rs2)
+									console.log(rs2.data.code)
+									if (rs2.data.code == 200){
+										wx.switchTab({
+											url: '/pages/index/index'
+										})
+									}
+								}).catch((err2) => {
+									console.log(err2)
+								})
+							}
+						}).catch((err1) => {
+							console.log(err1)
+							wx.hideLoading({
+								success: res => {
+									$Toast({
+										content: err1.data.data,
+										type: 'error'
+									})
+								}
+							})
+						})
+					}
+
+				}).catch((err) => {
+					console.log(err)
+					wx.hideLoading({
+						success: res => {
+							$Toast({
+								content: err.data.data,
+								type: 'error'
+							});
+						}
+					});
+				});
+			}
+		});
+		// } else {
+		//   console.log('用户拒绝权限');
+		// }
+	},
+	openAsk: function () {
+		this.setData({
+			tan: true
+		})
+	},
+	closeAsk: function () {
+		this.setData({
+			tan: false
+		})
+	},
+
+
+	/*============================================
+							 以下是基本操作 				
+	==============================================*/
+
+	...utils,  // mixin方法
+
+	trigger(e) {
+		app.trigger(e, this);
+	},
+
+	modalCancel() {
+		this.setData({
+			'modal.ishide': true
+		})
+	},
+
+	modalOk() {
+		this.setData({
+			'modal.ishide': true
+		})
+	},
+
+	/**
+	 * 触底分页 (需要分页的请反我牌)
+	 */
+	onReachBottom() {
+		let { page, isEnd } = this.data;
+
+		if (!isEnd) {
+			this.setData({
+				'page.data.page': page.data.page + 1
+			});
+		}
+	},
+
+	/**
+	 * 分页返回数据 (需要分页的请反我牌)
+	 */
+	pageSuccess(e) {
+		this.setData({
+			list: e.detail.list,
+			isEnd: e.detail.isEnd
+		})
+	},
+	pageFail(e) {
+
+	},
+	pageStart(e) {
+
+	}
+})
+

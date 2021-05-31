@@ -1,0 +1,115 @@
+.receipt-list {
+  padding: 24rpx 16rpx;
+  width: 750rpx;
+  box-sizing: border-box;
+  font-size: 36rpx;
+  box-shadow: 0 6rpx -4rpx 0 rgba(153, 153, 153, 0.35);
+}
+
+.receipt-list1 {
+  padding: 24rpx 16rpx;
+  width: 750rpx;
+  box-sizing: border-box;
+  font-size: 36rpx;
+}
+
+.receipt-item {
+  margin-top: 20rpx;
+  padding-bottom: 18rpx;
+  background-color: #FFFFFF;
+  border-radius: 6rpx;
+}
+
+.receipt-item:first-child {
+  margin: 0;
+}
+
+.receipt-name-area {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 50rpx 0 28rpx;
+  height: 84rpx;
+  border-bottom: 2rpx solid #E5E5E5;
+  box-sizing: border-box;
+}
+
+.receipt-name-area-left,
+.receipt-name-area-right {
+  display: flex;
+  align-items: center;
+}
+
+.receipt-name {
+  padding-left: 14rpx;
+  font-size: 28rpx;
+  color: #000000;
+  box-sizing: border-box;
+}
+
+.receipt-data {
+  padding: 16rpx 24rpx 16rpx 72rpx;
+  box-sizing: border-box;
+}
+
+.receipt-data-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 46rpx;
+}
+
+.receipt-data-item-left {
+  flex: 7;
+  font-size: 24rpx;
+  color: #000000;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.receipt-data-item-right {
+  flex: 5;
+  font-size: 24rpx;
+  color: #000000;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.receipt-remarks {
+  margin: 0 auto;
+  padding: 0 24rpx;
+  width: 664rpx;
+  height: 88rpx;
+  line-height: 84rpx;
+  font-size: 34rpx;
+  text-align: center;
+  color: #FF4B00;
+  border: 2rpx solid #FF4B00;
+  border-radius: 10rpx;
+  box-sizing: border-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.receipt-btn {
+  margin-top: 100rpx;
+  display: flex;
+  width: 750rpx;
+  box-sizing: border-box;
+  justify-content: center;
+}
+
+.btn {
+  width: 274rpx;
+  height: 68rpx;
+  background-color: #FF7900;
+  text-align: center;
+  line-height: 68rpx;
+  border-radius: 7rpx;
+  color: #fff;
+  box-shadow: 0 6rpx -4rpx 0 rgba(153, 153, 153, 0.35);
+
+}

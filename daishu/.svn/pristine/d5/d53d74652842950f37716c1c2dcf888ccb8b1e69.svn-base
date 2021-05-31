@@ -1,0 +1,144 @@
+page {
+  background-color: #F3F3F3;
+}
+
+/* banner背景 */
+.banner {
+  width: 750rpx;
+  height: 248rpx;
+  background: linear-gradient(90deg, #FF7900, #FF4B00);
+}
+
+.main {
+  margin-top: -156rpx;
+  padding: 0 16rpx 122rpx;
+  width: 750rpx;
+}
+
+/* 用户基本数据开始 */
+.user-info {
+  border-radius: 6rpx;
+  background-color: #FFFFFF;
+  box-shadow: 0 6rpx 10rpx 0 rgba(153, 153, 153, 0.35);
+}
+
+.user-avatar {
+  display: flex;
+  justify-content: center;
+}
+
+.avatar {
+  margin-top: -48rpx;
+  width: 106rpx;
+  height: 106rpx;
+  border-radius: 50%;
+}
+
+.login-register-btn-area {
+  display: flex;
+  justify-content: center;
+  font-size: 30rpx;
+  color: #000000;
+  font-weight: bold;
+}
+
+.login-tip {
+  font-size: 27rpx;
+  /* color: #C3C3C3; */
+  text-align: center;
+}
+
+.user-data {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 26rpx;
+  padding: 10rpx 8rpx;
+  border-top: 2rpx solid #F6F6F6;
+  box-sizing: border-box;
+}
+
+.user-data-item {
+  flex: 1;
+  height: 72rpx;
+  line-height: 72rpx;
+  text-align: center;
+  font-size: 24rpx;
+  color: #5B5B5B;
+  border-right: 2rpx solid #F6F6F6;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.user-data-item:last-child {
+  border: none;
+}
+
+/* 导航栏开始 */
+.nav {
+  margin-top: 22rpx;
+}
+
+.nav-list-content {
+  margin-bottom: 22rpx;
+  border-radius: 6rpx;
+  background-color: #FFFFFF;
+  box-shadow: 0 6rpx 10rpx 0 rgba(153, 153, 153, 0.35);
+}
+
+.nav-list-content:last-child {
+  margin: 0;
+}
+
+.nav-list-title {
+  line-height: 96rpx;
+  padding: 0 36rpx;
+  font-size: 32rpx;
+  color: #010101;
+  font-weight: bold;
+  border-bottom: 2rpx solid #F6F6F6;
+}
+
+.nav-list {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 50rpx 0 6rpx 0;
+}
+
+.nav-list .nav-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 44rpx;
+  width: 25%;
+}
+
+.nav-item-icon {
+  height: 52rpx;
+}
+
+.nav-item-name {
+  margin-top: 12rpx;
+  font-size: 24rpx;
+  color: #000000;
+}
+
+.nav-second-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding: 50rpx 0 6rpx 0;
+}
+
+.nav-second-list .nav-item {
+  margin-bottom: 44rpx;
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 导航栏结束 */

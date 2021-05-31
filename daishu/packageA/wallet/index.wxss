@@ -1,0 +1,165 @@
+.topColor {
+  background-image: linear-gradient(to right, #FF7900, #FF4B00);
+  height: 300rpx;
+  width: 100%;
+}
+
+.wallet {
+  position: absolute;
+  width: 92%;
+  background: #fff;
+  border-radius: 20rpx;
+  left: 4%;
+  top: 220rpx;
+  padding: 32rpx 32rpx 46rpx 32rpx;
+}
+.btnvuew {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+}
+
+
+.companyBalance {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 80rpx;
+}
+
+.companyText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 30rpx;
+  font-family: AlibabaPuHuiTiR;
+  font-weight: 400;
+  color: #A7A7A7;
+}
+
+.companyText .num {
+  font-size: 35rpx;
+  font-family: AlibabaPuHuiTiM;
+  color: #000000;
+  margin-top: 20rpx;
+}
+
+.transferOut {
+  width: 48%;
+  border-radius: 10rpx;
+  font-size: 36rpx;
+  font-family: AlibabaPuHuiTiR;
+  font-weight: 400;
+  color: #FEAC81;
+  height: 96rpx;
+  line-height: 96rpx;
+  background: #fff6ef;
+  text-align: center;
+}
+
+.switchTo {
+  width: 48%;
+  background: #ff4b00;
+  font-size: 36rpx;
+  font-family: AlibabaPuHuiTiR;
+  font-weight: 400;
+  color: #FFFFFF;
+  height: 96rpx;
+  line-height: 96rpx;
+  font-size: 38rpx;
+  text-align: center;
+  border-radius: 10rpx;
+}
+
+.mode {
+  display: flex;
+  justify-content: center;
+  margin-top: 63rpx;
+}
+
+.popup-area {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, .35);
+}
+
+.popup-content {
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  height: 100%;
+}
+
+.popup {
+  position: relative;
+  left: 0;
+  transition: bottom 300ms linear;
+  padding: 36rpx 20rpx;
+  width: 100%;
+  background-color: #FFFFFF;
+  border-top-left-radius: 10rpx;
+  border-top-right-radius: 10rpx;
+  box-sizing: border-box;
+}
+
+.close-popup {
+  display: flex;
+}
+
+.close-icon {
+  width: 22rpx;
+}
+
+.payment-amount {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  margin-top: 18rpx;
+  font-size: 54rpx;
+  color: #000000;
+  font-family: AlibabaPuHuiTiB;
+  font-weight: bold;
+}
+
+.payment-amount .yuan {
+  font-size: 28rpx;
+}
+
+.payment-type {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 68rpx;
+  padding-bottom: 44rpx;
+}
+
+.payment-type-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.payment-type-icon {
+  width: 142rpx;
+}
+
+.payment-name {
+  margin-top: 18rpx;
+  font-size: 28rpx;
+  color: #010101;
+}
+.user-avatar {
+
+}
+
+.avatar {
+
+  width: 106rpx;
+  height: 106rpx;
+  border-radius: 50%;
+}

@@ -1,0 +1,468 @@
+page {
+  padding-bottom: 170rpx;
+}
+
+.warehouseDetails {
+  width: 696rpx;
+  margin: 28rpx auto;
+  position: relative;
+}
+
+.wareText {
+  width: 100%;
+  height: 372rpx;
+  padding: 24rpx 18rpx 18rpx 24rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.ticket {
+  display: flex;
+  justify-content: space-between;
+}
+
+.tickets {
+  font-size: 38rpx;
+  font-family: AlibabaPuHuiTiM;
+  font-weight: bold;
+  color:#fff;
+}
+.yticket {
+  font-size: 76rpx;
+}
+.useTimeBan {
+  width: 424rpx;
+  font-family: AlibabaPuHuiTiB;
+  font-weight: bold;
+}
+.purchase {
+  padding: 0 24rpx;
+  height: 39rpx;
+  line-height: 29rpx;
+  font-size: 28rpx;
+  font-family: AlibabaPuHuiTiR;
+  font-weight: normal;
+  color: #FFFFFF;
+  text-align: center;
+  border: 4rpx solid #FFFFFF;
+  border-radius: 14rpx;
+}
+
+.useTime {
+  color: #fff;
+  margin-top: 10rpx;
+  font-size: 26rpx;
+
+}
+
+.wareTime {
+  font-size: 16rpx;
+  
+}
+
+.money {
+  font-size: 53rpx;
+  font-family: AlibabaPuHuiTiB;
+  font-weight: bold;
+  color: #010101;
+}
+
+.money text {
+  font-size: 25rpx;
+  font-family: AlibabaPuHuiTiR;
+  font-weight: bold;
+}
+
+.surplus {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 750rpx;
+  height: 58rpx;
+  background: #C9C9C9;
+  padding: 0 50rpx 0 44rpx;
+  box-sizing: border-box;
+}
+
+.progress-area {
+  display: flex;
+  align-items: center;
+}
+
+.progress {
+  width: 168rpx;
+  height: 12rpx;
+  border-radius: 6rpx;
+  background-color: #FFFFFF;
+  overflow: hidden;
+}
+
+.progress-ratio {
+  height: 12rpx;
+  background-color: #FF4B00;
+}
+
+.progress-value {
+  margin-left: 16rpx;
+  font-size: 26rpx;
+  color: #000000;
+}
+
+.surplus-value {
+  font-size: 26rpx;
+  color: #000000;
+}
+
+.volume {
+  font-size: 38rpx;
+  font-family: AlibabaPuHuiTiM;
+  font-weight: bold;
+  color: #647084;
+  text-decoration:line-through;
+}
+.text {
+  font-size: 23rpx;
+  font-family: AlibabaPuHuiTiM;
+  font-weight: bold;
+  color: #647084;
+  margin-left: 10rpx;
+}
+.wareContent {
+  padding: 48rpx 42rpx;
+}
+
+.volumeMoney {
+  font-size: 54rpx;
+  font-family: AlibabaPuHuiTiB;
+  font-weight: bold;
+  color: #FF5301;
+}
+
+.volumeMoney text {
+  font-size: 28rpx;
+  font-family: AlibabaPuHuiTiB;
+  font-weight: bold;
+  color: #FF5301;
+}
+
+.volumeContent {
+  display: flex;
+  align-items: baseline;
+}
+
+.careful {
+  margin-left: 24rpx;
+  font-size: 18rpx;
+  font-family: AlibabaPuHuiTiR;
+  font-weight: normal;
+  color: #909090;
+}
+
+.explain {
+  position: relative;
+  font-family: AlibabaPuHuiTiR;
+  margin-top: 50rpx;
+}
+
+.explainTitle {
+  font-size: 34rpx;
+  font-family: AlibabaPuHuiTiM;
+  font-weight: bold;
+  color: #000000;
+}
+
+.explainContent {
+  margin-top: 14rpx;
+  line-height: 24rpx;
+  font-size: 18rpx;
+  font-weight: normal;
+  color: #9F9F9F;
+}
+
+.gongzhang {
+  position: absolute;
+  bottom: -38rpx;
+  right: 50rpx;
+  width: 150rpx;
+}
+
+.rushPurchase {
+  margin: 24rpx auto 0;
+  padding: 0;
+  width: 244rpx;
+  height: 78rpx;
+  line-height: 78rpx;
+  background-image: linear-gradient(to right, #FF7900, #FF4B00);
+  font-size: 38rpx;
+  color: #fff;
+  border-radius: 39rpx;
+}
+
+.popup-area {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, .35);
+}
+
+.popup-content {
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  height: 100%;
+}
+
+.popup {
+  position: relative;
+  left: 0;
+  transition: bottom 300ms linear;
+  padding: 36rpx 20rpx 132rpx;
+  width: 100%;
+  background-color: #FFFFFF;
+  border-top-left-radius: 10rpx;
+  border-top-right-radius: 10rpx;
+  box-sizing: border-box;
+}
+
+.close-popup {
+  display: flex;
+}
+
+.close-icon {
+  width: 22rpx;
+}
+
+.payment-amount {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  margin-top: 18rpx;
+  font-size: 54rpx;
+  color: #000000;
+  font-family: AlibabaPuHuiTiB;
+  font-weight: bold;
+}
+
+.payment-amount .yuan {
+  font-size: 28rpx;
+}
+
+.payment-type {
+  display: flex;
+  justify-content: space-around;
+  /* justify-content: center; */
+  align-items: center;
+  margin-top: 68rpx;
+  padding-bottom: 44rpx;
+}
+
+.payment-type-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.payment-type-icon {
+  width: 142rpx;
+}
+
+.payment-name {
+  margin-top: 18rpx;
+  font-size: 28rpx;
+  color: #010101;
+}
+.wareContent {
+  display: flex;
+  justify-content: space-between;
+}
+.warehousing-popup,
+.delivery-popup {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 99999;
+}
+
+.warehousing-bg,
+.delivery-bg {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .65);
+  box-sizing: border-box;
+}
+
+.warehousing-area,
+.delivery-area {
+  padding: 20rpx 46rpx 40rpx;
+  width: 626rpx;
+  background-color: #FFFFFF;
+  border-radius: 15rpx;
+}
+
+.warehousing-title,
+.delivery-title {
+  height: 72rpx;
+  line-height: 72rpx;
+  font-size: 34rpx;
+  text-align: center;
+  color: #000000;
+}
+.close-popup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 32rpx;
+  width: 58rpx;
+  height: 58rpx;
+  border: 2rpx solid #FFFFFF;
+  border-radius: 29rpx;
+  box-sizing: border-box;
+}
+
+.close-popup-icon {
+  width: 32rpx;
+}
+page {
+  background: linear-gradient(180deg, #FFFFFF, #F2F2F2);
+  padding-bottom: 94rpx;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  width: 750rpx;
+  height: 76rpx;
+  background: #FFFFFF;
+}
+
+.default {
+  flex: 1;
+  height: 76rpx;
+  line-height: 74rpx;
+  font-size: 24rpx;
+  text-align: center;
+  color: #1E1E1E;
+  border-bottom: 2rpx solid #FFFFFF;
+}
+
+.red {
+  flex: 1;
+  height: 76rpx;
+  line-height: 74rpx;
+  font-size: 24rpx;
+  text-align: center;
+  color: #FF4B00;
+  border-bottom: 2rpx solid #FF4B00;
+}
+
+.onLine {
+  padding: 20rpx 34rpx;
+  width: 100%;
+  box-sizing: border-box;
+  padding-bottom: 150rpx;
+}
+
+.fillMoney {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 14rpx 32rpx 18rpx;
+  width: 100%;
+  box-sizing: border-box;
+  border-bottom: 2rpx solid #E9E9E9;
+}
+
+.moneyText {
+  display: flex;
+  align-items: center;
+  font-size: 54rpx;
+  font-family: AlibabaPuHuiTiM;
+  font-weight: bold;
+  color: #010101;
+}
+
+.fillMoney input {
+  height: 52rpx;
+  font-size: 24rpx;
+  color: #010101;
+}
+
+.recharge {
+  margin-top: 62rpx;
+  background-image: linear-gradient(to right, #FF7900, #FF4B00);
+  font-size: 34rpx;
+  color: #FFFFFF;
+  border-radius: 42rpx;
+}
+
+.tip {
+  margin-top: 32rpx;
+  height: 76rpx;
+  line-height: 76rpx;
+  font-size: 34rpx;
+  color: #000000;
+}
+
+.picture-area {
+  width: 100%;
+  border: 2rpx dashed #FF7900;
+}
+
+.picture-item {
+  position: relative;
+  width: 100%;
+}
+
+.remove {
+  position: absolute;
+  top: 20rpx;
+  right: 20rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50rpx;
+  height: 50rpx;
+  background-color: rgba(0, 0, 0, .35);
+  border-radius: 25rpx;
+  z-index: 9;
+}
+
+.remove-icon {
+  width: 26rpx;
+}
+
+.picture {
+  width: 100%;
+  height: 750rpx!important;
+  vertical-align: bottom;
+}
+
+.upload-picture {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 186rpx;
+  font-size: 24rpx;
+  color: #696969;
+}
+
+.submit-btn {
+  margin-top: 126rpx;
+  background-image: linear-gradient(to right, #FF7900, #FF4B00);
+  font-size: 34rpx;
+  color: #FFFFFF;
+  border-radius: 42rpx;
+}

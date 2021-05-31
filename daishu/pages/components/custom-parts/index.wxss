@@ -1,0 +1,45 @@
+/* colorui/components/cu-custom.wxss */
+.cuIcon-back:before{
+  font-size: 40rpx;
+}
+
+.cuIcon-homefill{
+  font-size: 32rpx;
+}
+
+.content{
+  display: flex;
+  align-items: center;
+  font-size: 36rpx !important;
+  width: calc(100% - 220rpx) !important;
+  right: auto !important;
+}
+
+.middleContent{
+  flex: 1;
+  text-align: left;
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.middleContent.iamCenter{
+  justify-content: center;
+}
+
+.leftContent{
+  padding-left: 30rpx;
+  text-align: left;
+  display: flex;
+  height: 100%;
+  align-items: center;
+}
+
+.leftContent.nomiddle{
+  width: 0 !important;
+}
+
+.backBtn{
+  transform: translate(0, 1px);
+}

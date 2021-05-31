@@ -1,0 +1,85 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<!-- 信息提示 -->
+<i-toast id="toast" />
+
+<!-- 模态框 -->
+<i-modal title="{{modal.tips}}" isHide="{{modal.ishide}}" bind:ok="{{modal.ok}}" bind:cancel="{{modal.cancel}}"
+    bind:plateBg="cancel">
+    <view>{{modal.message}}</view>
+</i-modal>
+
+<!----------------------------------------- 下面请开始你的表演 SHOW TIME ---------------------------------->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+    bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">我的仓票
+</custom-parts>
+<view class="nav-list" style="top: {{CustomBar}}px;">
+    <view class="nav_item {{navActivityIndex === item.id ? 'nav_activity' : ''}}" wx:for="{{navList}}" wx:key="{{item.id}}" data-index="{{index}}" catchtap="handleChangeNav">{{item.title}}</view>
+</view>
+<view class="main">
+    <view class="available" wx:if="{{navActivityIndex === 0}}">
+        <block wx:if="{{myStockList.length > 0}}">
+            <view class="wareDetails" wx:for="{{myStockList}}" wx:key="{{item.id}}">
+                <image src="/images/yh.png" class="wareImg"></image>
+                <view class="wareText">
+                    <view class="wareLeft">
+                        <view class="wareMoney">{{item.get_money}}<text>￥</text></view>
+                        <view class="ware-explain">面值</view>
+                    </view>
+                    <view class="wareRight">
+                        <view class="rightCenter">仅限{{item.use_month}}月使用</view>
+                        <view class="purchase" data-id="{{item.id}}" catchtap="handleUseStock">去使用</view>
+                    </view>
+                </view>
+            </view>
+        </block>
+        <view class="nodata" wx:else>没有查找到数据</view>
+    </view>
+    
+    <view class="available" wx:elif="{{navActivityIndex === 1}}">
+        <block wx:if="{{usedStockList.length > 0}}">
+            <view class="wareDetails" wx:for="{{usedStockList}}" wx:key="{{item.id}}">
+                <image src="/images/yh.png" class="wareImg"></image>
+                <view class="wareText">
+                    <view class="wareLeft">
+                        <view class="wareMoney">{{item.get_money}}<text>￥</text></view>
+                        <view class="ware-explain">面值</view>
+                    </view>
+                    <view class="wareRight">
+                        <view class="rightCenter">仅限{{item.use_month}}月使用</view>
+                        <view class="purchase" wx:if="{{item.bill_status === 0}}">未开发票</view>
+                        <view class="purchase" wx:elif="{{item.bill_status === 1}}">审核发票</view>
+                        <view class="purchase" wx:elif="{{item.bill_status === 2}}">已开发票</view>
+                        <!-- <navigator class="purchase" url="/pages/invoice/invoice?id={{item.id}}">查看发票</navigator> -->
+                    </view>
+                </view>
+            </view>
+        </block>
+        <view class="nodata" wx:else>没有查找到数据</view>
+    </view>
+    
+    <view class="available" wx:elif="{{navActivityIndex === 2}}">
+        <block wx:if="{{expiredStockList.length > 0}}">
+            <view class="wareDetails" wx:for="{{expiredStockList}}" wx:key="{{item.id}}">
+                <image src="/images/guoqi.png" class="wareImg"></image>
+                <view class="wareText">
+                    <view class="wareLeft">
+                        <view class="wareMoney">{{item.get_money}}<text>￥</text></view>
+                        <view class="ware-explain">面值</view>
+                    </view>
+                    <view class="wareRights">
+                        <view class="purchases" data-id="{{item.id}}" catchtap="handleReviewStock">申请回收</view>
+                    </view>
+                </view>
+            </view>
+        </block>
+        <view class="nodata" wx:else>没有查找到数据</view>
+    </view>
+</view>
+<toast parameter="{{toastParameter}}"></toast>
+<tabbar activeIdx="{{activeIdx}}"></tabbar>
+<!------------------------------------------------ 你触碰到我的底线了  W(￣_￣)W ---------------------------------->
+
+<!-- 分页组件 -->
+<!-- <page-parts options="{{page}}" bind:start="pageStart" bind:success="pageSuccess" bind:fail="pageFail"  /> -->

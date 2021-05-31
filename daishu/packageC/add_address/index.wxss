@@ -1,0 +1,188 @@
+@import '/lib/iconfont.wxss';
+
+.info_wrap {
+  margin-bottom: 46rpx;
+  background-color: #FFFFFF;
+}
+
+.my_self_cell {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 40rpx 0 48rpx;
+  min-height: 72rpx;
+  border-bottom: 1px solid #E5E5E5;
+  box-sizing: border-box;
+}
+
+.my_self_cell .my_self_lable {
+  width: 232rpx;
+  height: 70rpx;
+  line-height: 70rpx;
+  font-size: 28rpx;
+  color: #010101;
+}
+
+.my_self_cell input {
+  flex: 1;
+  height: 70rpx;
+  font-size: 24rpx;
+  color: #010101;
+}
+
+.tips {
+  font-size: 24rpx;
+  color: #818181;
+}
+
+.picker {
+  flex: 1;
+  height: 70rpx;
+  line-height: 70rpx;
+  font-size: 24rpx;
+  color: #010101;
+}
+
+.picker-default {
+  flex: 1;
+  height: 70rpx;
+  line-height: 70rpx;
+  font-size: 24rpx;
+  color: #818181;
+}
+
+.my_self_cell textarea {
+  font-size: 24rpx;
+  color: #010101;
+}
+
+.right-arrow {
+  display: flex;
+  align-items: center;
+  height: 70rpx;
+}
+
+.right-arrow-icon {
+  height: 30rpx;
+}
+
+.info_wrap .my_self_cell picker {
+  flex: 1;
+}
+
+/* textarea */
+.wx_textarea_wrap {
+  flex: 1;
+  position: relative;
+  padding: 18rpx 0;
+  word-break: break-all;
+  overflow: hidden;
+}
+
+.wx_textarea_wrap .wx_textarea {
+  display: block;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 144rpx!important;
+  line-height: 36rpx;
+  font-size: 24rpx;
+  overflow: hidden;
+}
+
+.wx_textarea_wrap .wx_textarea_word_length {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  height: 26rpx;
+  line-height: 26rpx;
+  font-size: 22rpx;
+  color: #999999;
+}
+
+/* 弹窗--选择地区 */
+.popup_title {
+  display: flex;
+  align-items: center;
+  height: 114rpx;
+}
+
+.popup_title .img_box {
+  width: 54rpx;
+  height: 100%;
+}
+
+.popup_title text {
+  flex: 1;
+  text-align: center;
+  font-size: 34rpx;
+  font-family: PingFang-SC-Bold;
+  font-weight: bold;
+  color: #333333;
+}
+
+.popup_title .img_box image {
+  margin: 45rpx auto 0rpx auto;
+  width: 24rpx;
+  height: 24rpx;
+}
+
+.tab_wrap {
+  display: flex;
+  padding: 15rpx;
+  border-top: 1rpx solid #F7F7F8;
+}
+
+.tab_wrap text {
+  padding: 0rpx 28rpx;
+  line-height: 67rpx;
+  font-size: 24rpx;
+  font-family: PingFang-SC-Medium;
+  font-weight: Medium;
+  color: #333333;
+}
+
+.tab_wrap text:first-of-type {
+  padding-left: 0rpx;
+}
+
+.tab_wrap .tabAct {
+  color: #FB9730;
+}
+
+.save_btn {
+  margin: 0 auto;
+  padding: 0;
+  width: 696rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 30rpx;
+  text-align: center;
+  color: #FFFFFF;
+  border-radius: 10rpx;
+  background: linear-gradient(90deg, #FF7900, #FF4B00);
+}
+
+/* 区域选择 */
+.choose_region {
+  position: relative;
+  width: 100%;
+  height: calc(100% - 210rpx);
+  box-sizing: border-box;
+}
+
+.area_item {
+  position: relative;
+  padding: 15rpx;
+  padding-left: 30rpx;
+  font-size: 28rpx;
+}
+
+.area_item::after {
+  content: "";
+  position: absolute;
+  left: 30rpx;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: #f5f5f5;
+}

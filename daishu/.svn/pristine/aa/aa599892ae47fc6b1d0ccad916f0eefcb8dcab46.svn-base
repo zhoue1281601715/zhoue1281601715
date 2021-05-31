@@ -1,0 +1,100 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<!-- 信息提示 -->
+<i-toast id="toast" />
+
+<!-- 模态框 -->
+<i-modal title="{{modal.tips}}" isHide="{{modal.ishide}}" bind:ok="{{modal.ok}}" bind:cancel="{{modal.cancel}}"
+  bind:plateBg="cancel">
+  <view>{{modal.message}}</view>
+</i-modal>
+
+<!----------------------------------------- 下面请开始你的表演 SHOW TIME ---------------------------------->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+  bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">推荐租仓客户
+</custom-parts>
+<view class="tip">租仓客户信息</view>
+<view class="container">
+  <form catchsubmit="formSubmit">
+    <view class="form-content">
+      <view class="item">
+        <view class="item-label"><text class="must">*</text>客户名称</view>
+        <input name="name" type="text" class="item-input" placeholder="请输入客户名称"></input>
+      </view>
+      <view class="item">
+        <view class="item-label"><text class="must">*</text>联系电话</view>
+        <input name="phone" type="number" class="item-input" placeholder="请输入客户联系电话"></input>
+      </view>
+      <view class="item">
+        <view class="item-label"><text class="must">*</text>用仓面积（m²）</view>
+        <input name="use_space" type="number" class="item-input" placeholder="请输入用仓面积"></input>
+      </view>
+      <view class="item">
+        <view class="item-label">储存产品</view>
+        <input name="lay_product" type="text" class="item-input" placeholder="请输入储存产品"></input>
+      </view>
+      <view class="item">
+        <view class="item-label">使用需求</view>
+        <view class="radio-area">
+          <view class="radio-item {{index === 2 ? 'radio-full-width' : ''}}" catchtap="handleRadioChange" data-title="{{item.title}}" data-index="{{index}}" wx:for="{{array}}" wx:key="index">
+            <view class="radio-icon {{item.checked ? 'radio-activity' : ''}}"></view>
+            <view class="radio-name">{{item.title}}</view>
+          </view>
+        </view>
+      </view>
+      <view class="item">
+        <view class="item-label">仓储服务</view>
+        <view class="radio-area">
+          <view class="radio-item" catchtap="handleRadioAChange" data-title="{{item.title}}" data-index="{{index}}" wx:for="{{arrayA}}" wx:key="index">
+            <view class="radio-icon {{item.checked ? 'radio-activity' : ''}}"></view>
+            <view class="radio-name">{{item.title}}</view>
+          </view>
+        </view>
+      </view>
+      <view class="item">
+        <view class="item-label">物流服务</view>
+        <view class="radio-area">
+          <view class="radio-item" catchtap="handleRadioBChange" data-title="{{item.title}}" data-index="{{index}}" wx:for="{{arrayB}}" wx:key="index">
+            <view class="radio-icon {{item.checked ? 'radio-activity' : ''}}"></view>
+            <view class="radio-name">{{item.title}}</view>
+          </view>
+        </view>
+      </view>
+      <view class="item">
+        <view class="item-label">用仓时长</view>
+        <view class="radio-area">
+          <view class="radio-item" catchtap="handleRadioCChange" data-title="{{item.title}}" data-index="{{index}}" wx:for="{{arrayC}}" wx:key="index">
+            <view class="radio-icon {{item.checked ? 'radio-activity' : ''}}"></view>
+            <view class="radio-name">{{item.title}}</view>
+          </view>
+        </view>
+      </view>
+      <view class="item">
+        <view class="item-label">使用城市</view>
+        <picker mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{customItem}}">
+          <view class="picker" wx:if="{{regionFlag}}">{{region[1]}} {{region[2]}}</view>
+          <view class="picker" wx:else>请选择使用城市</view>
+        </picker>
+      </view>
+    </view>
+    <view class="setting">
+      <view class="setting-checkbox {{checked ? 'setting-checked' : ''}}" catchtap="handleCheckboxChange"></view>
+      <view class="setting-tip">
+        <text>已阅读并同意</text>
+        <navigator class="agreement">《推荐租仓客户、仓库协议》</navigator></view>
+    </view>
+    <button class="recommend-btn {{checked ? 'recommend-activity' : ''}}" formType="submit">马上推荐</button>
+  </form>
+</view>
+<view class="reminder">
+  <view class="reminder-title">温馨提示</view>
+  <view class="reminder-item">1.请阅读并同意推荐租仓客户、仓库协议</view>
+  <view class="reminder-item">2.推荐不实信息会影响您的佣金发放甚至导致账户被冻结</view>
+</view>
+<toast parameter="{{toastParameter}}"></toast>
+
+<!------------------------------------------------ 你触碰到我的底线了  W(￣_￣)W ---------------------------------->
+
+<!-- 分页组件 -->
+<!-- <page-parts options="{{page}}" bind:start="pageStart" bind:success="pageSuccess" bind:fail="pageFail"  /> -->

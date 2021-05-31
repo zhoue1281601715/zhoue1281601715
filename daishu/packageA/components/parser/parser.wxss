@@ -1,0 +1,21 @@
+:host {
+  display: block;
+  /* overflow: scroll; */
+  word-break: break-all; 
+	word-wrap: break-word;
+  -webkit-overflow-scrolling: touch;
+}
+
+.top {
+  display: inherit;
+}
+
+@keyframes show {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}

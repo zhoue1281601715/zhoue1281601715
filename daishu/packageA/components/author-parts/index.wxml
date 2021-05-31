@@ -1,0 +1,20 @@
+<view class="authorization-wrap" hidden="{{!isShow}}" style="color: {{textColor}};">
+  <view class="authorization">
+    <view class='authorization-title'>
+      温馨提示
+    </view>
+    <view class="authorization-body">
+      <view class="authorization-info-1">
+        <view class="authorization-img"><img-parts url="{{imgPath}}" width="82" height="82" /></view>
+        <text decode="true">{{title}}</text>
+      </view>
+      <view class="authorization-info-2">
+        <view>{{tips}}</view>
+      </view>
+    </view>
+    <view class="authorization-footer">
+      <button open-type="getUserInfo" bind:getuserinfo="loginGetUserInfo">立即授权</button>
+      <button id="cancel" bind:getuserinfo="cancel">取消</button>
+    </view>
+  </view>
+</view>

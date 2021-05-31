@@ -1,0 +1,10 @@
+<template name="wx_textarea">
+    <view class="wx_textarea_wrap">
+        <textarea class="wx_textarea" value="{{value}}" placeholder="{{placeholder}}" placeholder-style="" placeholder-class="textarea-placeholder" maxlength="{{max_length}}" auto-focus="false" focus="{{is_focus}}" auto-height="" wx:if="{{is_show}}" bindinput="{{bind_input}}" bindblur="{{bind_blur}}">
+        </textarea>
+        <view class="wx_textarea" wx:if="{{!is_show}}" style="color:{{value ? '#010101' : '#818181'}}" bindtap="show_textarea">
+            {{value ? value : placeholder}}
+        </view>
+        <text class="wx_textarea_word_length">{{word_length}} / {{max_length}}</text>
+    </view>
+</template>

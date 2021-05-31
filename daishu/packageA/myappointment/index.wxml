@@ -1,0 +1,83 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<!-- 信息提示 -->
+<i-toast id="toast" />
+
+<!-- 模态框 -->
+<!-- <i-modal title="{{modal.tips}}" isHide="{{modal.ishide}}" bind:ok="{{modal.ok}}" bind:cancel="{{modal.cancel}}"
+    bind:plateBg="cancel">
+    <view>{{modal.message}}</view>
+</i-modal> -->
+
+<!----------------------------------------- 下面请开始你的表演 SHOW TIME ---------------------------------->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+    bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">我的预约
+</custom-parts>
+<view class="main">
+    <view class="information">
+
+        <view class="warehousing-form" wx:for="{{kehuData}}" key="{{index}}">
+
+            <view class="warehousing-item">
+                <view class="warehousing-item-left">
+                    <view class="state" wx:if="{{item.state===0}}">未完成</view>
+
+                    <view class="state" wx:if="{{item.state===1}}">完成</view>
+                </view>
+                <view class="warehousing-item-right">
+                    <button class="btnChange " data-index="{{index}}" bindtap="deitSave">{{!edit&&index == indexs?'保存':'编辑'}}</button>
+                </view>
+            </view>
+            <view class="warehousing-item">
+                <view class="warehousing-item-left">仓库名称</view>
+                <view class="warehousing-item-right">
+                    <input class="warehousing-input" type="text" disabled="false" value="{{item.warehouse_name}}"
+                        bindinput="" />
+                </view>
+            </view>
+            <view class="warehousing-item">
+                <view class="warehousing-item-left">预约单号</view>
+                <view class="warehousing-item-right">
+                    <input class="warehousing-input" disabled="false" type="text" value="{{item.code}}" />
+                </view>
+            </view>
+            <view class="warehousing-item">
+                <view class="warehousing-item-left">入仓单号</view>
+                <view class="warehousing-item-right">
+                    <input class="warehousing-input" disabled="false" type="text" value="{{item.bill_code}}" />
+                </view>
+            </view>
+            <view class="warehousing-item">
+                <view class="warehousing-item-left">车牌号</view>
+                <view class="warehousing-item-right">
+                    <input class="warehousing-input state" type="text" disabled="false" value="{{item.plate}}" />
+                </view>
+            </view>
+            <view class="warehousing-item">
+                <view class="warehousing-item-left" >司机</view>
+                <view class="warehousing-item-right">
+                    <input class="warehousing-input"  style="color:#FF5201" data-index="{{index}}" type="text" bindinput="driverInput" placeholder="请填写司机" value="{{item.driver}}" />
+                </view>
+            </view>
+            <view class="warehousing-item">
+                <view class="warehousing-item-left">电话</view>
+                <view class="warehousing-item-right">
+                    <input class="warehousing-input" type="text" style="color:#FF5201" data-index="{{index}}" bindinput="phoneInput" placeholder="请填写电话" value="{{item.phone}}" />
+                </view>
+            </view>
+            <view class="warehousing-item">
+                <view class="warehousing-item-left">时间段</view>
+                <view class="warehousing-item-right">
+                    <input class="warehousing-input" type="text" value="{{item.time}}" />
+                </view>
+            </view>
+            <view class="warehousing-item">
+                <view class="warehousing-item-left">备注</view>
+                <view class="warehousing-item-right">
+                    <input class="warehousing-input" type="text" disabled="false" value="{{item.remark}}" />
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

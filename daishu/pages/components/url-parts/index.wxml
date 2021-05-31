@@ -1,0 +1,6 @@
+<block wx:if="{{_openType === 'navigateBack'}}">
+	<navigator hover-class="none" url="{{url}}" class="j-class" open-type="{{_openType}}" delta="1"><slot></slot></navigator>
+</block>
+<block wx:else>
+	<navigator hover-class="none" url="{{url}}" class="j-class" open-type="{{_openType}}"><slot></slot></navigator>
+</block>

@@ -1,0 +1,156 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<!-- 信息提示 -->
+<i-toast id="toast" />
+
+<!-- 模态框 -->
+<i-modal title="{{modal.tips}}" isHide="{{modal.ishide}}" bind:ok="{{modal.ok}}" bind:cancel="{{modal.cancel}}"
+  bind:plateBg="cancel">
+  <view>{{modal.message}}</view>
+</i-modal>
+
+<!----------------------------------------- 下面请开始你的表演 SHOW TIME ---------------------------------->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+  bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">数据展示
+</custom-parts>
+<view class="nav-area" style="top: {{CustomBar}}px;">
+  <view class="nav">
+    <block wx:for='{{arr}}'>
+      <view class="tab {{currentTab == index ? 'red' : 'default'}}" catchtap='tabOn' data-index='{{index}}'>{{item}}
+      </view>
+    </block>
+  </view>
+  <view class="total">
+    <view class="total-top">
+      <view class="total-title">共支出64笔 合计</view>
+      <view class="checkbox-list">
+        <view class="check-item" wx:for="{{checkArr}}" catchtap="handleCheckboxChange" data-index="{{index}}">
+          <view class="custom-checkbox {{checkIndex === index ? 'custom-checked' : ''}}"></view>
+          <view class="check-title {{checkIndex === index ? 'title-checked' : ''}}">{{item}}</view>
+        </view>
+      </view>
+    </view>
+    <view class="totalMoney">¥2198.00</view>
+  </view>
+</view>
+<view class="main">
+  <view class="list">
+    <view class="item">
+      <view class="circle"></view>
+      <view class="item-content">
+        <view class="item-data">
+          <view class="item-title">拣货费</view>
+          <view class="item-amount">-2000.00</view>
+        </view>
+        <view class="item-date">10-20 10:45:44</view>
+      </view>
+    </view>
+    <view class="item">
+      <view class="circle"></view>
+      <view class="item-content">
+        <view class="item-data">
+          <view class="item-title">拣货费</view>
+          <view class="item-amount">-2000.00</view>
+        </view>
+        <view class="item-date">10-20 10:45:44</view>
+      </view>
+    </view>
+    <view class="item">
+      <view class="circle"></view>
+      <view class="item-content">
+        <view class="item-data">
+          <view class="item-title">拣货费</view>
+          <view class="item-amount">-2000.00</view>
+        </view>
+        <view class="item-date">10-20 10:45:44</view>
+      </view>
+    </view>
+    <view class="item">
+      <view class="circle"></view>
+      <view class="item-content">
+        <view class="item-data">
+          <view class="item-title">拣货费</view>
+          <view class="item-amount">-2000.00</view>
+        </view>
+        <view class="item-date">10-20 10:45:44</view>
+      </view>
+    </view>
+    <view class="item">
+      <view class="circle"></view>
+      <view class="item-content">
+        <view class="item-data">
+          <view class="item-title">拣货费</view>
+          <view class="item-amount">-2000.00</view>
+        </view>
+        <view class="item-date">10-20 10:45:44</view>
+      </view>
+    </view>
+    <view class="item">
+      <view class="circle"></view>
+      <view class="item-content">
+        <view class="item-data">
+          <view class="item-title">拣货费</view>
+          <view class="item-amount">-2000.00</view>
+        </view>
+        <view class="item-date">10-20 10:45:44</view>
+      </view>
+    </view>
+    <view class="item">
+      <view class="circle"></view>
+      <view class="item-content">
+        <view class="item-data">
+          <view class="item-title">拣货费</view>
+          <view class="item-amount">-2000.00</view>
+        </view>
+        <view class="item-date">10-20 10:45:44</view>
+      </view>
+    </view>
+    <view class="item">
+      <view class="circle"></view>
+      <view class="item-content">
+        <view class="item-data">
+          <view class="item-title">拣货费</view>
+          <view class="item-amount">-2000.00</view>
+        </view>
+        <view class="item-date">10-20 10:45:44</view>
+      </view>
+    </view>
+    <view class="item">
+      <view class="circle"></view>
+      <view class="item-content">
+        <view class="item-data">
+          <view class="item-title">拣货费</view>
+          <view class="item-amount">-2000.00</view>
+        </view>
+        <view class="item-date">10-20 10:45:44</view>
+      </view>
+    </view>
+    <view class="item">
+      <view class="circle"></view>
+      <view class="item-content">
+        <view class="item-data">
+          <view class="item-title">拣货费</view>
+          <view class="item-amount">-2000.00</view>
+        </view>
+        <view class="item-date">10-20 10:45:44</view>
+      </view>
+    </view>
+    <view class="item">
+      <view class="circle"></view>
+      <view class="item-content">
+        <view class="item-data">
+          <view class="item-title">拣货费</view>
+          <view class="item-amount">-2000.00</view>
+        </view>
+        <view class="item-date">10-20 10:45:44</view>
+      </view>
+    </view>
+  </view>
+</view>
+<tabbar activeIdx="{{activeIdx}}"></tabbar>
+
+<!------------------------------------------------ 你触碰到我的底线了  W(￣_￣)W ---------------------------------->
+
+<!-- 分页组件 -->
+<!-- <page-parts options="{{page}}" bind:start="pageStart" bind:success="pageSuccess" bind:fail="pageFail"  /> -->

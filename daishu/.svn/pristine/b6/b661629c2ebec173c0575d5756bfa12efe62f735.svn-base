@@ -1,0 +1,41 @@
+<!--pages/index/index.wxml-->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+    bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">运单查询
+</custom-parts>
+<view class="container">
+  <!--头部搜索-->
+    <view class="head_search">
+        <van-search
+            value="{{ value }}"
+            shape="round"
+            bind:change="onChange"
+            placeholder="请输入订单号"
+        />
+    </view>
+    <view class="progress">
+        <view class="progress_title">物流进展</view>
+        <view class="progress_item" hover-class="none" hover-stop-propagation="false" wx:for="{{waybillStep}}" wx:key="index">
+            <view class="step_title {{item.cont.indexOf('签收')==-1 && index==0 ?'show_word':''}}" hover-class="none" hover-stop-propagation="false">{{item.cont}}</view>
+            <view class="stpe_time" hover-class="none" hover-stop-propagation="false">{{item.date}}</view>
+        </view>
+        <!--<view class="progress_item" hover-class="none" hover-stop-propagation="false">
+            <view class="step_title" hover-class="none" hover-stop-propagation="false">安排提货</view>
+            <view class="step_line" hover-class="none" hover-stop-propagation="false">司机罗曼岛，车牌：粤A002001</view>
+            <view class="step_line" hover-class="none" hover-stop-propagation="false"> <text class="step_phone" selectable="false" space="false" decode="false">13648956689 </text> ,4876765567765</view>
+            <view class="stpe_time" hover-class="none" hover-stop-propagation="false">2020-08-03 14:34:30</view>
+        </view>
+        <view class="progress_item" hover-class="none" hover-stop-propagation="false">
+            <view class="step_title" hover-class="none" hover-stop-propagation="false">安排提货</view>
+            <view class="step_line" hover-class="none" hover-stop-propagation="false">司机罗曼岛，车牌：粤A002001</view>
+            <view class="step_line" hover-class="none" hover-stop-propagation="false">13648956689,4876765567765</view>
+            <view class="stpe_time" hover-class="none" hover-stop-propagation="false">2020-08-03 14:34:30</view>
+        </view>
+        <view class="progress_item" hover-class="none" hover-stop-propagation="false">
+            <view class="step_title" hover-class="none" hover-stop-propagation="false">客户下单成功</view>
+            <view class="stpe_time" hover-class="none" hover-stop-propagation="false">2020-08-03 14:34:30</view>
+        </view> -->
+        
+    </view>
+      
+</view>
+  

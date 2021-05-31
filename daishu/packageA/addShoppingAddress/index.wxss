@@ -1,0 +1,146 @@
+page {
+  background-color: #FFFFFF;
+}
+
+.main {
+  width: 750rpx;
+}
+
+.tip-area {
+  padding: 20rpx 28rpx;
+  width: 750rpx;
+  box-sizing: border-box;
+}
+
+.tip {
+  padding: 0 16rpx;
+  width: 100%;
+  height: 30rpx;
+  line-height: 30rpx;
+  font-size: 18rpx;
+  color: #818181;
+  border-radius: 15rpx;
+  background-color: #DCDCDC;
+}
+
+.item {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0 40rpx 0 48rpx;
+  width: 750rpx;
+  height: 72rpx;
+  border-bottom: 2rpx solid #E5E5E5;
+  box-sizing: border-box;
+}
+
+.item-left {
+  width: 232rpx;
+  font-size: 28rpx;
+  color: #010101;
+}
+
+.item-right {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.item-input {
+  flex: 1;
+  height: 70rpx;
+  font-size: 24rpx;
+  color: #010101;
+}
+
+.input-placeholder {
+  color: #828282;
+}
+
+.picker {
+  flex: 1;
+  height: 70rpx;
+  line-height: 70rpx;
+  font-size: 24rpx;
+  color: #010101;
+}
+
+.more-icon {
+  width: 28rpx;
+}
+
+.btn-area {
+  width: 750rpx;
+  padding: 46rpx 28rpx 24rpx;
+  box-sizing: border-box;
+}
+
+.submit-btn {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 84rpx;
+  line-height: 84rpx;
+  font-size: 30rpx;
+  color: #FFFFFF;
+  text-align: center;
+  background: linear-gradient(90deg, #FF7900, #FF4B00);
+  border-radius: 42rpx;
+}
+
+.delete-btn {
+  margin: 0 auto;
+  padding: 0;
+  width: 702rpx;
+  height: 84rpx;
+  line-height: 84rpx;
+  font-size: 30rpx;
+  color: #000000;
+  text-align: center;
+  background: linear-gradient(90deg, #E5E5E5, #DCDCDC);
+  border-radius: 42rpx;
+}
+
+.setting {
+  padding: 0 30rpx;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 70rpx;
+  box-sizing: border-box;
+}
+
+.setting-checkbox {
+  position: relative;
+  width: 32rpx;
+  height: 32rpx;
+  border-radius: 50%;
+  border: 2rpx solid #DCDCDC;
+  background-color: #FFFFFF;
+}
+
+.setting-checkbox::before {
+  display: block;
+  content: "\e645";
+  padding-left: 2rpx;
+  width: 38rpx;
+  height: 38rpx;
+  line-height: 28rpx;
+  font-size: 24rpx;
+  color: #FFFFFF;
+  font-family: "cuIcon";
+  pointer-events: none;
+  box-sizing: border-box;
+}
+
+.setting-checked {
+  border-color: #FF7400;
+  background-color: #FF7400;
+}
+
+.setting-tip {
+  margin-left: 16rpx;
+  font-size: 24rpx;
+  color: #010101;
+}

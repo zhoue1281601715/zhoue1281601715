@@ -1,0 +1,107 @@
+/* pages/waybill_search/waybill_search.wxss */
+page {
+    background-color: #f7f7f7;
+}
+
+.container {
+    padding: 20rpx 0;
+}
+
+.head_search {
+    padding: 30rpx;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    margin-bottom: 20rpx;
+}
+
+/* 物流进展 */
+.progress {
+    padding: 30rpx 0rpx 0rpx 48rpx;
+    box-sizing: border-box;
+    background-color: #ffffff;
+}
+
+.progress .progress_title {
+    padding-bottom: 30rpx;
+    font-size: 30rpx;
+    font-family: PingFang-SC-Bold;
+    font-weight: Bold;
+    color: #333333;
+}
+
+.progress .progress_item {
+    /* border-left: 1px solid #F0F0F0; */
+    margin-top: 28rpx;
+    padding: 0rpx 0rpx 70rpx 50rpx;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.progress_item .step_title {
+    font-size: 28rpx;
+    font-family: PingFang-SC-Bold;
+    font-weight: bold;
+    color: #333333;
+}
+
+.progress_item .step_line {
+    font-size: 28rpx;
+    font-family: PingFang-SC-Medium;
+    font-weight: Medium;
+    color: #333333;
+}
+
+.progress_item .step_line .step_phone {
+    color: #339AFD;
+}
+
+.progress_item .stpe_time {
+    font-size: 28rpx;
+    font-family: PingFang-SC-Medium;
+    font-weight: Medium;
+    color: #999999;
+}
+
+.progress_item::before {
+    content: '';
+    position: absolute;
+    top: 28rpx;
+    left: 0rpx;
+    width: 1rpx;
+    height: 100%;
+    background-color: #F0F0F0;
+}
+
+.progress_item::after {
+    content: '';
+    position: absolute;
+    top: 9rpx;
+    left: -4rpx;
+    width: 10rpx;
+    height: 10rpx;
+    border-radius: 50%;
+    /* background-color: #F0F0F0; */
+    background-color: tomato;
+}
+
+
+.progress_title+.progress_item.show_word::after {
+    content: '收';
+    width: 42rpx;
+    height: 42rpx;
+    background-color: #FF8F32;
+    text-align: center;
+    line-height: 42rpx;
+    color: #ffffff;
+    font-size: 24rpx;
+    top: -3rpx;
+    left: -18rpx;
+}
+
+.progress_title+.progress_item.hide::after {
+    display: none;
+}
+
+.progress .progress_item:last-of-type::before {
+    display: none;
+}

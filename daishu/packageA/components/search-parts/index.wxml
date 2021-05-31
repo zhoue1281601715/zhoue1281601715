@@ -1,0 +1,6 @@
+<view id="search" style="height:{{height}}rpx; width:{{width}}rpx; background:{{bColor}}; overflow:hidden;">
+  <view class="searchWrap {{isFocurs ? 'active' : ''}}"  bind:tap="searchInput" style="background:{{fColor}}; height:{{height - marginTop * 2}}rpx;  line-height:{{height - marginTop * 2 + 10}}rpx; margin:{{marginTop}}rpx {{marginLeft}}rpx; {{style}}">
+    <text class="icon" style="color : {{iconColor}};"></text>
+    <input type="text" placeholder-style="color:{{placeholdColor}};" placeholder="{{placeholder}}" style="height:{{height - marginTop * 2}}rpx; line-height:{{height - marginTop * 2}}rpx; color : {{color}}; font-size:{{fontSize}}rpx; width:{{isFocurs ? (width - marginLeft * 2 - 20 - (height - marginTop * 2)) : (placeholder.length * fontSize)}}rpx;" value="{{searchValue}}" bindconfirm="searchSuccess" value="{{searchValue}}" focus="{{isFocurs}}" disabled="{{!isFocurs}}" bindblur="searchBlur"></input>
+  </view>
+</view>

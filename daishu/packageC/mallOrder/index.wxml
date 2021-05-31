@@ -1,0 +1,91 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<!-- 信息提示 -->
+<i-toast id="toast" />
+
+<!-- 模态框 -->
+<i-modal title="{{modal.tips}}" isHide="{{modal.ishide}}" bind:ok="{{modal.ok}}" bind:cancel="{{modal.cancel}}"
+    bind:plateBg="cancel">
+    <view>{{modal.message}}</view>
+</i-modal>
+
+<!----------------------------------------- 下面请开始你的表演 SHOW TIME ---------------------------------->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}" bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">商城订单</custom-parts>
+
+<view class="main">
+    <view class="nav-list" style="top: {{CustomBar}}px;">
+        <view class="nav-item {{currentTab === index ? 'nav-item-activity' : ''}}" wx:for="{{navList}}" wx:key="index" data-index="{{index}}" catchtap="handleChangeNav">{{item}}</view>
+    </view>
+    <view class="goods-list">
+        <block wx:if="{{orderList.length > 0}}">
+            <view class="goods-item" wx:for="{{orderList}}" wx:key="{{item.id}}" wx:for-item="goodsItem">
+                <navigator url="/packageA/viewDetails/index?id={{item.cart_info.productInfo.id}}" class="goods-data-area" wx:for="{{goodsItem.cartitem}}">
+                    <view class="goods-picture-area">
+                        <image class="goods-picture" src="{{item.cart_info.productInfo.image}}" mode="aspectFill"></image>
+                    </view>
+                    <view class="goods-data">
+                        <view class="goods-name">{{item.cart_info.productInfo.store_name}}</view>
+                        <view class="goods-size">{{item.cart_info.productInfo.attrInfo.suk}}</view>
+                        <view class="goods-price-area">
+                            <view class="goods-price">
+                                <text class="actual-payment">实付款</text>
+                                <text class="yuan">￥</text>
+                                <text>{{item.cart_info.truePrice}}</text>
+                            </view>
+                        </view>
+                    </view>
+                </navigator>
+                <view class="btn-area" wx:if="{{currentTab === 0}}">
+                    <view class="btn-disable" data-unique="{{goodsItem.unique}}" catchtap="handleDeleteOrder">删除订单</view>
+                    <view class="btn-active" data-unique="{{goodsItem.unique}}" data-total_price="{{goodsItem.total_price}}" catchtap="handleToPay">去付款</view>
+                </view>
+                <view class="btn-area" wx:elif="{{currentTab === 1}}">
+                    <view class="btn-disable">等待发货</view>
+                </view>
+                <view class="btn-area" wx:elif="{{currentTab === 2}}">
+                    <view class="btn-active" data-unique="{{goodsItem.unique}}" catchtap="handleConfirmReceipt">确认收货</view>
+                </view>
+                <view class="btn-area" wx:elif="{{currentTab === 3}}">
+                    <view class="btn-active" data-unique="{{goodsItem.unique}}" catchtap="handlePayAgain">再次购买</view>
+                    <navigator class="btn-active" url="/packageC/evaluate/evaluate?unique={{goodsItem.unique}}&order_id={{goodsItem.id}}&product_id={{goodsItem.cartitem[0].product_id}}&goods_name={{goodsItem.cartitem[0].cart_info.productInfo.store_name}}&goods_picture={{goodsItem.cartitem[0].cart_info.productInfo.image}}">去评价</navigator>
+                </view>
+                <view class="btn-area" wx:elif="{{currentTab === 4}}">
+                    <view class="btn-active" data-unique="{{goodsItem.unique}}" catchtap="handlePayAgain">再次购买</view>
+                </view>
+            </view>
+        </block>
+        <view class="nodata" wx:else>没有查找到数据</view>
+    </view>
+</view>
+<view class="popup-area" wx:if="{{showPopup}}">
+    <view class="popup-content">
+        <view class="popup" style="bottom: {{popupPositionBottom}}rpx;">
+            <view class="close-popup">
+                <view catchtap="handleHidePopup">
+                    <image class="close-icon" src="/images/close_icon.png" mode="widthFix"></image>
+                </view>
+            </view>
+            <view class="payment-amount">
+                <text class="yuan">￥</text>
+                <text>{{totalPrice}}</text>
+            </view>
+            <view class="payment-type">
+                <view class="payment-type-item" catchtap="handlePayment" data-pay_type="weixin">
+                    <image class="payment-type-icon" src="/images/wechat.png" mode="widthFix"></image>
+                    <text class="payment-name">微信支付</text>
+                </view>
+                <view class="payment-type-item" catchtap="handlePayment" data-pay_type="yue">
+                    <image class="payment-type-icon" src="/images/wallet.jpg" mode="widthFix"></image>
+                    <text class="payment-name">余额支付</text>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>
+<toast parameter="{{toastParameter}}"></toast>
+
+<!------------------------------------------------ 你触碰到我的底线了  W(￣_￣)W ---------------------------------->
+
+<!-- 分页组件 -->
+<!-- <page-parts options="{{page}}" bind:start="pageStart" bind:success="pageSuccess" bind:fail="pageFail"  /> -->

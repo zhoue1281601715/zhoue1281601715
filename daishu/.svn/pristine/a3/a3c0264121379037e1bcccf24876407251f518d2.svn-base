@@ -1,0 +1,335 @@
+@import '/lib/iconfont.wxss';
+.c {
+  margin: 30rpx;
+  height: 60rpx;
+  background: #efefef;
+}
+
+/* banner图开始 */
+.banner {
+  position: relative;
+  width: 750rpx;
+  height: 402rpx;
+}
+
+.banner swiper {
+  width: 750rpx;
+  height: 402rpx;
+}
+
+.banner-img {
+  width: 750rpx;
+  height: 402rpx;
+  vertical-align: bottom;
+}
+/* banner图结束 */
+
+/* banner图右边"了解代叔"按钮开始 */
+.know-daishu {
+  position: absolute;
+  top: 238rpx;
+  right: 74rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 14rpx 0 20rpx;
+  height: 44rpx;
+  line-height: 44rpx;
+  background-color: #FFAD0C;
+  border-radius: 22rpx;
+  font-size: 24rpx;
+  color: #FFFFFF;
+}
+
+.know-daishu .iconfont {
+  display: flex;
+  align-items: center;
+  margin-left: 4rpx;
+  font-size: 20rpx;
+  color: #FFFFFF;
+}
+/* banner图右边"了解代叔"按钮结束 */
+
+/* 主体内容开始 */
+.main {
+  position: relative;
+  margin-top: -100rpx;
+  padding-bottom: 140rpx;
+  width: 750rpx;
+}
+
+.content {
+  padding: 0 30rpx;
+  width: 750rpx;
+  box-sizing: border-box;
+  z-index: 9;
+}
+
+/* 运单查询开始 */
+.search-content {
+  background-color: #FCFCFC;
+  border-radius: 30rpx;
+  box-shadow: 0 6rpx 10rpx 0 rgba(153, 153, 153, 0.35);
+}
+
+/* 运单查询 输入框模块 开始 */
+.search-content-top {
+  padding: 0 20rpx 34rpx;
+  background-color: #FFFFFF;
+  border-radius: 30rpx;
+}
+
+.search-title {
+  line-height: 64rpx;
+  font-size: 24rpx;
+  color: #000000;
+}
+
+.search-input-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 6rpx;
+  padding-left: 16rpx;
+  height: 56rpx;
+  border-radius: 28rpx;
+  background-color: #E6E4E4;
+}
+
+.search-icon {
+  width: 36rpx;
+}
+
+.search-input {
+  flex: 1;
+  height: 56rpx;
+  padding-left: 20rpx;
+  font-size: 24rpx;
+  color: #000000;
+}
+
+.input-placeholder {
+  color: #929292;
+}
+
+.clear-icon-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 10rpx;
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 20rpx;
+  background: rgba(255, 255, 255);
+}
+
+.clear-icon {
+  width: 18rpx;
+}
+
+.search-btn {
+  width: 140rpx;
+  height: 56rpx;
+  line-height: 56rpx;
+  font-size: 30rpx;
+  color: #FFFFFF;
+  border-radius: 28rpx;
+  background-color: #FF6C00;
+}
+/* 运单查询 输入框模块 结束 */
+
+/* 运单查询 代叔快讯模块 开始 */
+.message-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30rpx 0 40rpx;
+  width: 100%;
+  height: 46rpx;
+  box-sizing: border-box;
+}
+
+.message-content-left {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.message-icon {
+  width: 26rpx;
+}
+
+.message-title {
+  margin-left: 30rpx;
+  line-height: 46rpx;
+  font-size: 20rpx;
+  color: #8D8D8D;
+}
+
+/* 运单查询 代叔快讯-轮播快讯 开始 */
+.message-swiper {
+  flex: 1;
+  height: 46rpx;
+}
+
+.message-swiper swiper {
+  width: 100%;
+  height: 46rpx;
+}
+
+.message-swiper swiper-item {
+  width: 100%;
+  height: 46rpx;
+}
+
+.message-swiper-item {
+  width: 100%;
+  line-height: 46rpx;
+  font-size: 20rpx;
+  color: #8D8D8D;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* 运单查询 代叔快讯-轮播快讯 结束 */
+
+.message-content-right {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 40rpx;
+}
+
+.new-message {
+  line-height: 46rpx;
+  font-size: 20rpx;
+  color: #8D8D8D;
+}
+
+.new-message-num {
+  margin: 0 14rpx 0 4rpx;
+  width: 24rpx;
+  height: 24rpx;
+  line-height: 24rpx;
+  font-size: 16rpx;
+  color: #FFFFFF;
+  text-align: center;
+  border-radius: 50%;
+  background-color: #FF4B00;
+}
+
+.message-content-right .iconfont {
+  display: flex;
+  align-items: center;
+  font-size: 24rpx;
+  color: #131313;
+}
+/* 运单查询 代叔快讯模块 结束 */
+/* 运单查询结束 */
+
+/* 导航栏开始 */
+.nav-content {
+  margin-top: 18rpx;
+  border-radius: 30rpx;
+  box-shadow: 0 6rpx 10rpx 0 rgba(153, 153, 153, 0.35);
+  overflow: hidden;
+}
+
+.nav-item-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rpx;
+}
+
+.nav-item-line:last-child {
+  margin: 0;
+}
+
+.nav-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  margin-right: 2rpx;
+  padding: 40rpx 0 50rpx;
+  background-color: #FFFFFF;
+}
+
+.nav-item:last-child {
+  margin: 0;
+}
+
+.nav-item-left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 36rpx;
+}
+
+.nav-item:last-child .nav-item-left {
+  padding: 0 40rpx 0 60rpx;
+}
+
+.nav-item-icon {
+  width: 56rpx;
+}
+
+.nav-item-right {
+  padding-right: 20rpx;
+}
+
+.nav-item-name {
+  font-size: 24rpx;
+  color: #2C2C2C;
+}
+
+.nav-item-slogan {
+  margin-top: 8rpx;
+  font-size: 16rpx;
+  color: #8C8C8C;
+}
+/* 导航栏结束 */
+/* 主体内容结束 */
+
+/* 分享优惠租仓开始 */
+.share-reward {
+  position: fixed;
+  left: 0;
+  bottom: 146rpx;
+  padding: 0 24rpx;
+  width: 750rpx;
+  box-sizing: border-box;
+  z-index: 99;
+}
+
+.share-btn-bg {
+  width: 100%;
+  vertical-align: bottom;
+}
+/* 分享优惠租仓结束 */
+
+.movable-area {
+  width: 100%;
+  height: 100%;
+}
+
+.movable-view {
+  z-index: 999999;
+  width: 108rpx;
+  height: 108rpx;
+}
+
+.movable-name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 108rpx;
+  height: 108rpx;
+  font-size: 28rpx;
+  color: #FFFFFF;
+  text-align: center;
+  border-radius: 50%;
+  background-color: #FF5201;
+  box-shadow: 0 4rpx 10rpx 0  #999999;
+}

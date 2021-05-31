@@ -1,0 +1,15 @@
+<view class="loading {{fade ? 'fade' : ''}}" style='background:{{background}};' wx:if="{{!loadEnd}}">
+  <slot />
+  <view class="loadingBox" wx:if="{{load}}">
+    <view class="m-load2">
+      <view class="line">
+          <view></view>
+          <view></view>
+          <view></view>
+          <view></view>
+          <view></view>
+          <view></view>
+      </view>
+  </view>
+  </view>
+</view>

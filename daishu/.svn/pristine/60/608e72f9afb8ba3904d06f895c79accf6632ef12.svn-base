@@ -1,0 +1,45 @@
+.poster-content {
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 750rpx;
+}
+
+.poster-content .poster {
+  width: 750rpx;
+}
+
+.poster-content .qrcode {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100px;
+  height: 100px;
+}
+
+.download-btn {
+  position: absolute;
+  bottom: 130px;
+  left: 50%;
+  margin-left: -222rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 444rpx;
+  height: 94rpx;
+  border-radius: 47rpx;
+  background: linear-gradient(90deg, #FF7900, #FF4B00);
+  box-shadow: 8rpx 8rpx 16rpx 0rpx rgba(255, 0, 0, .85);
+}
+
+.download-btn text {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #FFFFFF;
+}
+
+.download-btn image {
+  margin-left: 20rpx;
+  height: 30rpx;
+}

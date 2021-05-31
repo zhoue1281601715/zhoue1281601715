@@ -1,0 +1,47 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<!-- 信息提示 -->
+<i-toast id="toast" />
+
+<!-- 模态框 -->
+<i-modal title="{{modal.tips}}" isHide="{{modal.ishide}}" bind:ok="{{modal.ok}}" bind:cancel="{{modal.cancel}}"
+  bind:plateBg="cancel">
+  <view>{{modal.message}}</view>
+</i-modal>
+
+<!----------------------------------------- 下面请开始你的表演 SHOW TIME ---------------------------------->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+  bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">地址管理</custom-parts>
+
+<view class="address-list">
+  <view class="address-item" wx:for="{{addressList}}" wx:key="{{item.id}}">
+    <view class="address-data" catchtap="handleGetBack" data-address_id="{{item.id}}">
+      <view class="address">
+        <view class="default-flag" wx:if="{{item.is_default === 1}}">默认</view>
+        <view class="address-details">{{item.province}}{{item.city}}{{item.district}}{{item.detail}}</view>
+      </view>
+      <view class="user-data">
+        <text class="username">{{item.real_name}}</text>
+        <text class="user-phone">{{item.phone}}</text>
+      </view>
+    </view>
+    <navigator class="change-area" url="/packageA/addShoppingAddress/index?address_id={{item.id}}&province={{item.province}}&city={{item.city}}&district={{item.district}}&detail={{item.detail}}&real_name={{item.real_name}}&phone={{item.phone}}&post_code={{item.post_code}}&is_default={{item.is_default}}">
+      <image class="change-icon" src="/images/cx.png" mode="widthFix">
+      </image>
+    </navigator>
+  </view>
+</view>
+<view class="add-new-address">
+  <url-parts url="/packageA/addShoppingAddress/index">
+    <view class="add-btn" bindtap="addAddress">
+      添加新地址
+    </view>
+  </url-parts>
+</view>
+
+<!------------------------------------------------ 你触碰到我的底线了  W(￣_￣)W ---------------------------------->
+
+<!-- 分页组件 -->
+
+<!-- <page-parts options="{{page}}" bind:start="pageStart" bind:success="pageSuccess" bind:fail="pageFail"  /> -->

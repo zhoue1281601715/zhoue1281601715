@@ -1,0 +1,100 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+  bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">订单详情
+</custom-parts>
+<view>
+  <view class="receipt-list">
+    <!-- <view class="receipt-item">
+      <view class="receipt-name-area titlename">
+        <view class="receipt-name-area-left">
+          <view class="receipt-name">
+            <view>起</view>
+            <view class="start-end"></view>
+            <view class="start-end"></view>
+            <view class="start-end"></view>
+            <view class="start-end"></view>
+            <view class="start-end"></view>
+            <view>终</view>
+          </view>
+          <view class="local">
+            <view>四川 武川</view>
+            <view>广州 天河</view>
+          </view>
+        </view>
+        <view class="receipt-name-area-right receipt-name-area-map">
+          <image class="imgMap"></image>
+        </view>
+      </view>
+
+
+    </view> -->
+    <view class="cangInfo1">送货信息</view>
+    <view class="receipt-item marClear">
+      <view class="receipt-data">
+        <view class="receipt-data-item">
+          <view class="receipt-data-item-left">预约单号：{{goodObj.code}}</view>
+          <view class="receipt-data-item-right">入仓单号：{{goodObj.bill_code}}</view>
+        </view>
+        <view class="receipt-data-item">
+          <view class="receipt-data-item-left">车牌号：{{goodObj.plate}}</view>
+          <view class="receipt-data-item-right">仓库：{{goodObj.warehouse_name}}</view>
+        </view>
+
+        <view class="receipt-data-item">
+          <view class="receipt-data-item-left">司机：{{goodObj.driver}}</view>
+          <view class="receipt-data-item-right">电话：{{goodObj.phone}}</view>
+        </view>
+        <view class="receipt-data-item">
+          <view class="receipt-data-item-left">时间段：{{goodObj.time}}</view>
+
+        </view>
+      </view>
+      <view class="receipt-remarks">备注：{{goodObj.remark}}</view>
+    </view>
+  </view>
+  <view wx:if="{{distb}}">
+    <view class="receipt-btn">
+      <view>
+        <span class="into-area">√</span>
+        已进入签到指定区域
+      </view>
+      <view class="btn" bindtap="starttask">签到</view>
+    </view>
+    <!-- 签到信息展示 -->
+    <view class="receipt-item">
+      <view class="cangInfo">仓库信息</view>
+      <view class="receipt-name-area receipt-name-info" wx:for="{{goodComm}}" key="item.id">
+        <view class="receipt-data-item infohe">
+          <view class="receipt-data-item-left fontSize"><span class="dlin">仓库名称：</span>{{item.warehouse_name}}</view>
+        </view>
+        <view class="receipt-data-item infohe">
+          <view class="receipt-data-item-left fontSize"><span class="dlin">联系电话：</span>{{item.warehouse_contact}}</view>
+        </view>
+        <view class="receipt-data-item infohe">
+          <view class="receipt-data-item-left fontSize"><span class="dlin">客户名称：</span>{{item.customer_name}}</view>
+        </view>
+        <view class="receipt-data-item infohe">
+          <view class="receipt-data-item-left fontSize"><span class="dlin">客服：</span>{{item.kefu}}</view>
+        </view>
+        <view class="receipt-data-item infohe">
+          <view class="receipt-data-item-left fontSize"><span class="dlin">票数：</span>{{item.count}}</view>
+        </view>
+        <view class="receipt-data-item infohe">
+          <view class="receipt-data-item-left fontSize"><span class="dlin">数量：</span>{{item.quantity}}</view>
+        </view>
+        <view class="receipt-data-item infohe">
+          <view class="receipt-data-item-left fontSize"><span class="dlin">体重：</span>{{item.weight}}</view>
+        </view>
+        <view class="receipt-data-item infohe">
+          <view class="receipt-data-item-left fontSize"><span class="dlin">体积：</span>{{item.volume}}</view>
+        </view>
+        <view class="receipt-data-item infohe">
+          <view class="receipt-data-item-left fontSize"><span class="dlin">
+              备注：
+            </span>{{item.remark}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

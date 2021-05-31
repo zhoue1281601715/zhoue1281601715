@@ -1,0 +1,229 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<!-- 信息提示 -->
+<i-toast id="toast" />
+
+<!-- 模态框 -->
+<i-modal title="{{modal.tips}}" isHide="{{modal.ishide}}" bind:ok="{{modal.ok}}" bind:cancel="{{modal.cancel}}"
+    bind:plateBg="cancel">
+    <view>{{modal.message}}</view>
+</i-modal>
+
+<!----------------------------------------- 下面请开始你的表演 SHOW TIME ---------------------------------->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+    bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">{{fillIn}}
+</custom-parts>
+
+<view class="information">
+    <view class="warehousing-form" wx:if="{{yuycommIndex!=1}}">
+        <view class="warehousing-item">
+            <view class="warehousing-item-left">送货公司</view>
+            <view class="warehousing-item-right">
+                <input class="warehousing-input" type="text" placeholder="请输入送货公司名称" value="{{shippingOffice}}"
+                    bindinput="handleShippingOfficeInput" />
+            </view>
+        </view>
+        <view class="warehousing-item">
+            <view class="warehousing-item-left">送货车牌</view>
+            <view class="warehousing-item-right">
+                <input class="warehousing-input" type="text" placeholder="请填写送货车牌号码" value="{{deliveryLicensePlate}}"
+                    bindinput="handleDeliveryLicensePlateInput" />
+            </view>
+        </view>
+        <!-- 是否加工start -->
+        <view class="delivery-item">
+            <view>是否加工</view>
+            <view>
+                <switch style="zoom:.8" checked="{{machining}}" bindchange="switchChecked">
+                </switch>
+            </view>
+        </view>
+
+        <view wx:if="{{machining}}" class="paddingBom">
+
+            <view class="delivery-le" wx:for="{{makerComm}}" wx:key="index">
+                <view class="del-item" bindtap="deleItem" data-indexs="{{index}}">x</view>
+                <view class="delivery-level">
+                    <view class="deliveryLevel1 ">一级</view>
+                    <view class="deliveryLevel1 width27 borderColorLeve marginBu borderRa">
+                        <picker mode="selector" data-indexs="{{index}}" bindchange="processedCommChange"
+                            value="{{levelIndexone}}" range="{{machData}}" range-key="name">
+                            <view class="fontLeve" wx:if="{{item.seleName===''}}">
+                                选择类目
+                            </view>
+                            <view class="fontLeve" wx:else>
+                                {{item.seleName}}
+                            </view>
+                        </picker>
+                    </view>
+                    <view class="deliveryLevel1 secondLevel">二级</view>
+                    <view class="deliveryLevel1 width30 width94 borderColorLeve borderRa">
+                        <picker mode="selector" data-indexs="{{index}}" bindchange="processedTow" value="levelIndextow"
+                            range="{{machData2}}" range-key="name">
+                            <view class="fontLeve" wx:if="{{item.seleNameTow===''}}">
+                                选择类目
+                            </view>
+                            <view class="fontLeve">
+                                {{item.seleNameTow}}
+                            </view>
+                        </picker>
+                    </view>
+
+                </view>
+                <view>
+                    <view class=" infoComm">
+
+                        <view class="selectplIn flex2">
+                            <view class="slectPay margR">付款</view>
+                            <view class="borderColorLeve widthInput borderRa">
+                                <picker mode="selector" data-indexs="{{index}}" bindchange="processedCommPay"
+                                    value="payIndex" range="{{payWay}}">
+                                    <view class="fontLeve" wx:if="{{item.payWayed===''}}">付款方式</view>
+                                    <view class="fontLeve">
+                                        {{item.payWayed}}
+                                    </view>
+                                </picker>
+                            </view>
+                        </view>
+                        <view class="deliveryLevel1 deliverInput flex1">
+                            <span class="spanblc">数量</span>
+                            <input class="inputNumber" placeholder-style="color:#fff" placeholder-class='phcolor'
+                                data-indexs="{{index}}" bindinput="inputedit" data-name="commNumber" placeholder="输入数量"
+                                value="{{item.numberComm}}" />
+                        </view>
+                    </view>
+                    <view class="selecInfo">
+                        <view class="delivery-item remarks">
+                            <view class="delivery-cmakr">备注信息</view>
+                        </view>
+                        <view class="textarea-area">
+                            <textarea data-indexs="{{index}}" placeholder-class="placeholderClass12"
+                                class="borderColor1 borderRa" value="{{deliveryRemark}}" maxlength="200"
+                                placeholder="请填写备注信息" bindinput="handleDeliveryRemarkInput"></textarea>
+                        </view>
+                    </view>
+
+                </view>
+            </view>
+            <view class="marginL40" bindtap="addObject">+</view>
+        </view>
+        <!-- 是否加工end -->
+        <!-- <view class="warehousing-item remarks">
+            <view class="warehousing-item-left">备注信息</view>
+        </view>
+        <view class="textarea-area">
+            <textarea value="{{warehousingRemark}}" maxlength="200" placeholder="请填写备注信息"
+                bindinput="handleWarehousingRemarkInput"></textarea>
+            <view class="textarea-val-len">
+                <text class="not-full" wx:if="{{warehousingRemark.length < 200}}">{{warehousingRemark.length}}/</text>
+                <text class="full" wx:else>200/</text>
+                <text class="full">200</text>
+            </view>
+        </view> -->
+    </view>
+    <!-- 填写预约信息 -->
+    <!-- <view class="warehousing-form" >
+        <view class="warehousing-item">
+            <view class="warehousing-item-left">司机信息</view>
+            <view class="warehousing-item-right">
+
+            </view>
+        </view>
+        <view class="warehousing-item">
+            <view class="warehousing-item-left">姓名：</view>
+            <view class="warehousing-item-right">
+                <input class="warehousing-input" type="text" placeholder="必须与身份证保持一致" value="{{carName}}"
+                    bindinput="handleShippingOfficeInput4" />
+            </view>
+        </view>
+        <view class="warehousing-item">
+            <view class="warehousing-item-left">联系方式姓名：</view>
+            <view class="warehousing-item-right">
+                <input class="warehousing-input" type="text" placeholder="请输入联系人姓名" value="{{contactInfo}}"
+                    bindinput="handleShippingOfficeInput1" />
+            </view>
+        </view>
+        <view class="warehousing-item">
+            <view class="warehousing-item-left">车牌号码：</view>
+            <view class="warehousing-item-right">
+                <input class="warehousing-input2" type="text" placeholder="请输入车牌号码" value="{{licensePlate}}"
+                    bindinput="handleShippingOfficeInput2" />
+            </view>
+        </view>
+        <view class="warehousing-item">
+            <view class="warehousing-item-left">入仓时间：</view>
+            <view class="warehousing-item-right">
+                <picker mode="date" value="{{warehousingProductionDate}}" start="2000-01-01" end="2120-12-01"
+                    bindchange="bindWarehousingProductionDateChange">
+                    <view class="picker-default" wx:if="{{warehousingProductionDate === ''}}">请选择日期</view>
+                    <view class="picker" wx:else>{{warehousingProductionDate}}</view>
+                </picker>
+                <image class="picker-right-arrow" src="/images/right_arrow.png" mode="heightFix"></image>
+                
+            </view>
+        </view>
+        <view class="warehousing-item">
+            <view class="warehousing-item-left">仓单号：</view>
+            <view class="warehousing-item-right">
+                <input class="warehousing-input" type="text" placeholder="请输入单号" value="{{WarehouseNo}}"
+                    bindinput="handleShippingOfficeInput3" />
+            </view>
+        </view>
+    </view> -->
+    <!-- 提交预约信息成功提示框 -->
+    <view class="warehousing-popup" wx:if="{{warehousingPopupShow}}">
+        <view class="warehousing-bg">
+            <view class="img_vie">
+                <image class="imag-com" src="../../images/img_title.png"></image>
+            </view>
+
+            <view class="suscess">
+                <view class="img-con">
+                    √
+                </view>
+                <view class="yuyTitle">预约入仓成功</view>
+                <view class="btnflex">
+                    <button class="btn" bindtap="gotoPage1">继续预约</button>
+                    <button class="btn btn1">查看订单</button>
+                </view>
+
+                <view class="close-popup" catchtap="handleCloseWarehousingPopup">
+                    <image class="close-popup-icon" src="/images/close_white_icon.png" mode="widthFix"></image>
+                </view>
+            </view>
+        </view>
+    </view>
+
+    <view class="queryTitle">入仓产品信息</view>
+    <view class="receipt-list">
+        <view class="receipt-item" wx:for="{{warehousingCheckedList}}" wx:key="{{item.id}}">
+            <view class="receipt-name">{{item.name}}</view>
+            <view class="receipt-data">
+                <view class="receipt-data-item">
+                    <view class="receipt-data-item-left">产品编号：{{item.code}}</view>
+                    <view class="receipt-data-item-right">规格：{{item.spec}}{{item.stock_unit}}</view>
+                </view>
+                <view class="receipt-data-item">
+                    <view class="receipt-data-item-left">入仓数量：{{item.totalNum}}</view>
+                </view>
+                <view class="receipt-data-item">
+                    <view class="receipt-data-item-left">批次号1：{{item.batch1}}</view>
+                    <view class="receipt-data-item-right">批次号2：{{item.batch2}}</view>
+                </view>
+                <view class="receipt-data-item">
+                    <view class="receipt-data-item-left">生产日期：{{item.production_date}}</view>
+                    <view class="receipt-data-item-right">到期日期：{{item.expiration_date}}</view>
+                </view>
+            </view>
+            <view class="receipt-remarks">备注：{{item.remark}}</view>
+        </view>
+    </view>
+    <view class="submit-btn" catchtap="handleConfirmOrder">{{sumbcomm}}</view>
+</view>
+<tabbar activeIdx="{{activeIdx}}"></tabbar>
+
+<!------------------------------------------------ 你触碰到我的底线了  W(￣_￣)W ---------------------------------->
+
+<!-- 分页组件 -->
+<!-- <page-parts options="{{page}}" bind:start="pageStart" bind:success="pageSuccess" bind:fail="pageFail"  /> -->

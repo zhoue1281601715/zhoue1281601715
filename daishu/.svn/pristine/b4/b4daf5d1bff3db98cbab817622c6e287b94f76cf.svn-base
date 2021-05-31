@@ -1,0 +1,302 @@
+@import '/lib/iconfont.wxss';
+
+page {
+  background: linear-gradient(90deg, #FF7900, #FF4B00);
+}
+
+/* banner图开始 */
+.banner {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  width: 750rpx;
+  height: 402rpx;
+}
+
+.banner_area {
+  position: relative;
+  width: 750rpx;
+  height: 402rpx;
+}
+
+.banner_area swiper {
+  width: 750rpx;
+  height: 402rpx;
+}
+
+.banner-img {
+  width: 750rpx;
+  height: 402rpx;
+  vertical-align: bottom;
+}
+/* banner图结束 */
+
+/* banner图右边"了解代叔"按钮开始 */
+.know-daishu {
+  position: absolute;
+  bottom: 182rpx;
+  right: 70rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 14rpx 0 20rpx;
+  height: 56rpx;
+  line-height: 56rpx;
+  font-size: 30rpx;
+  color: #FFFFFF;
+  background-color: #FFAD0C;
+  border-radius: 28rpx;
+  box-shadow: 0 6rpx 10rpx 0 rgba(153, 153, 153, 0.35);
+}
+
+.know-daishu .iconfont {
+  display: flex;
+  align-items: center;
+  margin-left: 4rpx;
+  font-size: 20rpx;
+  color: #FFFFFF;
+}
+/* banner图右边"了解代叔"按钮结束 */
+
+/* 头部导航栏开始 */
+.nav-list {
+  position: absolute;
+  bottom: 84rpx;
+  left: 24rpx;
+  display: none;
+  padding: 0 30rpx;
+  width: 702rpx;
+  height: 82rpx;
+  background-color: #F2F2F2;
+  border-radius: 10rpx;
+  box-sizing: border-box;
+  z-index: 9;
+}
+
+.nav-list-show {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.swiper-nav-list {
+  flex: 1;
+  width: 0;
+  height: 82rpx;
+}
+
+.swiper-nav-item {
+  height: 82rpx;
+  line-height: 82rpx;
+  font-size: 24rpx;
+  color: #000000;
+}
+
+.nav-activity {
+  color: #FF5101;
+}
+
+.nav-more {
+  padding-left: 8rpx;
+  height: 82rpx;
+  line-height: 82rpx;
+  color: #828282;
+}
+
+.nav-more .arrow-icon {
+  width: 34rpx;
+  vertical-align: middle;
+}
+/* 头部导航栏结束 */
+
+.nav-select-area {
+  display: none;
+  position: absolute;
+  left: 24rpx;
+  top: 236rpx;
+  width: 702rpx;
+  z-index: 9;
+}
+
+.nav-select-show {
+  display: block;
+}
+
+.nav-select {
+  padding: 0 24rpx;
+  width: 100%;
+  background: #FFFFFF;
+  box-shadow: 0 0 8rpx 0 rgba(153, 153, 153, 0.35);
+  border-radius: 10rpx;
+  box-sizing: border-box;
+}
+
+.nav-select-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 82rpx;
+  font-size: 24rpx;
+  color: #FF5201;
+  border-bottom: 2rpx solid #E5E5E5;
+  box-sizing: border-box;
+}
+
+.nav-select-top view {
+  display: flex;
+  align-items: center;
+  padding-left: 8rpx;
+  height: 82rpx;
+}
+
+.nav-select-top .arrow-icon {
+  width: 34rpx;
+  vertical-align: bottom;
+  transform: rotate(180deg);
+}
+
+.nav-select-list {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20rpx 0 2rpx;
+}
+
+.nav-select-item {
+  margin: 0 24rpx 20rpx 0;
+  padding: 0 24rpx;
+  height: 52rpx;
+  line-height: 48rpx;
+  font-size: 24rpx;
+  color: #000000;
+  background-color: #F3F3F3;
+  border: 2rpx solid #F3F3F3;
+  border-radius: 26rpx;
+  box-sizing: border-box;
+}
+
+.nav-select-activity {
+  color: #FF5201;
+  border-color: #FF5201;
+  background-color: #FFF2EE;
+}
+
+.banner-slogan {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 750rpx;
+  height: 84rpx;
+}
+
+.banner-slogan-top {
+  font-size: 28rpx;
+  color: #FFFFFF;
+}
+
+.banner-slogan-bottom {
+  font-size: 20rpx;
+  color: #FFFFFF;
+}
+
+.main {
+  padding: 0 14rpx 108rpx;
+  width: 750rpx;
+  box-sizing: border-box;
+}
+
+.goods-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 14rpx;
+  background-color: #FFFFFF;
+  border-radius: 10rpx;
+}
+
+.goods-item {
+  width: 340rpx;
+  margin-bottom: 14rpx;
+  padding-bottom: 32rpx;
+  background-color: #F2F2F2;
+  border-radius: 10rpx;
+  overflow: hidden;
+}
+
+.goods-picture-area {
+  width: 340rpx;
+  height: 340rpx;
+  overflow: hidden;
+}
+
+.goods-picture {
+  width: 340rpx;
+  height: 340rpx;
+  vertical-align: bottom;
+  background-color: #E5E5E5;
+}
+
+.goods-data {
+  margin-top: 10rpx;
+  padding: 0 18rpx;
+  box-sizing: border-box;
+}
+
+.goods-label {
+  display: inline-block;
+  margin-right: 10rpx;
+  padding: 0 8rpx;
+  height: 30rpx;
+  line-height: 30rpx;
+  font-size: 24rpx;
+  color: #FFFFFF;
+  background-color: #FE6706;
+  border-radius: 6rpx;
+}
+
+.goods-name {
+  font-size: 28rpx;
+  color: #010101;
+}
+
+.goods-price-area {
+  display: flex;
+  align-items: baseline;
+  margin-top: 14rpx;
+}
+
+.yuan {
+  font-size: 20rpx;
+  color: #FF6400;
+}
+
+.goods-price {
+  font-size: 34rpx;
+  color: #FF6400;
+}
+
+.payment-num {
+  margin-left: 10rpx;
+  font-size: 20rpx;
+  color: #909090;
+}
+
+.more {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 24rpx;
+  color: #909090;
+}
+
+.nodata {
+  padding: 50rpx 0;
+  text-align: center;
+  font-size: 28rpx;
+  color: #818181;
+  background-color: #FFFFFF;
+  border-radius: 10rpx;
+}

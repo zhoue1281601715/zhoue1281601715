@@ -1,0 +1,571 @@
+/**
+ * 如果位目录层数大于两级需要修改路径
+ */
+const { $Toast, $Message } = require('../../utils/iview/base/index');
+import Tools from '../../utils/modules/Tools';
+import Config from '../../config';
+import utils from '../../utils/utils';
+
+const app = getApp()
+
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    modal : {
+			tips : '提示',
+			message : '模态框说明',
+			ok : 'modalOk',
+			cancel : 'modalCancel',
+			ishide : true
+		},
+		currentUserInfo: '', // 用户基本信息
+		activeIdx: -1, // tabbar当前下标
+		CustomBar: 0, // 自定义导航栏高度
+		columns: ['客户自提', '代发快递', '代叔物流'], // 出仓方式列表
+		delivery_type: '', // 出仓方式
+		pickerIndex: '', // 出仓方式下标
+		deliveryMethod: ['送货', '自提'], // 送货方式列表
+		deliveryMethodPickerIndex: '', // 送货方式下标
+		logistics_consignee_delivery: '', // 送货方式
+		paymentMethod: ['现付', '提付', '月结', '多笔付'], // 付款方式列表
+		paymentMethodPickerIndex: '', // 付款方式下标
+		logistics_consignee_paytype: '', // 付款方式
+		vantPopup: false, // 选择城市、片区、街道的弹窗
+		city: [], // 城市列表
+		region: ['请选择城市', '选择片区', '选择街道'], // 选择的城市
+		tabIndex: 0, // 0 选择城市 1选择片区 2选择街道
+		address: '', // 详细的收货地址
+		otherList: [], // 选择的区域或这是街道列表
+		deliveryCheckedList: [], // 准备入仓商品列表
+		shippingOffice: '', // 送货公司
+		deliveryLicensePlate: '', // 送货车牌
+		consignee: {}, // 收货人地址
+		consigneeShow: true,
+		deliveryRemark: '', // 用户填写的入仓备注
+		result: [], // 商品列表包装城接口需要的格式
+	},
+
+	/**
+   * 用户选择出仓方式
+   */
+  bindPickerChange(e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    const that = this
+    const { columns } = that.data
+		const pickerIndex = e.detail.value
+		const delivery_type = columns[e.detail.value]
+    that.setData({
+			pickerIndex,
+      delivery_type
+		})
+		console.log('delivery_type', delivery_type)
+	},
+
+	/**
+   * 用户选择送货方式
+   */
+  bindDeliveryMethodPickerChange(e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    const that = this
+    const { deliveryMethod } = that.data
+		const deliveryMethodPickerIndex = e.detail.value
+		const logistics_consignee_delivery = deliveryMethod[e.detail.value]
+    that.setData({
+			deliveryMethodPickerIndex,
+      logistics_consignee_delivery
+		})
+		console.log('logistics_consignee_delivery', logistics_consignee_delivery)
+	},
+
+	/**
+   * 用户选择付款方式
+   */
+  bindPaymentMethodPickerChange(e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    const that = this
+    const { paymentMethod } = that.data
+		const paymentMethodPickerIndex = e.detail.value
+		const logistics_consignee_paytype = paymentMethod[e.detail.value]
+    that.setData({
+			paymentMethodPickerIndex,
+      logistics_consignee_paytype
+		})
+		console.log('logistics_consignee_paytype', logistics_consignee_paytype)
+	},
+	
+	/**
+	 * 点击"送货地址"，弹出地址选择弹出
+	 */
+	selectCity() {
+    this.setData({
+      vantPopup: true
+    })
+	},
+
+	/**
+	 * 关闭地址选择弹出
+	 */
+	onClose() {
+    this.setData({
+      vantPopup: false
+    })
+	},
+	
+	/**
+	 * 城市列表
+	 */
+	city_list() {
+		app.https({
+			config: {
+				url: 'xcx/city/list',
+				data: {},
+				method: 'POST'
+			},
+			isAuth: false
+		}).then((res) => {
+			console.log('city_listRes', res)
+			this.setData({
+				city: res.data.data
+			})
+		}).catch((err) => {
+			console.log('city_listErr', err)
+		})
+	},
+
+	/**
+	 * 获取片区
+	 */
+	choose_area() {
+		const that = this
+		const region = this.data.region
+		app.https({
+			config: {
+				url: 'xcx/area/list',
+				data: {
+					city_name: region[0]
+				},
+				method: 'POST'
+			},
+			isAuth: false
+		}).then((res) => {
+			console.log('choose_areaRes', res)
+			that.setData({
+				otherList: res.data.data
+			})
+		}).catch((err) => {
+			console.log('choose_areaErr', err)
+		})
+	},
+
+	/**
+	 * 获取街镇
+	 */
+	town_area() {
+		const that = this
+		let region = this.data.region
+		app.https({
+			config: {
+				url: 'xcx/town/list',
+				data: {
+					city_name: region[0],
+					area_name: region[1]
+				},
+				method: 'POST'
+			},
+			isAuth: false
+		}).then((res) => {
+			if (res.data.data.length == 0) {
+				region.pop()
+				that.setData({
+					street: false,
+					region: region,
+					vantPopup: false
+				})
+			} else {
+				that.setData({
+					otherList: res.data.data,
+					street: true,
+					tabIndex: 2
+				})
+			}
+		}).catch((err) => {
+			console.log('town_area', err)
+		})
+	},
+
+	/**
+	 * tab切换
+	 */
+	switchTab(event) {
+		const currentTab = event.currentTarget.dataset.tab
+		const region = this.data.region
+		const tabIndex = this.data.tabIndex
+
+		// 第一种情况 正向
+		if (tabIndex == 0 && currentTab == 1 && region[tabIndex] == "请选择城市") {
+			app.utils.wx_toast("请先选择城市")
+			return false
+		}
+		// 第二种情况 正向
+		if (tabIndex == 0 && currentTab == 2 && region[tabIndex] == "请选择城市") {
+			app.utils.wx_toast("请先选择城市")
+			return false
+		}
+		// 第三种情况 正向
+		if (tabIndex == 1 && currentTab == 2 && region[tabIndex] == "选择片区") {
+			app.utils.wx_toast("请先选择片区")
+			return false
+		}
+		// 第四种情况 反向
+		if (tabIndex == 2 && currentTab == 1) {
+			this.setData({
+				"region[2]": "请选择街道",
+				"region[1]": "选择片区"
+			})
+			this.choose_area()
+		}
+		// 第五种情况 反向
+		if (tabIndex == 2 && currentTab == 0) {
+			let region = ["请选择城市", "选择片区", "选择片区"]
+			this.setData({
+				region: region
+			})
+			this.city_list()
+		}
+		// 第六种情况 反向
+		if (tabIndex == 1 && currentTab == 0) {
+			let region = ["请选择城市", "选择片区", "选择片区"]
+			this.setData({
+				region: region
+			})
+			this.city_list()
+		}
+		this.setData({
+			tabIndex: currentTab
+		})
+	},
+
+	/**
+	 * 组件选择城市
+	 */
+	choose_city(event) {
+		const selectCity = event.detail
+		this.setData({
+			"region[0]": selectCity.name,
+			tabIndex: 1
+		})
+		this.choose_area()
+	},
+
+	/** 
+	 * 选择地区或者街道
+	 */
+	chooseOther(event) {
+		const tabIndex = this.data.tabIndex
+		const regionName = event.currentTarget.dataset.name
+		if (tabIndex == 1) {
+			this.setData({
+				"region[1]": regionName,
+			})
+			this.town_area()
+		}
+		if (tabIndex == 2) {
+			this.setData({
+				"region[2]": regionName
+			})
+			// 选择完街道之后关闭弹窗
+			this.onClose()
+		}
+	},
+
+	/**
+	 * 用户输入送货公司
+	 */
+	handleShippingOfficeInput(e) {
+		this.setData({
+			shippingOffice: e.detail.value
+		})
+	},
+
+	/**
+	 * 用户输入送货车牌
+	 */
+	handleDeliveryLicensePlateInput(e) {
+		this.setData({
+			deliveryLicensePlate: e.detail.value
+		})
+	},
+
+	/**
+	 * 用户选择收货地址
+	 */ 
+  handleChooseAddress() {
+    const isAdd = 1
+    wx.navigateTo({
+      url: '/packageC/addressManagement/index?isAdd=' + isAdd,
+    })
+  },
+
+  /**
+   * 用户填写入仓备注
+   */
+  handleDeliveryRemarkInput(e) {
+    const that = this
+    const remark = e.detail.value
+    that.setData({
+      deliveryRemark: remark
+    })
+	},
+
+	/**
+	 * 将商品列表包装城接口需要的格式
+	*/ 
+  packagingData(arr) {
+		const that = this
+    let result = []
+    // 后端接口需要的参数列表
+    const props = [
+      "company_id",
+      "warehouse_id",
+      "customer_id",
+      "item_id",
+      "quantity_e",
+      "batch1",
+      "batch2",
+      "production_date",
+      "expiration_date",
+      "remark"
+		]
+		const propsLen = props.length
+    arr.map((item, index) => {
+			result[index] = {}
+      for (let i = 0; i < propsLen; i++) {
+        result[index][props[i]] = item[props[i]]
+      }
+    })
+    that.setData({
+      result
+    }, () => {
+			console.log('result', that.data.result)
+		})
+	},
+	
+	/**
+	 * 将收获人地址替换为借口需要的参数
+	 */ 
+  replaceProp(obj) {
+		const that = this
+    let delivery_type = that.data.delivery_type
+    let consignee = that.data.consignee // 初始对象
+    let targetObj = {} // 目标对象
+    // 初始属性
+    let initialProps = [
+      "name",
+      "phone",
+      "city",
+      "area",
+      "street",
+      "address"
+    ]
+    // 目标属性
+    let targetProps = [
+      "logistics_consignee_name",
+      "logistics_consignee_phone",
+      "logistics_consignee_city",
+      "logistics_consignee_area",
+      "logistics_consignee_street",
+      "logistics_consignee_address"
+    ]
+    let arr = Object.getOwnPropertyNames(consignee)
+    if (!arr.length && delivery_type === '代叔物流') {
+			wx.showToast({
+				title: '请选择收货人',
+				icon: 'none',
+				duration: 2000
+			})
+      return false
+    } else {
+			let targetPropsLen = targetProps.length
+      for (let i = 0; i < targetPropsLen; i++) {
+        targetObj[targetProps[i]] = consignee[initialProps[i]]
+      }
+    }
+    return targetObj
+  },
+
+  /**
+	 * 用户点击确认下单
+	 */
+  handleConfirmOrder() {
+		const that = this
+		const { pickerIndex, delivery_type, logistics_consignee_delivery, logistics_consignee_paytype, consigneeShow, currentUserInfo } = that.data
+		if (delivery_type === '') {
+			wx.showToast({
+				title: '请选择出仓方式',
+				icon: 'none',
+				duration: 1500
+			})
+			return false
+	 	} else if (pickerIndex > 0 && logistics_consignee_delivery === '') {
+			wx.showToast({
+				title: '请选择送货方式',
+				icon: 'none',
+				duration: 1500
+			})
+			return false
+	 	} else if (pickerIndex > 0 && logistics_consignee_paytype === '') {
+			wx.showToast({
+				title: '请选择付款方式',
+				icon: 'none',
+				duration: 1500
+			})
+			return false
+	 	} else if (pickerIndex > 0 && consigneeShow) {
+			wx.showToast({
+				title: '请选择送货地址',
+				icon: 'none',
+				duration: 1500
+			})
+			return false
+	 	} else if (!that.replaceProp()) {
+			return false
+		} else {
+			wx.showModal({
+				title: '提示',
+				content: '是否确认下单？',
+				success (res) {
+					if (res.confirm) {
+						const parameter = {
+							type: 1,
+							company_id: currentUserInfo.company_id,
+							warehouse_id: currentUserInfo.warehouse_id,
+							warehouse_name: currentUserInfo.warehouse_name,
+							kefu: currentUserInfo.kefu,
+							xcx_openid: currentUserInfo.xcx_openid,
+							print_custom: currentUserInfo.print_custom,
+							createby: currentUserInfo.realname,
+							table_num: currentUserInfo.table_num,
+							customer_id: currentUserInfo.customer_id,
+							customer_name: currentUserInfo.customer_name,
+							delivery_type: that.data.delivery_type,
+							logistics_consignee_delivery: that.data.logistics_consignee_delivery,
+							logistics_consignee_paytype: that.data.logistics_consignee_paytype,
+							delivery_company: that.data.shippingOffice,
+							delivery_plate: that.data.deliveryLicensePlate,
+							remark: that.data.deliveryRemark,
+							details: that.data.result
+						}
+						const destination = that.replaceProp()
+						Object.assign(parameter, destination)
+						app.request.json_post('/xcx/bill/save', parameter, that.navgateToPage).then(res => {
+							that.navgateToPage(1)
+						})
+					}
+				}
+			})
+		}
+	},
+	
+	/**
+	 * 下单结果
+	 * @param {*} param 
+	 */
+  navgateToPage(param) {
+		const that = this
+		param = param ? param : 0
+		if (param == 1) {
+			let deliveryCheckedList = that.data.deliveryCheckedList
+			let deliveryList = wx.getStorageSync('deliveryList')
+			deliveryCheckedList.forEach(item => {
+				let deliveryListLen = deliveryList.length
+				for (let i = 0; i < deliveryListLen; i++) {
+					if (item.item_id === deliveryList[i].id) {
+						deliveryList.splice(i, 1)
+					}
+					break;
+				}
+			})
+			wx.setStorageSync('deliveryList', deliveryList)
+		} 
+    // 0:下单失败 1:下单成功
+    wx.navigateTo({
+      url: '/packageB/in_stock_res/in_stock_res?isOut=1&res=' + param,
+    })
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    const that = this
+		const CustomBar = app.store.custom.CustomBar
+		const currentUserInfo = wx.getStorageSync("currentUserInfo")
+		let deliveryCheckedList = wx.getStorageSync("deliveryCheckedList")
+		console.log('deliveryCheckedList', deliveryCheckedList)
+		deliveryCheckedList.map((item, index) => {
+      item.quantity_e = parseInt(item.totalNum)
+			item.warehouse_id = currentUserInfo.warehouse_id
+			item.customer_id = currentUserInfo.customer_id
+			item.company_id = currentUserInfo.company_id
+			delete item.id
+    })
+    that.setData({
+			CustomBar,
+			currentUserInfo,
+      deliveryCheckedList
+		})
+		that.packagingData(deliveryCheckedList)
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+		this.city_list()
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
+  }
+})

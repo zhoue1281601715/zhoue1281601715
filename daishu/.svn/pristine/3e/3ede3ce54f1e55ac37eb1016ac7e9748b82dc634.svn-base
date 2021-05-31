@@ -1,0 +1,83 @@
+
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<!-- 信息提示 -->
+<i-toast id="toast" />
+
+<!-- 模态框 -->
+<i-modal title="{{modal.tips}}" isHide="{{modal.ishide}}" bind:ok="{{modal.ok}}" bind:cancel="{{modal.cancel}}"
+    bind:plateBg="cancel">
+    <view>{{modal.message}}</view>
+</i-modal>
+
+<!----------------------------------------- 下面请开始你的表演 SHOW TIME ---------------------------------->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+    bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">出仓信息
+</custom-parts>
+<view class="shippingInformation">
+    <view class="information-title">填写送货信息</view>
+    <view class="information-content">
+        <view class="information-term">
+            <view>送货公司</view>
+            <input type="text" data-type="delivery_company" focus="{{is_company}}" bindinput="placeAnOrderParams" placeholder="请输入公司名称" placeholder-class="tips" auto-focus/>
+        </view>
+        <view  class="information-term">
+            <view>提货车牌</view>
+            <input type="text" data-type="delivery_plate"  focus="{{is_plate}}" bindinput="placeAnOrderParams" placeholder="请填写提货车牌号码" placeholder-class="tips" auto-focus/>
+        </view>
+        <view  class="">
+            <view>备注</view>
+            <textarea value="" data-type="remark" placeholder="请填写备注信息" focus="{{is_remark}}" placeholder-class="tips"  
+                maxlength="140" bindinput="placeAnOrderParams" auto-focus style="80rpx">
+            </textarea>
+        </view>
+        <!-- <view class="addContacts">+添加收货人</view> -->
+        <view wx:if="{{consigneeShow}}" class="addContacts" bindtap="consigneeAddress">+添加收货人</view>
+
+<view class="addContacts" wx:if="{{!consigneeShow}}" bindtap="consigneeAddress">
+    <view class="consignee_name">
+     <text  selectable="false" space="false" decode="false" style="margin-right:20rpx">{{consignee.name}}</text>   
+     <text  selectable="false" space="false" decode="false">{{consignee.phone}}</text>
+    </view>
+    <view class="consignee_address">{{consignee.addressStr}}</view>
+    <!-- <image class="" src="../../images/icon_more.png" mode="aspectFit|aspectFill|widthFix" lazy-load="false" binderror="" bindload="" /> -->
+</view>
+    </view>
+</view>
+<view class="productInformation" wx:for="{{comfireShopList}}">
+    <view class="product-title">入仓产品信息</view>
+    <view class="product-content">
+        <view class="product-content-title">{{item.name}}</view>
+        <view class="product-content-center">
+            <view class="product-content-center-left">
+                <view>产品编号：{{item.item_code}}</view>
+               
+                <view>批次号1:{{item.batch1}}</view>
+                <view>出仓数量：{{item.wareNums}}</view>
+                <view>生产日期：{{item.production_date}}</view>
+            </view>
+            <view class="product-content-center-right">
+                <view>规格：{{item.item_spec}}</view>
+                <view>批次号1:{{item.batch2}}</view>
+                <view>到期日期：{{item.expiration_date}}</view>
+            </view>
+
+        </view>
+        <!-- <view>备注：{{item.remarks}}</view> -->
+    </view>
+</view>
+<button class=" overbookingBtn" bindtap="confirmOrder">立即下单</button>
+
+
+
+
+
+
+
+
+<!------------------------------------------------ 你触碰到我的底线了  W(￣_￣)W ---------------------------------->
+
+<!-- 分页组件 -->
+
+<!-- <page-parts options="{{page}}" bind:start="pageStart" bind:success="pageSuccess" bind:fail="pageFail"  /> -->

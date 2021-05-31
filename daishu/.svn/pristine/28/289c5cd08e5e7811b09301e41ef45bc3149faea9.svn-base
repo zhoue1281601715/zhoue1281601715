@@ -1,0 +1,93 @@
+page {
+  background-color: #FFFFFF;
+}
+
+.address-list {
+  padding-bottom: 308rpx;
+}
+
+.address-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 750rpx;
+  padding: 28rpx 36rpx;
+  box-sizing: border-box;
+  border-bottom: 2rpx solid #E5E5E5;
+}
+
+.address-data {
+  width: 0;
+  flex: 1;
+}
+
+.address {
+  display: flex;
+  align-items: center;
+}
+
+.default-flag {
+  margin-right: 12rpx;
+  padding: 0 9rpx;
+  line-height: 26rpx;
+  font-size: 20rpx;
+  color: #FFFFFF;
+  border-radius: 13rpx;
+  background-color: #FF5201;
+}
+
+.address-details {
+  flex: 1;
+  width: 0;
+  font-size: 26rpx;
+  color: #000000;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.user-data {
+  margin-top: 14rpx;
+}
+
+.username {
+  font-size: 22rpx;
+  color: #000000;
+}
+
+.user-phone {
+  padding-left: 24rpx;
+  font-size: 22rpx;
+  color: #6B6969;
+}
+
+.change-area {
+  margin-left: 60rpx;
+}
+
+.change-icon {
+  width: 46rpx;
+  vertical-align: bottom;
+}
+
+.add-new-address {
+  position: fixed;
+  left: 0;
+  bottom: 94rpx;
+  padding: 52rpx 28rpx 82rpx;
+  width: 750rpx;
+  border: 2rpx solid #E5E5E5;
+  background-color: #FFFFFF;
+  box-sizing: border-box;
+}
+
+.add-btn {
+  width: 100%;
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 30rpx;
+  color: #FFFFFF;
+  text-align: center;
+  background: linear-gradient(90deg, #FF7900, #FF4B00);
+  border-radius: 10rpx;
+}

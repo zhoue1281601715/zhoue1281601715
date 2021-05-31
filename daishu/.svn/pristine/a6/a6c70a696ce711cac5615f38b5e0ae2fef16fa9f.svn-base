@@ -1,0 +1,99 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<!-- 信息提示 -->
+<i-toast id="toast" />
+
+<!-- 模态框 -->
+<i-modal title="{{modal.tips}}" isHide="{{modal.ishide}}" bind:ok="{{modal.ok}}" bind:cancel="{{modal.cancel}}"
+    bind:plateBg="cancel">
+    <view>{{modal.message}}</view>
+</i-modal>
+
+<!----------------------------------------- 下面请开始你的表演 SHOW TIME ---------------------------------->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+    bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">填写提货信息
+</custom-parts>
+
+<view class="information">
+    <view class="delivery-form">
+        <view class="delivery-item">
+            <view class="delivery-item-left">出仓方式</view>
+            <view class="delivery-item-right">
+                <picker mode="selector" bindchange="bindPickerChange" value="{{pickerIndex}}" range="{{columns}}">
+                    <view class="picker-default" wx:if="{{pickerIndex === ''}}">请选择出仓方式</view>
+                    <view class="picker" wx:else>{{columns[pickerIndex]}}</view>
+                </picker>
+                <image class="more-icon" src="/images/right_arrow.png" mode="heightFix"></image>
+            </view>
+        </view>
+        <view class="delivery-item">
+            <view class="delivery-item-left">提货公司</view>
+            <view class="delivery-item-right">
+                <input class="delivery-input" type="text" placeholder="请输入提货公司名称" value="{{shippingOffice}}"
+                    bindinput="handleShippingOfficeInput" />
+            </view>
+        </view>
+        <view class="delivery-item">
+            <view class="delivery-item-left">提货车牌</view>
+            <view class="delivery-item-right">
+                <input class="delivery-input" type="text" placeholder="请填写提货车牌号码" value="{{deliveryLicensePlate}}"
+                    bindinput="handleDeliveryLicensePlateInput" />
+            </view>
+        </view>
+        <view class="add-address" catchtap="handleChooseAddress" wx:if="{{consigneeShow}}">+添加收货人</view>
+        <view class="address-details" catchtap="handleChooseAddress" wx:if="{{!consigneeShow}}">
+            <view>
+                <view class="user-data">
+                    <text class="user-name">{{consignee.name}}</text>
+                    <text class="user-phone">{{consignee.phone}}</text>
+                </view>
+                <view class="user-address">{{consignee.addressStr}}</view>
+            </view>
+            <image class="more-icon" src="/images/right_arrow.png" mode="heightFix"></image>
+        </view>
+        <view class="delivery-item remarks">
+            <view class="delivery-item-left">备注信息</view>
+        </view>
+        <view class="textarea-area">
+            <textarea value="{{deliveryRemark}}" maxlength="200" placeholder="请填写备注信息"
+                bindinput="handleDeliveryRemarkInput"></textarea>
+            <view class="textarea-val-len">
+                <text class="not-full" wx:if="{{deliveryRemark.length < 200}}">{{deliveryRemark.length}}/</text>
+                <text class="full" wx:else>200/</text>
+                <text class="full">200</text>
+            </view>
+        </view>
+    </view>
+    <view class="queryTitle">入仓产品信息</view>
+    <view class="receipt-list">
+        <view class="receipt-item" wx:for="{{deliveryCheckedList}}" wx:key="{{item.id}}">
+            <view class="receipt-name">{{item.item_name}}</view>
+            <view class="receipt-data">
+                <view class="receipt-data-item">
+                    <view class="receipt-data-item-left">产品编号：{{item.item_code}}</view>
+                    <view class="receipt-data-item-right">规格：{{item.item_spec}}{{item.item_stock_unit}}</view>
+                </view>
+                <view class="receipt-data-item">
+                    <view class="receipt-data-item-left">入仓数量：{{item.totalNum}}</view>
+                </view>
+                <view class="receipt-data-item">
+                    <view class="receipt-data-item-left">批次号1：{{item.batch1}}</view>
+                    <view class="receipt-data-item-right">批次号2：{{item.batch2}}</view>
+                </view>
+                <view class="receipt-data-item">
+                    <view class="receipt-data-item-left">生产日期：{{item.production_date}}</view>
+                    <view class="receipt-data-item-right">到期日期：{{item.expiration_date}}</view>
+                </view>
+            </view>
+            <view class="receipt-remarks">备注：{{item.remark}}</view>
+        </view>
+    </view>
+    <view class="submit-btn" catchtap="handleConfirmOrder">确认下单</view>
+</view>
+<tabbar activeIdx="{{activeIdx}}"></tabbar>
+
+<!------------------------------------------------ 你触碰到我的底线了  W(￣_￣)W ---------------------------------->
+
+<!-- 分页组件 -->
+<!-- <page-parts options="{{page}}" bind:start="pageStart" bind:success="pageSuccess" bind:fail="pageFail"  /> -->

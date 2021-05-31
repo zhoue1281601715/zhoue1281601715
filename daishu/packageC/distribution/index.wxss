@@ -1,0 +1,188 @@
+page {
+  padding-bottom: 114rpx;
+}
+
+.topColor {
+  background-image: linear-gradient(to right, #FF7900, #FF4B00);
+  height: 234rpx;
+}
+
+.commission {
+  margin: -216rpx auto 0;
+  width: 690rpx;
+  padding-bottom: 24rpx;
+  border-radius: 10rpx;
+  background: #FFFFFF;
+  -webkit-box-shadow: 0 0 10rpx #CCCCCC;
+  -moz-box-shadow: 0 0 10rpx #CCCCCC;
+  box-shadow: 0 0 10rpx #CCCCCC;
+}
+
+.totalCommission {
+  padding: 34rpx 0 48rpx 0;
+  line-height: 40rpx;
+  font-size: 28rpx;
+  font-family: AlibabaPuHuiTiR;
+  color: #000000;
+  text-align: center;
+}
+
+.commissionNum {
+  display: flex;
+  justify-content: space-between;
+}
+
+.commissionItem {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 114rpx;
+}
+
+.commissionItem:first-child {
+  border-right: 2rpx solid #E5E5E5;
+}
+
+.commissionText {
+  font-size: 26rpx;
+  color: #A7A7A7;
+}
+
+.commissionVal {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #000000;
+}
+
+.Offline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20rpx auto 0;
+  width: 690rpx;
+  border-radius: 10rpx;
+  background: #FFFFFF;
+  -webkit-box-shadow: 0 0 10rpx #CCCCCC;
+  -moz-box-shadow: 0 0 10rpx #CCCCCC;
+  box-shadow: 0 0 10rpx #CCCCCC;
+}
+
+.offlineItem {
+  padding: 20rpx 34rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.OfflinePeople {
+  margin-bottom: 8rpx;
+  font-size: 26rpx;
+  color: #A7A7A7;
+}
+
+.offlineVal {
+  font-size: 30rpx;
+  color: #000000;
+}
+
+.container {
+  margin: 20rpx auto 0;
+  padding: 32rpx 0;
+  width: 690rpx;
+  padding-bottom: 24rpx;
+  border-radius: 10rpx;
+  background: #FFFFFF;
+  -webkit-box-shadow: 0 0 10rpx #CCCCCC;
+  -moz-box-shadow: 0 0 10rpx #CCCCCC;
+  box-shadow: 0 0 10rpx #CCCCCC;
+  box-sizing: border-box;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 28rpx;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.default {
+  padding: 0 6rpx;
+  height: 46rpx;
+  line-height: 44rpx;
+  font-size: 26rpx;
+  color: #000000;
+  border-bottom: 2rpx solid #FFFFFF;
+}
+
+.red {
+  padding: 0 6rpx;
+  height: 46rpx;
+  line-height: 44rpx;
+  font-size: 26rpx;
+  color: #FF5201;
+  border-bottom: 2rpx solid #FF5201;
+}
+
+.user-list {
+  margin-top: 10rpx;
+}
+
+.user-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 42rpx 22rpx 20rpx;
+  border-bottom: 2rpx solid #E5E5E5;
+  box-sizing: border-box;
+}
+
+.user-item-left {
+  display: flex;
+}
+
+.avatar-area {
+  width: 102rpx;
+  height: 102rpx;
+  border-radius: 61rpx;
+  background-color: #FF5201;
+  overflow: hidden;
+}
+
+.user-avatar {
+  width: 102rpx;
+  height: 102rpx;
+}
+
+.user-info {
+  margin-left: 24rpx;
+}
+
+.user-name {
+  font-size: 24rpx;
+  color: #000000;
+}
+
+.register-time {
+  margin-top: 8rpx;
+  font-size: 20rpx;
+  color: #828282;
+}
+
+.user-item-right {
+  align-self: flex-end;
+  display: flex;
+  align-items: baseline;
+}
+
+.commission-label {
+  font-size: 20rpx;
+  color: #828282;
+}
+
+.commission-val {
+  font-size: 26rpx;
+  color: #FF5201;
+}

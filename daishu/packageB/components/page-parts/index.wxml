@@ -1,0 +1,6 @@
+
+<view id="page" class="j-class">
+  <view>
+    <view class="cu-load {{loading ? 'loading' : 'over'}}" hidden="{{isHidden}}" style="color:{{color}};"></view>
+  </view>
+</view>

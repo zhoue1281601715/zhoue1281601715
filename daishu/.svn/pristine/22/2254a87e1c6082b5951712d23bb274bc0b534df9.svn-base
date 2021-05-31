@@ -1,0 +1,123 @@
+.logo {
+  width: 165rpx;
+  height: 212rpx;
+
+}
+
+page {
+  background: #fff;
+}
+
+.weixin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 189rpx auto 0;
+  padding: 0;
+  width: 602rpx;
+  height: 90rpx;
+  border-radius: 45rpx;
+  font-size: 32rpx;
+  color: #fff;
+  background: #55b836;
+}
+
+.weixin .cuIcon-weixin {
+  margin-right: 24rpx;
+  font-size: 60rpx;
+}
+
+.pages {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30%;
+}
+
+.agreement {
+  width: 100%;
+  position: fixed;
+  bottom: 50rpx;
+}
+
+.agreement view {
+  font-size: 24rpx;
+  text-align: center;
+  color: #5B6A91;
+}
+
+.agreementText {
+  margin-top: 8rpx;
+  font-size: 24rpx;
+  color: #FF4B00 !important;
+}
+
+/* 获取电话号码的弹框 */
+.ask {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.askContent {
+  width: 74%;
+  /* height: 430rpx; */
+  background: #fff;
+  border-radius: 10rpx;
+  margin-top: 70%;
+  margin-left: 13%;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.askContent view {
+  padding: 10rpx 0;
+  font-size: 28rpx;
+  color: #666;
+}
+
+.askContent view:first-child {
+  font-size: 30rpx;
+  color: #333;
+  font-weight: bold;
+  padding-top: 30rpx;
+  padding-bottom: 20rpx;
+}
+
+.btnXinxi {
+  margin-top: 14rpx;
+  padding: 0!important;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  /* position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 0; */
+}
+
+.askContent button {
+  width: 50%;
+  height: 100rpx;
+  line-height: 100rpx;
+  margin: 0;
+  border-radius: 0;
+  border-radius: 0;
+  background: #FF4B00 !important;
+  color: #fff;
+}
+
+.askContent button::after {
+  border: 0;
+}
+
+.askContent button:first-child {
+  border-right: 1px solid #ccc;
+}

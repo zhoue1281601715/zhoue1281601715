@@ -1,0 +1,27 @@
+<!--packageC/data_statistics/data_statistics.wxml-->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+  bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">业绩统计
+</custom-parts>
+<view class="data">
+  <view class="statistics">
+    <view class="tit">{{eChartName}}年业绩统计</view>
+    <view class="container">
+      <ec-canvas id="mychart-dom-line" canvas-id="mychart-line" ec="{{ ec }}"></ec-canvas>
+    </view>
+  </view>
+</view>
+<view class="timeList">
+  <view class="item" wx:for="{{monthStatistics}}" wx:key="index">
+    <view class="ls">
+      <view class="tits">时间</view>
+      <view class="desc"><text class="c1">{{item.date}}</text></view>
+    </view>
+    <view class="ls">
+      <view class="tits">合计</view>
+      <view class="desc"><text class="c2">{{item.money}}</text> 元</view>
+    </view>
+    <view class="ls">
+      <navigator url="../data_statistics_yue/data_statistics_yue?month={{item.date}}">查看详细<image src="../../images/18.png" mode="widthFix"></image></navigator>
+    </view>
+  </view>
+</view>

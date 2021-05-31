@@ -1,0 +1,86 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<!-- 信息提示 -->
+<i-toast id="toast" />
+
+<!-- 模态框 -->
+<i-modal title="{{modal.tips}}" isHide="{{modal.ishide}}" bind:ok="{{modal.ok}}" bind:cancel="{{modal.cancel}}"
+    bind:plateBg="cancel">
+    <view>{{modal.message}}</view>
+</i-modal>
+
+<!----------------------------------------- 下面请开始你的表演 SHOW TIME ---------------------------------->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+    bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">全部评论</custom-parts>
+
+<view class="comment-nav">
+    <view class="comment-nav-item {{selected?'comment-nav-activity':''}} " bindtap="selected">全部({{shoppingAllComment.length}})</view>
+    <view class="comment-nav-item {{selected?'':'comment-nav-activity'}}" bindtap="selected1">有图({{imgList.length}})</view>
+</view>
+<view class="comment-list {{selected?'show':'hidden'}}">
+    <view class="comment-item" wx:for="{{shoppingAllComment}}">
+        <view class="user-data">
+            <view class="avatar">
+                <image class="user-avatar" src="{{item.user.avatar}}" mode="aspectFill"></image>
+            </view>
+            <view class="user-area">
+                <view class="username">{{item.user.nickname}}</view>
+                <view class="comment-date">{{item.add_time}}</view>
+            </view>
+        </view>
+        <view class="comment-content">{{item.comment}}</view>
+        <view class="comment-picture-list">
+            <view class="comment-picture-item" wx:for="{{item.pics}}" wx:for-item="itemChild">
+                <image class="comment-picture" src="{{itemChild}}" mode="aspectFill"></image>
+            </view>
+            <!-- <view class="comment-picture-item">
+                <image class="comment-picture" src="" mode="aspectFill"></image>
+            </view>
+            <view class="comment-picture-item">
+                <image class="comment-picture" src="" mode="aspectFill"></image>
+            </view>
+            <view class="comment-picture-item">
+                <image class="comment-picture" src="" mode="aspectFill"></image>
+            </view> -->
+        </view>
+    </view>
+
+</view>
+<view class="comment-list {{selected1?'show':'hidden'}}">
+    <view wx:if="{{imgList.length===0}}" class="notYet">暂无评价</view>
+    <view class="comment-item" wx:for="{{imgList}}" >
+        <view class="user-data">
+            <view class="avatar">
+                <image class="user-avatar" src="{{item.user.avatar}}" mode="aspectFill"></image>
+            </view>
+            <view class="user-area">
+                <view class="username">{{item.user.nickname}}</view>
+                <view class="comment-date">{{item.add_time}}</view>
+            </view>
+        </view>
+        <view class="comment-content">{{item.comment}}</view>
+        <view class="comment-picture-list">
+            <view class="comment-picture-item" wx:for="{{item.pics}}" wx:for-item="itemChild">
+                <image class="comment-picture" src="{{itemChild}}" mode="aspectFill"></image>
+            </view>
+            <!-- <view class="comment-picture-item">
+                <image class="comment-picture" src="" mode="aspectFill"></image>
+            </view>
+            <view class="comment-picture-item">
+                <image class="comment-picture" src="" mode="aspectFill"></image>
+            </view>
+            <view class="comment-picture-item">
+                <image class="comment-picture" src="" mode="aspectFill"></image>
+            </view> -->
+        </view>
+    </view>
+    
+
+
+</view>
+
+<!------------------------------------------------ 你触碰到我的底线了  W(￣_￣)W ---------------------------------->
+
+<!-- 分页组件 -->
+<!-- <page-parts options="{{page}}" bind:start="pageStart" bind:success="pageSuccess" bind:fail="pageFail"  /> -->

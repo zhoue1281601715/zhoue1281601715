@@ -1,0 +1,32 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<!-- 信息提示 -->
+<i-toast id="toast" />
+
+<!-- 模态框
+<i-modal title="{{modal.tips}}" isHide="{{modal.ishide}}" bind:ok="{{modal.ok}}" bind:cancel="{{modal.cancel}}"
+  bind:plateBg="cancel">
+  <view>{{modal.message}}</view>
+</i-modal> -->
+<custom-parts isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+  bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">代叔科技</custom-parts>
+<!-- banner图开始 -->
+<view class="container" style="padding: 0 0 178rpx 0;">
+  <view class="res_wrap" wx:if="{{res=='1'}}" hover-class="none" hover-stop-propagation="false">
+    <image src="../../images/icon_success.png" mode="aspectFit|aspectFill|widthFix" lazy-load="false" binderror=""
+      bindload="" />
+    <text class="res_text" selectable="false" space="false" decode="false">下单成功</text>
+    <text class="res_tips" selectable="false" space="false" decode="false">恭喜您下单成功</text>
+  </view>
+  <view class="res_wrap" wx:if="{{res=='0'}}" hover-class="none" hover-stop-propagation="false">
+    <image src="../../images/icon_fail.png" mode="aspectFit|aspectFill|widthFix" lazy-load="false" binderror=""
+      bindload="" />
+    <text class="res_text" selectable="false" space="false" decode="false">下单失败</text>
+    <text class="res_tips" selectable="false" space="false" decode="false">请重新下单</text>
+  </view>
+  <view class="btn first_btn" wx:if="{{res=='1'}}" data-type="myCenter" bindtap="goBack">返回我的</view>
+  <view class="btn first_btn" wx:if="{{res=='0' && !isOut}}" data-type="inStock" bindtap="goBack">返回申请入仓</view>
+  <view class="btn first_btn" wx:if="{{res=='0' && isOut}}" data-type="outStock" bindtap="goBack">返回申请出仓</view>
+  <view class="btn back_index" wx:if="{{res=='0'}}" data-type="index" bindtap="goBack">返回首页</view>
+</view>

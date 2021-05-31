@@ -1,0 +1,76 @@
+.shippingInformation{
+  width: 94%;
+  margin: 20rpx auto 0;
+  background: #fff;
+  border-radius: 10rpx;
+}
+.information-title{
+  padding: 0rpx 40rpx 20rpx;
+  border-bottom: 1rpx solid #E5E5E5;
+}
+.information-content{
+  padding:0 40rpx 40rpx;
+}
+.information-term{
+  display:flex ;
+  padding: 10rpx 0;
+}
+.information-term view{
+  width: 30%;
+}
+.addContacts{
+  width: 100%;
+  padding: 20rpx 0;
+  text-align: center;
+border: 1rpx solid #FF5202;
+border-radius: 10rpx;
+color: #FF5202;
+}
+.productInformation{
+  width: 94%;
+  margin:20rpx auto 0;
+  background: #fff;
+  border-radius: 10rpx;
+  padding: 20rpx 0 40rpx 0;
+}
+.product-title{
+  padding: 0rpx 40rpx 20rpx;
+  border-bottom: 1rpx solid #E5E5E5;
+}
+.product-content{
+  padding: 0 40rpx;
+}
+.product-content-title{
+  padding: 10rpx 0;
+}
+.product-content-center{
+  display: flex;
+  justify-content: space-between;
+}
+.product-content-center-left{
+  width: 49%;
+}
+.product-content-center-right{
+width: 49%;
+}
+.product-content-center-left view{
+  white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
+padding: 10rpx 0;
+}
+.product-content-center-right view{
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  padding: 10rpx 0;
+
+}
+.overbookingBtn{
+  width: 80%;
+  margin: auto;
+  background-image: linear-gradient(to right, #FF7900 , #FF4B00);
+  margin-top: 40rpx;
+  border-radius: 50rpx;
+  color: #fff;
+}

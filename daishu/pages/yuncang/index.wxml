@@ -1,0 +1,375 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<!-- 信息提示 -->
+<i-toast id="toast" />
+
+<!-- 模态框 -->
+<i-modal title="{{modal.tips}}" isHide="{{modal.ishide}}" bind:ok="{{modal.ok}}" bind:cancel="{{modal.cancel}}"
+    bind:plateBg="cancel">
+    <view>{{modal.message}}</view>
+</i-modal>
+
+<!----------------------------------------- 下面请开始你的表演 SHOW TIME ---------------------------------->
+<custom-parts isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+    bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">{{yuyIndex==1?'预约入仓':'代叔共享仓'}}</custom-parts>
+<!-- <view class="main-nav" style="top: {{CustomBar}}px;" wx-if="{{yuyIndex==1}}">
+    <view class="main-nav-item main-nav-activity pad">预约入仓</view>
+</view> -->
+<view class="main-nav" style="top: {{CustomBar}}px;" wx-if="{{yuyIndex!=1}}">
+    <view class="main-nav-item {{sectionShow === index ? 'main-nav-activity' : ''}}" data-index="{{index}}"
+        catchtap="handleChangeSection" wx:for="{{sectionArr}}" wx:key="index">{{item}}</view>
+</view>
+
+<view class="{{yuyIndex==1?'':'main-content'}}">
+    <view class="main-content-area" wx:if="{{sectionShow === 0}}">
+        <view class="search-area" wx:if="{{yuyIndex!=1}}">
+            <view class="search">
+                <image class="search-icon" src="/images/ss.png" mode="widthFix"></image>
+                <input class="search-input" placeholder-class="input-placeholder" placeholder="搜索商品" value="{{name}}"
+                    bindinput="handleInputGoodsName" bindblur="getGoodsList"></input>
+            </view>
+        </view>
+        <view class="search-area">
+            <view class="search" wx:if="{{yuyIndex==1}}">
+                <image class="search-icon" src="/images/ss.png" mode="widthFix"></image>
+                <input class="search-input" placeholder-class="input-placeholder" placeholder="请输入入仓单号" value="{{code}}"
+                    bindinput="handleInputGoodsCode"></input>
+                <button class="search-btn" bindtap="getAppointmentList">查询</button>
+            </view>
+
+        </view>
+        <view class="goods-list">
+
+            <!-- 预约入仓start -->
+            <view class="queryResults" wx:if="{{yuyIndex==1}}" wx:key="index" wx:for="{{comGoodsList.details}}">
+                <view class="queryTitle">
+                    <view>{{item.item_name || ""}}）</view>
+                    <view class="state" wx:if="{{item.type===1}}">出仓</view>
+                    <view class="state" wx:if="{{item.type===0}}">入仓</view>
+                </view>
+                <view class="number" selectable='true'>仓单号：{{code}}</view>
+                <view class="queryContent">
+                    <view class="queryText">
+                        <view>产品编号：{{item.item_code}}</view>
+                        <view>库存数量：{{item.bill_code ||""}}</view>
+                        <view>体积:{{item.volume || ""}}</view>
+                        <view>批次号1:{{item.batch1 || ""}}</view>
+                        <view>生产日期：{{item.production_date || ""}}</view>
+                    </view>
+                    <view class="queryText">
+                        <view>规格：{{item.item_spec || ""}}</view>
+                        <view>箱规：{{item.item_multiple  || ""}}</view>
+                        <view>重量：{{item.weight || ""}}</view>
+                        <view>批次号2:{{item.batch2 || ""}}</view>
+                        <view>到期日期：{{item.expiration_date || ""}}</view>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <!-- 预约入仓end -->
+        <view class="goods-list" wx:if="{{yuyIndex=='undefined'||yuyIndex==''}}">
+            <view class="goods-item" wx:for="{{goodsList}}">
+                <view class="goods-picture-area">
+                    <image class="goods-picture" src="/images/stock.png" mode="aspectFill"></image>
+                </view>
+                <view class="goods-data">
+                    <view class="goods-data-top">
+                        <view class="goods-name">{{item.name}}</view>
+                        <view class="goods-number">产品编号：{{item.code}}</view>
+                    </view>
+                    <view class="goods-data-bottom">
+                        <view class="goods-specs">
+                            <text class="goods-specs-title">规格：</text>
+                            <text class="goods-specs-val">{{item.spec}}{{item.stock_unit}}</text>
+                        </view>
+                        <button class="apply-btn" data-id="{{item.id}}"
+                            catchtap="handleOpenWarehousingPopup">申请入仓</button>
+                    </view>
+                </view>
+            </view>
+
+        </view>
+
+    </view>
+</view>
+
+<view class="out-of-warehouse" wx:if="{{sectionShow === 1}}">
+    <view class="form-area">
+        <view class="form-item form-border">
+            <view class="form-item-left">选择仓库</view>
+            <view class="form-item-right">
+                <picker mode="selector" bindchange="bindPickerChange" value="{{pickerIndex}}" range="{{warehouseList}}"
+                    range-key="name">
+                    <view class="picker-default" wx:if="{{pickerIndex === ''}}">请选择仓库</view>
+                    <view class="picker" wx:else>{{warehouseList[pickerIndex].name}}</view>
+                </picker>
+                <image class="more-icon" src="/images/right_arrow.png" mode="heightFix"></image>
+            </view>
+        </view>
+        <view class="form-item">
+            <view class="form-item-left">产品名称</view>
+            <view class="form-item-right">
+                <input class="product-name" type="text" placeholder="产品名称/批次号" placeholder-style="color: #818181;"
+                    value="{{para1}}" bindinput="handleProductNameInput" />
+            </view>
+        </view>
+        <view class="form-btn-area">
+            <button class="form-btn" catchtap="handleDeliveryQuery">立即查询</button>
+        </view>
+    </view>
+    <view class="receipt-list listPadd">
+        <view class="receipt-item" wx:for="{{deliveryQueryList}}" wx:key="{{item_id}}">
+            <view class="receipt-name">{{item.item_name}}</view>
+            <view class="receipt-data">
+                <view class="receipt-data-item">
+                    <view class="receipt-data-item-left">产品编号：{{item.item_code}}</view>
+                    <view class="receipt-data-item-right">规格：{{item.item_spec}}{{item.item_stock_unit}}</view>
+                </view>
+                <view class="receipt-data-item">
+                    <view class="receipt-data-item-left">库存数量：{{item.quantity}}</view>
+                    <view class="receipt-data-item-right">箱规：{{item.item_multiple}}</view>
+                </view>
+                <view class="receipt-data-item">
+                    <view class="receipt-data-item-left">批次号1：{{item.batch1}}</view>
+                    <view class="receipt-data-item-right">批次号2：{{item.batch2}}</view>
+                </view>
+                <view class="receipt-data-item">
+                    <view class="receipt-data-item-left">生产日期：{{item.production_date}}</view>
+                    <view class="receipt-data-item-right">到期日期：{{item.expiration_date}}</view>
+                </view>
+            </view>
+            <view class="delivery-btn-area">
+                <view class="delivery-view" catchtap="handleOpenDeliveryPopup" data-id="{{item.id}}">出库</view>
+            </view>
+        </view>
+    </view>
+</view>
+
+<!-- 入仓下单 -->
+<view class="btn-area" wx:if="{{sectionShow === 0}}">
+    <view class="btn-area-left">
+        <!-- <view class="checkbox"></view> -->
+        <view>已选择数量</view>
+        <view class="checked-num">{{warehousingTotal}}</view>
+    </view>
+    <view class="btn-area-right">
+        <image class="btn-bg" src="/images/xd.png" mode="widthFix"></image>
+        <view class="buy-btn" wx:if="{{yuyIndex!=1}}" bindtap="handleWarehousingPlaceAnOrder">下单</view>
+        <view class="buy-btn" wx:if="{{yuyIndex==1}}" bindtap="handleOpenWarehousingPopup1">下单</view>
+    </view>
+</view>
+<!-- 入仓下单 -->
+<!-- 出仓下单 -->
+<view class="btn-area" wx:else>
+    <view class="btn-area-left">
+        <!-- <view class="checkbox"></view> -->
+        <view>已选择数量</view>
+        <view class="checked-num">{{deliveryTotal}}</view>
+    </view>
+    <view class="btn-area-right">
+        <image class="btn-bg" src="/images/xd.png" mode="widthFix"></image>
+        <view class="buy-btn" open-type="reLaunch" bindtap="handleDeliveryPlaceAnOrder">下单</view>
+    </view>
+</view>
+<!-- 入仓下单 -->
+<view class="warehousing-popup" wx:if="{{warehousingPopupShow}}">
+    <view class="warehousing-bg" style="padding-top: {{CustomBar}}px;" catchtap="handleCloseWarehousingPopup">
+        <view class="warehousing-area" catchtap="stopBubbling">
+            <view class="warehousing-title">选择入仓信息</view>
+            <view class="warehousing-data">
+                <form catchsubmit="warehousingFormSubmit">
+                    <view class="warehousing-item">
+                        <view class="warehousing-item-left">{{yuyIndex==1?'仓库名称：':'填写入仓数量'}}</view>
+                        <view class="warehousing-item-right">
+                            <view wx:if="{{yuyIndex==1}}">{{comGoodsList.warehouse_name}}</view>
+                            <input wx:if="{{yuyIndex!=1}}" class="warehousing-input" name="totalNum"
+                                value="{{oneKindWarehousingTotal}}" type="number"
+                                bindinput="handleOneKindWarehousingTotal" />
+                        </view>
+                    </view>
+                    <view class="warehousing-item" wx:if="{{yuyIndex!=1}}">
+                        <view class="warehousing-item-right">
+                            <input class="warehousing-input" value="{{warehousingPackageNum}}" name="packageNum"
+                                type="number" bindinput="handleWarehousingPackageNumInput" />
+                            <text class="warehousing-unit">{{warehousingDetails.packaging_unit}}</text>
+                            <input class="warehousing-input" name="stockNum" value="{{warehousingStockNum}}"
+                                type="number" bindinput="handleWarehousingStockNumInput" />
+                            <text class="warehousing-unit">{{warehousingDetails.stock_unit}}</text>
+                        </view>
+                    </view>
+                    <view class="warehousing-item">
+                        <view class="warehousing-item-left">{{yuyIndex==1?'入仓单号:':'填写批次号1'}} </view>
+                        <view class="warehousing-item-right">
+                            <view wx:if="{{yuyIndex==1}}">{{comGoodsList.code}}</view>
+                            <input wx:if="{{yuyIndex!=1}}" class="warehousing-input" type="text" name="batch1"
+                                value="{{warehousingBatch1}}" />
+                        </view>
+                    </view>
+                    <view class="warehousing-item">
+                        <view class="warehousing-item-left">{{yuyIndex==1?'车牌号:':'填写批次号2'}}</view>
+                        <view class="warehousing-item-right">
+                            <input wx:if="{{yuyIndex==1}}" class="warehousing-input" type="text" name="plate"
+                                value="{{plate}}" />
+                            <input wx:if="{{yuyIndex!=1}}" class="warehousing-input" type="text" name="batch2"
+                                value="{{warehousingBatch2}}" />
+                        </view>
+                    </view>
+                    <view class="warehousing-item" wx:if="{{yuyIndex==1}}">
+                        <view class="warehousing-item-left">送货司机：</view>
+                        <view class="warehousing-item-right">
+                            <input class="warehousing-input" type="text" name="driver" value="{{driver}}" />
+
+                        </view>
+                    </view>
+                    <view class="warehousing-item" wx:if="{{yuyIndex==1}}">
+                        <view class="warehousing-item-left">送货司机电话：</view>
+                        <view class="warehousing-item-right">
+                            <input class="warehousing-input" type="text" name="phone" value="{{phone}}" />
+
+                        </view>
+                    </view>
+
+                    <view class="warehousing-item" wx:if="{{yuyIndex!=1}}">
+                        <view class="warehousing-item-left">{{yuyIndex==1?'开始时间:':'生产日期'}} </view>
+                        <view class="warehousing-item-right">
+                            <picker name="warehousingProductionDate" mode="date" value="{{warehousingProductionDate}}"
+                                start="2000-01-01" end="2120-12-01" bindchange="bindWarehousingProductionDateChange">
+                                <view class="picker-default" wx:if="{{warehousingProductionDate === ''}}">请选择日期</view>
+                                <view class="picker" wx:else>{{warehousingProductionDate}}</view>
+                            </picker>
+                            <image class="picker-right-arrow" src="/images/right_arrow.png" mode="heightFix"></image>
+                        </view>
+                    </view>
+                    <view class="warehousing-item" wx:if="{{yuyIndex==1}}">
+                        <view class="warehousing-item-left">开始时间:</view>
+                        <view class="warehousing-item-right">
+                            <picker mode="multiSelector" value="{{dateTime}}" range="{{dateTimeArray}}"
+                                bindchange="changeDateTime">
+                                <view>{{startT}}</view>
+                            </picker>
+                            <image class="picker-right-arrow" src="/images/right_arrow.png" mode="heightFix"></image>
+                        </view>
+                    </view>
+
+                    <view class="warehousing-item" wx:if="{{yuyIndex!=1}}">
+                        <view class="warehousing-item-left">{{yuyIndex==1?'结束时间:':'到期日期'}}</view>
+                        <view class="warehousing-item-right">
+                            <picker name="warehousingExpireDate" mode="date" value="{{warehousingExpireDate}}"
+                                start="2000-01-01" end="2120-12-01" bindchange="bindWarehousingExpireDateChange">
+                                <view class="picker-default" wx:if="{{warehousingExpireDate === ''}}">请选择日期</view>
+                                <view class="picker" wx:else>{{warehousingExpireDate}}</view>
+                            </picker>
+                            <image class="picker-right-arrow" src="/images/right_arrow.png" mode="heightFix"></image>
+                        </view>
+                    </view>
+
+                    <view class="warehousing-item" wx:if="{{yuyIndex==1}}">
+                        <view class="warehousing-item-left">结束时间：</view>
+
+                        <view class="warehousing-item-right">
+                            <picker mode="multiSelector" value="{{datetimeend}}" range="{{dateTimeendArray}}"
+                                bindchange="changeDateend">
+                                <view>{{endT}}</view>
+                            </picker>
+                            <image class="picker-right-arrow" src="/images/right_arrow.png" mode="heightFix">
+                            </image>
+                        </view>
+                    </view>
+
+                    <view class="warehousing-item remarks">
+                        <view class="warehousing-item-left">备注</view>
+                    </view>
+                    <view class="textarea-area" wx:if="{{yuyIndex!=1}}">
+                        <textarea name="remark" value="{{warehousingRemark}}" maxlength="200"
+                            bindinput="handleWarehousingRemarkInput"></textarea>
+                        <view class="textarea-val-len">
+                            <text class="not-full"
+                                wx:if="{{warehousingRemark.length < 200}}">{{warehousingRemark.length}}/</text>
+                            <text class="full" wx:else>200/</text>
+                            <text class="full">200</text>
+                        </view>
+                    </view>
+                    <view class="textarea-area" wx:if="{{yuyIndex==1}}">
+                        <textarea name="remark" value="{{warehousingRemark}}" maxlength="200"
+                            bindinput="handleWarehousingRemarkInput"></textarea>
+                        <view class="textarea-val-len">
+                            <text class="not-full"
+                                wx:if="{{warehousingRemark.length < 200}}">{{warehousingRemark.length}}/</text>
+                            <text class="full" wx:else>200/</text>
+                            <text class="full">200</text>
+                        </view>
+                    </view>
+                    <button class="warehousing-btn" form-type="submit">{{yuyIndex==1?'添加预约入仓单:':'添加到入仓单'}}</button>
+                </form>
+
+            </view>
+        </view>
+        <view class="close-popup" catchtap="handleCloseWarehousingPopup">
+            <image class="close-popup-icon" src="/images/close_white_icon.png" mode="widthFix"></image>
+        </view>
+    </view>
+</view>
+<view class="delivery-popup" wx:if="{{deliveryPopupShow}}">
+    <view class="delivery-bg" style="padding-top: {{CustomBar}}px;" catchtap="handleCloseDeliveryPopup">
+        <view class="delivery-area" catchtap="stopBubbling">
+            <view class="delivery-title">选择出仓信息</view>
+            <view class="delivery-data">
+                <form catchsubmit="deliveryFormSubmit">
+                    <view class="delivery-item">
+                        <view class="delivery-item-left">填写出仓数量</view>
+                        <view class="delivery-item-right">
+                            <input class="delivery-input" name="totalNum" value="{{oneKindDeliveryTotal}}" type="number"
+                                bindinput="handleOneKindDeliveryTotal" />
+                        </view>
+                    </view>
+                    <view class="delivery-item">
+                        <view class="delivery-item-right">
+                            <input class="delivery-input" value="{{deliveryPackageNum}}" name="packageNum" type="number"
+                                bindinput="handleDeliveryPackageNumInput" />
+                            <text class="delivery-unit">{{deliveryDetails.item_packaging_unit}}</text>
+                            <input class="delivery-input" name="stockNum" value="{{deliveryStockNum}}" type="number"
+                                bindinput="handleDeliveryStockNumInput" />
+                            <text class="delivery-unit">{{deliveryDetails.item_stock_unit}}</text>
+                        </view>
+                    </view>
+                    <view class="delivery-item">
+                        <view class="delivery-item-left">批次号1</view>
+                        <view class="delivery-item-right">
+                            <view class="delivery-val">{{deliveryDetails.batch1}}</view>
+                        </view>
+                    </view>
+                    <view class="delivery-item">
+                        <view class="delivery-item-left">批次号2</view>
+                        <view class="delivery-item-right">
+                            <view class="delivery-val">{{deliveryDetails.batch2}}</view>
+                        </view>
+                    </view>
+                    <view class="delivery-item">
+                        <view class="delivery-item-left">生产日期</view>
+                        <view class="delivery-item-right">
+                            <view class="delivery-val">{{deliveryDetails.production_date}}</view>
+                        </view>
+                    </view>
+                    <view class="delivery-item">
+                        <view class="delivery-item-left">到期日期</view>
+                        <view class="delivery-item-right">
+                            <view class="delivery-val">{{deliveryDetails.expiration_date}}</view>
+                        </view>
+                    </view>
+                    <button class="delivery-btn" form-type="submit">添加到出仓单</button>
+                </form>
+            </view>
+        </view>
+        <view class="close-popup" catchtap="handleCloseDeliveryPopup">
+            <image class="close-popup-icon" src="/images/close_white_icon.png" mode="widthFix"></image>
+        </view>
+    </view>
+</view>
+<!--  -->
+<tabbar activeIdx="{{activeIdx}}"></tabbar>
+<!------------------------------------------------ 你触碰到我的底线了  W(￣_￣)W ---------------------------------->
+
+<!-- 分页组件 -->
+
+<!-- <page-parts options="{{page}}" bind:start="pageStart" bind:success="pageSuccess" bind:fail="pageFail"  /> -->

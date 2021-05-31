@@ -1,0 +1,53 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<!-- 信息提示 -->
+<i-toast id="toast" />
+
+<!-- 模态框 -->
+<i-modal title="{{modal.tips}}" isHide="{{modal.ishide}}" bind:ok="{{modal.ok}}" bind:cancel="{{modal.cancel}}"
+    bind:plateBg="cancel">
+    <view>{{modal.message}}</view>
+</i-modal>
+
+<!----------------------------------------- 下面请开始你的表演 SHOW TIME ---------------------------------->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+  bg="background: #FF4B00;" textSize="26rpx">代叔线上充值、结算、对账的通知函
+</custom-parts>
+
+<view class="notice-area">
+  <view class="notice-start">致尊敬的客户：</view>
+  <view class="notice-content">
+    <view class="radial-gradient-area">
+      <view class="notice-content-item">
+        尊敬的客户您好，为了方便双方结算，提高工作效率。代叔科技产品和服务不断升级迭代，满足业务发展需要，立足客户需求和实现业务线上办理结算，线下操作运营一体化，现通知如下：
+      </view>
+      <view class="notice-content-item">
+        1、代叔科技给予2021年4月之后的新客户以及到期续约的客户，不超过押金金额30%的授信额度，该额度不能提现。客户充值金额优先用于抵扣已经使用的授信额度。老客户的按原授信额度不变。
+      </view>
+      <view class="notice-content-item">
+        2、从2021年4月1日开始，租金按日结算，每月记账天数为30日，每月的31日不收取租金，其他费用照常结算。对于3月31日收取的租金，将如数退还到系统内您的账上。
+      </view>
+      <view class="notice-content-item">
+        3、客户可以微信支付到“结算余额”，也可以线下公账转公账的形式转账，转账后由我司财务代为充值到客户的“结算余额”。“结算余额”可以直接用于仓租、服务费、物流费等所有费用的结算。
+      </view>
+      <view class="notice-content-item">
+        4、客户可以在小程序上直接微信支付的方式购买袋金票。也可以线下公账转公账的方式购买袋金票，但此方式需要在小程序内上传支付凭证及输入购买的数量，并支付对应的金额，然后由我司财务审核通过后方能成功购买。
+      </view>
+    </view>
+    <view class="notice-content-item">
+      5、客户点击使用袋金票后，袋金票的面额将转为“结算余额”，“结算余额”直接用于费用的结算。
+    </view>
+    <view class="notice-content-item">
+      6、购买和使用仓票是客户获得优惠的唯一途径；
+    </view>
+  </view>
+  <view class="notice-end">特此通知！</view>
+  <view class="notice-sign">
+    <view class="notice-sign-item">广州代叔科技有限公司</view>
+    <view class="notice-sign-item">二〇二一年四月六日</view>
+  </view>
+</view>
+<view class="tip">附：充值及仓票购买流程</view>
+<image class="picture" src="/images/banner.jpg" mode="widthFix"></image>
+<!------------------------------------------------ 你触碰到我的底线了  W(￣_￣)W ---------------------------------->

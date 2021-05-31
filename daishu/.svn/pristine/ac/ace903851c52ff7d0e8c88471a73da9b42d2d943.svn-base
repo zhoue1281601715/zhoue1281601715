@@ -1,0 +1,93 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<!-- 信息提示 -->
+<i-toast id="toast" />
+
+<!-- 模态框 -->
+<i-modal title="{{modal.tips}}" isHide="{{modal.ishide}}" bind:ok="{{modal.ok}}" bind:cancel="{{modal.cancel}}"
+    bind:plateBg="cancel">
+    <view>{{modal.message}}</view>
+</i-modal>
+
+<!----------------------------------------- 下面请开始你的表演 SHOW TIME ---------------------------------->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+    bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">出入记录
+</custom-parts>
+
+<view class="main">
+    <view class="recordsDetails">
+        <view class="select">
+            <view class="select-title">选择仓库</view>
+            <view class="selector">
+                <picker mode='selector' bindchange="handlePickerChange" value="{{warehousIndex}}" range="{{warehouse}}"
+                    range-key="name" data-id="{{warehousIndex[warehousIndex].id}}">
+                    <view class="picker-default" wx:if="{{warehousIndex==''}}">请选择仓库</view>
+                    <view class="picker-val" wx:else>{{warehouse[warehousIndex].name}}</view>
+                </picker>
+                <image class="more-icon" src="/images/right_arrow.png" mode="heightFix"></image>
+            </view>
+        </view>
+        <view class="select">
+            <view class="select-title">时间段</view>
+            <view class="selector selector-no-arrow">
+                <picker class="selectText" mode="date" value="{{startTime}}" bindchange='handerChangeStartTime'>
+                    <view class="picker-default" wx:if="{{startTime==''}}">起始时间</view>
+                    <view class="picker-val" wx:else>{{startTime}}</view>
+                </picker>
+                <view class="line">——</view>
+                <picker class="selectText" mode="date" value="{{endTime}}" bindchange='handerChangeEndTime'>
+                    <view class="picker-default" wx:if="{{endTime==''}}">截止时间</view>
+                    <view class="picker-val" wx:else>{{endTime}}</view>
+                </picker>
+            </view>
+        </view>
+        <view class="select">
+            <view class="select-title">类型</view>
+            <view class="selector">
+                <picker mode='selector' value="{{typeIndex}}" bindchange='handerChangeType' range="{{typeName}}">
+                    <view class="picker-default" wx:if="{{typeIndex==''}}">请选择</view>
+                    <view class="picker-val" wx:else> {{typeName[typeIndex]}}</view>
+                </picker>
+                <image class="more-icon" src="/images/right_arrow.png" mode="heightFix"></image>
+            </view>
+        </view>
+        <view class="select">
+            <view class="select-title">关键字</view>
+            <view class="selector selector-no-arrow">
+                <input class="keyword-input" type="text" placeholder="仓单号/车牌号" placeholder-style="color: #818181;"
+                    bindinput="getKeyword" value="{{keyword}}" />
+            </view>
+        </view>
+        <button class="query" bindtap="queryBtn">立即查询</button>
+    </view>
+    <view class="queryResults" wx:for="{{warehouseList}}" wx:key="index">
+        <view class="queryTitle">
+            <view>{{item.item_name || ""}}）</view>
+            <view class="state" wx:if="{{item.bill_type===1}}">出仓</view>
+            <view class="state" wx:if="{{item.bill_type===0}}">入仓</view>
+        </view>
+        <view class="number">仓单号：{{item.bill_code}}</view>
+        <view class="queryContent">
+            <view class="queryText">
+                <view>产品编号：{{item.item_code}}</view>
+                <view>库存数量：{{item.bill_code ||""}}</view>
+                <view>体积:{{item.volume || ""}}</view>
+                <view>批次号1:{{item.batch1 || ""}}</view>
+                <view>生产日期：{{item.production_date || ""}}</view>
+            </view>
+            <view class="queryText">
+                <view>规格：{{item.item_spec || ""}}</view>
+                <view>箱规：{{item.item_multiple || ""}}</view>
+                <view>重量：{{item.weight || ""}}</view>
+                <view>批次号2:{{item.batch2 || ""}}</view>
+                <view>到期日期：{{item.expiration_date || ""}}</view>
+            </view>
+        </view>
+    </view>
+</view>
+<tabbar activeIdx="{{activeIdx}}"></tabbar>
+<!------------------------------------------------ 你触碰到我的底线了  W(￣_￣)W ---------------------------------->
+
+<!-- 分页组件 -->
+<!-- <page-parts options="{{page}}" bind:start="pageStart" bind:success="pageSuccess" bind:fail="pageFail"  /> -->

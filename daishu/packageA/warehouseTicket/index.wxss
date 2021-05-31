@@ -1,0 +1,143 @@
+.share {
+  padding: 10rpx 30rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.shareLeft {
+  display: flex;
+  align-items: center;
+  color: #FF5500;
+}
+
+.share image {
+  width: 20rpx;
+}
+
+.nav {
+  padding: 0 20rpx;
+  height: 140rpx;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  line-height: 140rpx;
+  background: #FF5500;
+  color: #FFFFFF;
+  font-size: 26rpx;
+  white-space: nowrap;
+  z-index: 99;
+}
+
+.nav-item {
+  width: 15%;
+  display: inline-block;
+  text-align: center;
+}
+
+.nav-item:last-child {
+  width: 25%;
+}
+
+.nav-item.active {
+  font-size: 38rpx;
+}
+
+.header_view_hide {
+  display: none;
+}
+
+.wareDetails {
+  padding: 14rpx 10rpx 108rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+
+.wareContent {
+  width: 708rpx;
+  position: relative;
+  margin-bottom: 45rpx;
+  box-shadow: 0 4rpx 16rpx 0 rgba(0, 0, 0, .3);
+}
+
+.wareContent image {
+  width: 100%;
+  vertical-align: bottom;
+}
+
+.wareContent:nth-child(even) {
+  margin-right: 0;
+}
+
+.wareText {
+  display: flex;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 15%;
+  color: #fff;
+}
+.dai {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+
+  margin-top: -10px;
+  height: 80%;
+  /* margin-right: 20px; */
+}
+.moneth {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 30%;
+  margin-top: -10px;
+  height: 80%;
+  margin-left: 50rpx;
+}
+.price {
+  font-size: 45rpx;
+
+}
+.text {
+
+  font-size: 25rpx;
+}
+.title {
+
+  font-size: 25rpx;
+
+}
+.longtext {
+  color: #ffd300;
+}
+.payparce {
+  margin-top: 20rpx;
+}
+.payway {
+  font-size: 30rpx;
+  color: #ffa656;
+  font-weight: bold;
+}
+.spanText {
+  font-size: 70rpx;
+  color: #e8e8e8;
+
+}
+.shopPay {
+  color: #ff4b00;
+  font-weight: bold;
+}
+.shengy {
+  font-size: 20rpx;
+  margin-top: 5rpx;
+  color: #a9a9a9;
+}

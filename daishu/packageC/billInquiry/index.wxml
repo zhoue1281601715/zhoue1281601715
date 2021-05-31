@@ -1,0 +1,63 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<!-- 信息提示 -->
+<i-toast id="toast" />
+
+<!-- 模态框 -->
+<i-modal title="{{modal.tips}}" isHide="{{modal.ishide}}" bind:ok="{{modal.ok}}" bind:cancel="{{modal.cancel}}"
+    bind:plateBg="cancel">
+    <view>{{modal.message}}</view>
+</i-modal>
+
+<!----------------------------------------- 下面请开始你的表演 SHOW TIME ---------------------------------->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+    bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">账单查询
+</custom-parts>
+<view class="nav-area" style="top: {{CustomBar}}px;">
+    <view class="nav">
+        <picker mode="date" value="{{date}}" fields ="month" bindchange="bindDateChange">
+            <view class="picker">
+                <text>{{date}}</text>
+                <image class="more-icon" src="/images/more.png" mode="widthFix"></image>
+            </view>
+        </picker>
+    </view>
+    <view class="account">
+        <view class="account-item">支出：{{expenditure}}</view>
+        <view class="account-item">收入：{{income}}</view>
+    </view>
+</view>
+<view class="main">
+    <view class="list">
+        <block wx:for="{{billList}}" wx:key="index">
+            <navigator class="item" url="/packageC/orderDetails/index?code={{item.bill_code}}" wx:if="{{item.bill_code.length > 0}}">
+                <view class="circle">{{item.showWord}}</view>
+                <view class="item-content">
+                    <view class="item-data">
+                        <view class="item-title">{{item.subject}}</view>
+                        <view class="item-amount">{{item.amount}}</view>
+                    </view>
+                    <view class="item-bill_code">单号：{{item.bill_code}}</view>
+                    <view class="item-date">{{item.create_time}}</view>
+                </view>
+            </navigator>
+            <view class="item" wx:else>
+                <view class="circle">{{item.showWord}}</view>
+                <view class="item-content">
+                    <view class="item-data">
+                        <view class="item-title">{{item.subject}}</view>
+                        <view class="item-amount">{{item.amount}}</view>
+                    </view>
+                    <view class="item-date">{{item.create_time}}</view>
+                </view>
+            </view>
+        </block>
+    </view>
+</view>
+<tabbar activeIdx="{{activeIdx}}"></tabbar>
+
+<!------------------------------------------------ 你触碰到我的底线了  W(￣_￣)W ---------------------------------->
+
+<!-- 分页组件 -->
+<!-- <page-parts options="{{page}}" bind:start="pageStart" bind:success="pageSuccess" bind:fail="pageFail"  /> -->

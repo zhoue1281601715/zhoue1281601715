@@ -1,0 +1,157 @@
+/**
+ * 如果位目录层数大于两级需要修改路径
+ */
+const { $Toast, $Message } = require('../../utils/iview/base/index');
+import Tools from '../../utils/modules/Tools';
+import Config from '../../config';
+import utils from '../../utils/utils';
+
+const app = getApp();
+
+Page({
+	data: {
+		modal : {
+			tips : '提示',
+			message : '模态框说明',
+			ok : 'modalOk',
+			cancel : 'modalCancel',
+			ishide : true
+		},
+	
+		// --  分页配置数据  -------- 
+		page: {
+			url: '/',
+				data: {
+				page: 1,
+			}
+		},
+		isEnd: false,
+		// ------------------------- 
+		activeIdx: -1,
+		compony_money: '', // 公司余额
+		toastParameter: {}, // 自定义toast参数
+	},
+
+	/**
+	 * 转出到结算余额
+	 */
+	handleTransferOut (e) {
+		const that = this
+		const money = e.detail.value.money
+		const compony_money = that.data.compony_money
+		if (money > compony_money) {
+			wx.showToast({
+				title: '转出金额不能大于公司余额',
+				icon: 'none',
+				duration: 2000
+			})
+			return false
+		} else {
+			wx.showModal({
+				title: '提示',
+				content: '确认转出到结算余额？',
+				success(res) {
+					if (res.confirm) {
+						app.http({
+							config: {
+								url: 'api/v1/user_change',
+								data: {
+									change_money: money
+								},
+								method: 'POST'
+							},
+							isAuth: true
+						}).then(res => {
+							console.log(res, 'transferOutRes')
+							let toastParameter = {
+								icon: 'success',
+								content: res.data.msg,
+								duration: 1500,
+							}
+							that.setData({
+								toastParameter,
+							}, function () {
+								setTimeout(() => {
+									wx.navigateBack({
+										delta: 1,
+									})
+								}, 1500)
+							})
+						}).catch(err => {
+							console.log(err, 'transferOutErr')
+							wx.showModal({
+								title: '提示',
+								content: err.data.msg,
+								showCancel: false
+							})
+						})
+					}
+				}
+			})
+		}
+	},
+
+	onLoad (query){
+		app.setTitle('填个标题吧');
+		const that = this
+		const compony_money = Number(query.compony_money)
+		that.setData({
+			compony_money
+		})
+	},
+	
+	onShow (){
+		
+	},
+
+	/*============================================
+	 			     以下是基本操作 				
+	==============================================*/ 
+
+	...utils,  // mixin方法
+
+	trigger (e){
+		app.trigger(e, this);
+	},
+
+	modalCancel (){
+		this.setData({
+			'modal.ishide' : true
+		})
+	},
+
+	modalOk (){
+		this.setData({
+			'modal.ishide' : true
+		})
+	},
+
+	/**
+	 * 触底分页 (需要分页的请反我牌)
+	 */
+	onReachBottom() {
+		let { page, isEnd } = this.data;
+	
+		if (!isEnd) {
+		  this.setData({
+			'page.data.page': page.data.page + 1
+		  });
+		}
+	},
+
+	/**
+	 * 分页返回数据 (需要分页的请反我牌)
+	 */
+	pageSuccess(e) {
+		this.setData({
+		  list: e.detail.list,
+		  isEnd: e.detail.isEnd
+		})
+	},
+	pageFail(e) {
+		
+	},
+	pageStart(e) {
+		
+	}
+})

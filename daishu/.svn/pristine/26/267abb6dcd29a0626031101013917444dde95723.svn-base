@@ -1,0 +1,100 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<!-- 信息提示 -->
+<i-toast id="toast" />
+
+<!-- 模态框 -->
+<i-modal title="{{modal.tips}}" isHide="{{modal.ishide}}" bind:ok="{{modal.ok}}" bind:cancel="{{modal.cancel}}"
+    bind:plateBg="cancel">
+    <view>{{modal.message}}</view>
+</i-modal>
+
+<!----------------------------------------- 下面请开始你的表演 SHOW TIME ---------------------------------->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+    bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">分销
+</custom-parts>
+<view class="topColor">
+
+</view>
+<view class="commission">
+    <view class="totalCommission">累积佣金</view>
+    <view class="commissionNum">
+        <view class="commissionItem">
+            <view class="commissionText">今日佣金</view>
+            <view class="commissionVal">{{firstOfflineCountToday + secondOfflineCountToday}}</view>
+        </view>
+        <view class="commissionItem">
+            <view class="commissionText">累积收入</view>
+            <view class="commissionVal">{{firstOfflineCountSum + secondOfflineCountSum}}</view>
+        </view>
+    </view>
+</view>
+<view class="Offline">
+    <view class="offlineItem">
+        <view class="OfflinePeople">一级下线</view>
+        <view class="offlineVal">{{firstOffline.length}}人</view>
+    </view>
+    <view class="offlineItem">
+        <view class="OfflinePeople">二级下线</view>
+        <view class="offlineVal">{{secondOffline.length}}人</view>
+    </view>
+</view>
+<view class="container">
+    <view class="nav">
+        <block wx:for='{{ arr }}'>
+            <view class="tab {{currentTab == index ? 'red' : 'default'}}" catchtap='tabOn' data-index='{{index}}'
+                data-id="{{item.id}}">{{ item.name }}
+            </view>
+        </block>
+    </view>
+    <view class="user-list" wx:if="{{currentTab === 0}}">
+        <view class="user-item" wx:for="{{firstOffline}}" wx:key="index">
+            <view class="user-item-left">
+                <view class="avatar-area">
+                    <image class="user-avatar" src="{{item.avatar}}" mode="aspectFill" wx:if="{{item.avatar}}"></image>
+                    <image class="user-avatar" src="/images/default_avatar.png" mode="aspectFill" wx:else></image>
+                </view>
+                <view class="user-info">
+                    <view class="user-name">{{item.nickname}}</view>
+                    <view class="register-time">注册时间{{item.add_time}}</view>
+                </view>
+            </view>
+            <view class="user-item-right">
+                <text class="commission-label">累计佣金：</text>
+                <text class="commission-val">{{item.sum}}元</text>
+            </view>
+        </view>
+    </view>
+    <view class="user-list" wx:if="{{currentTab === 1}}">
+        <view class="user-item" wx:for="{{secondOffline}}" wx:key="index">
+            <view class="user-item-left">
+                <view class="avatar-area">
+                    <image class="user-avatar" src="{{item.avatar}}" mode="aspectFill" wx:if="{{item.avatar}}"></image>
+                    <image class="user-avatar" src="/images/default_avatar.png" mode="aspectFill" wx:else></image>
+                </view>
+                <view class="user-info">
+                    <view class="user-name">{{item.nickname}}</view>
+                    <view class="register-time">注册时间{{item.add_time}}</view>
+                </view>
+            </view>
+            <view class="user-item-right">
+                <text class="commission-label">累计佣金：</text>
+                <text class="commission-val">{{item.sum}}元</text>
+            </view>
+        </view>
+    </view>
+</view>
+<tabbar activeIdx="{{activeIdx}}"></tabbar>
+
+
+
+
+
+
+
+
+<!------------------------------------------------ 你触碰到我的底线了  W(￣_￣)W ---------------------------------->
+
+<!-- 分页组件 -->
+<!-- <page-parts options="{{page}}" bind:start="pageStart" bind:success="pageSuccess" bind:fail="pageFail"  /> -->

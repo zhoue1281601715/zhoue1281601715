@@ -1,0 +1,6 @@
+{
+  "component" : true,
+  "usingComponents": {
+    "img-parts": "/pages/components/img-parts/index"
+  }
+}

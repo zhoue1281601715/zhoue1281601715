@@ -1,0 +1,63 @@
+<!--packageC/waybill_printing/waybill_printing.wxml-->
+<!-- <van-nav-bar
+  title="运单打印"
+  left-arrow
+  title-class="title_bar"
+  custom-class="title_bar"
+  bind:click-left="onClickLeft"
+/> -->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+  bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">运单打印
+</custom-parts>
+<view class="rewu">
+<!-- <view class="rewu" style="margin-top:calc({{statusHeight}}px + 20rpx);"> -->
+
+  <view wx:for="{{list}}" wx:key="index">
+    <navigator class="item" url="../waybill_printing_detail/waybill_printing_detail?id={{item.id}}" >
+      <view class="tit">
+        <view class="name">运单号：{{item.code}}</view>
+        <view class="type">类型：{{item.delivery_type}}</view>
+      </view>
+      <view class="n">
+        <view class="d2">货物信息：<text>{{item.quantity}}件</text><text>|</text><text>{{item.weight}}KG</text><text>|</text><text>{{item.volume}}m³</text></view>
+        <view class="d2">下单时间：<text>{{item.date}}</text></view>
+        <view class="desc">备注：{{item.remark}}</view>
+      </view>
+      <view class="n" style="padding:0;">
+        <view class="site">
+          <image class="img" src="../../images/1.png" mode="widthFix"></image>
+          <view class="r">
+            <view class="t">
+              <view class="name">{{item.shipper_contact}}</view>
+              <view class="phone">{{item.shipper_mobile}}</view>
+            </view>
+            <view class="descs">{{item.shipper_city + item.shipper_area + item.shipper_street + item.shipper_address}}</view>
+            <view class="bPhone" data-phone="{{item.shipper_mobile}}" catchtap="getPhoneNum"><image src="../../images/16.png"></image>拨打电话</view>
+          </view>
+        </view>
+        <view class="site">
+          <image class="img" src="../../images/3.png" mode="widthFix"></image>
+          <view class="r">
+            <view class="t">
+              <view class="name">{{item.consignee_contact}}</view>
+              <view class="phone">{{item.consignee_phone}}</view>
+            </view>
+            <view class="descs">{{item.consignee_city + item.consignee_area + item.consignee_street + item.consignee_address}}</view>
+            <view class="bPhone" data-phone="{{item.consignee_phone}}" catchtap="getPhoneNum"><image src="../../images/16.png"></image>拨打电话</view>
+          </view>
+        </view>
+      </view>
+      <view class="pring" catchtap="isConnect" data-id="{{item.id}}">
+        <image src="../../images/10.png" mode="widthFix"></image>打印
+      </view>
+    </navigator>
+      <!--<print print="{{item.id}}"></print>-->
+  </view>
+  
+</view>
+
+
+<van-popup show="{{ show }}"  round  position="bottom" bind:close="closePopup" >
+  <van-cell is-link link-type="navigateTo"  wx:for="{{phoneList}}" wx:key="index" data-phone="{{item}}" value="{{item}}" bindtap="choosePhoneNum"/>
+</van-popup>
+

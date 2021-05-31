@@ -1,0 +1,172 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<!-- 信息提示 -->
+<i-toast id="toast" />
+
+<!-- 模态框 -->
+<i-modal title="{{modal.tips}}" isHide="{{modal.ishide}}" bind:ok="{{modal.ok}}" bind:cancel="{{modal.cancel}}"
+    bind:plateBg="cancel">
+    <view>{{modal.message}}</view>
+</i-modal>
+
+<!----------------------------------------- 下面请开始你的表演 SHOW TIME ---------------------------------->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+    bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">仓单详情</custom-parts>
+<view class="details">
+    <view class="orderName">
+        <view class="oederDetails">
+            <view>仓库名称</view>
+            <view>{{detail.warehouse_name}}</view>
+        </view>
+        <view class="oederDetails">
+            <view>客户</view>
+            <view>{{detail.customer_name}}</view>
+        </view>
+        <view class="oederDetails">
+            <view>日期</view>
+            <view>{{detail.date}}</view>
+        </view>
+        <view class="oederDetails">
+            <view>类型</view>
+            <view>{{detail.cate}}</view>
+            <!-- <view wx:if="{{detail.type === 0}}">入仓</view>
+            <view wx:elif="{{detail.type === 1}}">出仓</view> -->
+        </view>
+        <view class="oederDetails">
+            <view>编号</view>
+            <view>{{detail.code}}</view>
+        </view>
+        <view class="oederDetails">
+            <view>客服</view>
+            <view>{{detail.kefu}}</view>
+        </view>
+        <view class="oederDetails">
+            <view>票数</view>
+            <view>{{detail.count}}</view>
+        </view>
+        <view class="oederDetails">
+            <view>数量</view>
+            <view>{{detail.quantity}}</view>
+        </view>
+        <view class="oederDetails">
+            <view>重量</view>
+            <view>{{detail.weight}}</view>
+        </view>
+        <view class="oederDetails">
+            <view>体积</view>
+            <view>{{detail.volume}}</view>
+        </view>
+    </view>
+    <view class="companyName">
+        <view class="companyDetails">
+            <view>提货公司</view>
+            <view>{{detail.delivery_company}}</view>
+        </view>
+        <view class="companyDetails">
+            <view>车牌号</view>
+            <view>{{detail.delivery_plate}}</view>
+        </view>
+        <view class="companyDetails">
+            <view>出仓方式</view>
+            <view>{{detail.delivery_type}}</view>
+        </view>
+        <view class="companyDetails">
+            <view>收货公司</view>
+            <view>{{detail.logistics_consignee_name}}</view>
+        </view>
+        <view class="companyDetails">
+            <view>收货人</view>
+            <view>{{detail.logistics_consignee_contact}}</view>
+        </view>
+        <view class="companyDetails">
+            <view>收货电话</view>
+            <view>{{detail.logistics_consignee_phone}}</view>
+        </view>
+        <view class="companyDetails">
+            <view>收货地址</view>
+            <view>{{detail.logistics_consignee_province}}{{detail.logistics_consignee_city}}{{detail.logistics_consignee_area}}{{detail.logistics_consignee_street}}</view>
+        </view>
+        <view class="companyDetails">
+            <view>送货地址</view>
+            <view>{{detail.logistics_consignee_address}}</view>
+        </view>
+        <view class="companyDetails">
+            <view>取货方式</view>
+            <view>{{detail.logistics_delivery}}</view>
+        </view>
+        <view class="companyDetails">
+            <view>付款方式</view>
+            <view>{{detail.logistics_paytype}}</view>
+        </view>
+        <view class="companyDetails">
+            <view>指定保价</view>
+            <view>{{detail.logistics_worth}}</view>
+        </view>
+        <view class="companyDetails">
+            <view>提付款</view>
+            <view>{{detail.logistics_ti_amount}}</view>
+        </view>
+    </view>
+    <view class="queryTitle">查询结果 <text class="relation_num">({{detail.details.length}})</text></view>
+    <view class="goods-list">
+        <view class="goods-item" wx:for="{{detail.details}}">
+            <view class="goods-name">{{item.item_name}}）</view>
+            <view class="goods-data">
+                <view class="goods-data-left">
+                    <view class="goods-data-item">
+                        <view class="goods-data-name">产品编号：</view>
+                        <view class="goods-data-val">{{item.item_code || ''}}</view>
+                    </view>
+                    <view class="goods-data-item">
+                        <view class="goods-data-name" wx:if="{{detail.type === 0}}">入仓数量：</view>
+                        <view class="goods-data-name" wx:elif="{{detail.type === 1}}">出仓数量：</view> 
+                        <!-- <view class="goods-data-name">库存数量：</view> -->
+                        <!-- <view class="goods-data-val">{{(item.quantity_a + item.item_stock_unit) || ''}}</view> -->
+                        <view class="goods-data-val">{{item.package_num || ''}}</view>
+                    </view>
+                    <!-- <view class="goods-data-item">
+                        <view class="goods-data-name">体积：</view>
+                        <view class="goods-data-val"></view>
+                    </view> -->
+                    <view class="goods-data-item">
+                        <view class="goods-data-name">批次号1：</view>
+                        <view class="goods-data-val">{{item.batch1 || ''}}</view>
+                    </view>
+                    <view class="goods-data-item">
+                        <view class="goods-data-name">生产日期：</view>
+                        <view class="goods-data-val">{{item.production_date || ''}}</view>
+                    </view>
+                </view>
+                <view class="goods-data-right">
+                    <view class="goods-data-item">
+                        <view class="goods-data-name">规格：</view>
+                        <view class="goods-data-val">{{item.item_spec || ''}}{{item.item_stock_unit || ''}}</view>
+                    </view>
+                    <view class="goods-data-item">
+                        <view class="goods-data-name">箱规：</view>
+                        <view class="goods-data-val">{{item.item_multiple || ''}}</view>
+                    </view>
+                    <!-- <view class="goods-data-item">
+                        <view class="goods-data-name">重量：</view>
+                        <view class="goods-data-val"></view>
+                    </view> -->
+                    <view class="goods-data-item">
+                        <view class="goods-data-name">批次号2：</view>
+                        <view class="goods-data-val">{{item.batch2 || ''}}</view>
+                    </view>
+                    <view class="goods-data-item">
+                        <view class="goods-data-name">到期日期：</view>
+                        <view class="goods-data-val">{{item.expiration_date || ''}}</view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>
+<tabbar activeIdx="{{activeIdx}}"></tabbar>
+
+<!------------------------------------------------ 你触碰到我的底线了  W(￣_￣)W ---------------------------------->
+
+<!-- 分页组件 -->
+<!-- <page-parts options="{{page}}" bind:start="pageStart" bind:success="pageSuccess" bind:fail="pageFail"  /> -->

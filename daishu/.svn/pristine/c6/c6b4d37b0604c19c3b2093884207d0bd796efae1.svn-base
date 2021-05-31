@@ -1,0 +1,147 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<!-- 信息提示 -->
+<i-toast id="toast" />
+
+<!-- 模态框 -->
+<i-modal title="{{modal.tips}}" isHide="{{modal.ishide}}" bind:ok="{{modal.ok}}" bind:cancel="{{modal.cancel}}"
+    bind:plateBg="cancel">
+    <view>{{modal.message}}</view>
+</i-modal>
+
+<!----------------------------------------- 下面请开始你的表演 SHOW TIME ---------------------------------->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+    bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">入仓单
+</custom-parts>
+
+<view class="receipt-list">
+    <view class="receipt-item" wx:for="{{warehousingList}}" wx:key="{{item.id}}">
+        <view class="receipt-name-area">
+            <view class="receipt-name-area-left">
+                <!-- 自定义checkbox开始 -->
+                <view class="i-checkbox {{item.checked ? 'i-checked' : ''}}" catchtap="handleCheckboxChange" data-index="{{index}}" data-item_total_price="{{item.truePrice * item.cart_num}}"></view>
+                <!-- 自定义checkbox结束 -->
+                <view class="receipt-name">{{item.name}}</view>
+            </view>
+            <view class="receipt-name-area-right">
+                <view class="operate-icon-area" data-id="{{item.id}}" catchtap="handleOpenWarehousingPopup">
+                    <image class="operate-icon" src="/images/change_orange.png" mode="heightFix"></image>
+                </view>
+                <view class="operate-icon-area" data-id="{{item.id}}" catchtap="handleDeleteWarehousingReceipt">
+                    <image class="operate-icon" src="/images/delete_orange.png" mode="heightFix"></image>
+                </view>
+            </view>
+        </view>
+        <view class="receipt-data">
+            <view class="receipt-data-item">
+                <view class="receipt-data-item-left">产品编号：{{item.code}}</view>
+                <view class="receipt-data-item-right">规格：{{item.spec}}{{item.stock_unit}}</view>
+            </view>
+            <view class="receipt-data-item">
+                <view class="receipt-data-item-left">入仓数量：{{item.totalNum}}</view>
+            </view>
+            <view class="receipt-data-item">
+                <view class="receipt-data-item-left">批次号1：{{item.batch1}}</view>
+                <view class="receipt-data-item-right">批次号2：{{item.batch2}}</view>
+            </view>
+            <view class="receipt-data-item">
+                <view class="receipt-data-item-left">生产日期：{{item.production_date}}</view>
+                <view class="receipt-data-item-right">到期日期：{{item.expiration_date}}</view>
+            </view>
+        </view>
+        <view class="receipt-remarks">备注：{{item.remark}}</view>
+    </view>
+</view>
+<!-- 入仓下单 -->
+<view class="btn-area">
+    <view class="btn-area-left">
+        <view class="checkbox {{allChecked ? 'checked' : ''}}" catchtap="handleCheckedAllChange"></view>
+        <view>全选</view>
+    </view>
+    <view class="btn-area-right">
+        <image class="btn-bg" src="/images/xd.png" mode="widthFix"></image>
+        <view class="buy-btn" bindtap="handleOrderNow">立即下单</view>
+    </view>
+</view>
+<!-- 入仓下单 -->
+<view class="warehousing-popup" wx:if="{{warehousingPopupShow}}">
+    <view class="warehousing-bg" style="padding-top: {{CustomBar}}px;" catchtap="handleCloseWarehousingPopup">
+        <view class="warehousing-area" catchtap="stopBubbling">
+            <view class="warehousing-title">选择入仓信息</view>
+            <view class="warehousing-data">
+                <form catchsubmit="warehousingFormSubmit">
+                    <view class="warehousing-item">
+                        <view class="warehousing-item-left">填写入仓数量</view>
+                        <view class="warehousing-item-right">
+                            <input class="warehousing-input" name="totalNum" value="{{oneKindWarehousingTotal}}" type="number" bindinput="handleOneKindWarehousingTotal" />
+                        </view>
+                    </view>
+                    <view class="warehousing-item">
+                        <view class="warehousing-item-right">
+                            <input class="warehousing-input" value="{{warehousingPackageNum}}" name="packageNum" type="number" bindinput="handleWarehousingPackageNumInput" />
+                            <text class="warehousing-unit">{{warehousingDetails.packaging_unit}}</text>
+                            <input class="warehousing-input" name="stockNum" value="{{warehousingStockNum}}" type="number" bindinput="handleWarehousingStockNumInput" />
+                            <text class="warehousing-unit">{{warehousingDetails.stock_unit}}</text>
+                        </view>
+                    </view>
+                    <view class="warehousing-item">
+                        <view class="warehousing-item-left">填写批次号1</view>
+                        <view class="warehousing-item-right">
+                            <input class="warehousing-input" type="text" value="{{warehousingBatch1}}" />
+                        </view>
+                    </view>
+                    <view class="warehousing-item">
+                        <view class="warehousing-item-left">填写批次号2</view>
+                        <view class="warehousing-item-right">
+                            <input class="warehousing-input" type="text" value="{{warehousingBatch2}}" />
+                        </view>
+                    </view>
+                    <view class="warehousing-item">
+                        <view class="warehousing-item-left">生产日期</view>
+                        <view class="warehousing-item-right">
+                            <picker mode="date" value="{{warehousingProductionDate}}" start="2000-01-01" end="2120-12-01"
+                                bindchange="bindWarehousingProductionDateChange">
+                                <view class="picker-default" wx:if="{{warehousingProductionDate === ''}}">请选择日期</view>
+                                <view class="picker" wx:else>{{warehousingProductionDate}}</view>
+                            </picker>
+                            <image class="picker-right-arrow" src="/images/right_arrow.png" mode="heightFix"></image>
+                        </view>
+                    </view>
+                    <view class="warehousing-item">
+                        <view class="warehousing-item-left">到期日期</view>
+                        <view class="warehousing-item-right">
+                            <picker mode="date" value="{{warehousingExpireDate}}" start="2000-01-01" end="2120-12-01"
+                                bindchange="bindWarehousingExpireDateChange">
+                                <view class="picker-default" wx:if="{{warehousingExpireDate === ''}}">请选择日期</view>
+                                <view class="picker" wx:else>{{warehousingExpireDate}}</view>
+                            </picker>
+                            <image class="picker-right-arrow" src="/images/right_arrow.png" mode="heightFix"></image>
+                        </view>
+                    </view>
+                    <view class="warehousing-item remarks">
+                        <view class="warehousing-item-left">备注</view>
+                    </view>
+                    <view class="textarea-area">
+                        <textarea value="{{warehousingRemark}}" maxlength="200" bindinput="handleWarehousingRemarkInput"></textarea>
+                        <view class="textarea-val-len">
+                            <text class="not-full" wx:if="{{warehousingRemark.length < 200}}">{{warehousingRemark.length}}/</text>
+                            <text class="full" wx:else>200/</text>
+                            <text class="full">200</text>
+                        </view>
+                    </view>
+                    <button class="warehousing-btn" form-type="submit">添加到入仓单</button>
+                </form>
+            </view>
+        </view>
+        <view class="close-popup" catchtap="handleCloseWarehousingPopup">
+            <image class="close-popup-icon" src="/images/close_white_icon.png" mode="widthFix"></image>
+        </view>
+    </view>
+</view>
+<tabbar activeIdx="{{activeIdx}}"></tabbar>
+
+<!------------------------------------------------ 你触碰到我的底线了  W(￣_￣)W ---------------------------------->
+
+<!-- 分页组件 -->
+<!-- <page-parts options="{{page}}" bind:start="pageStart" bind:success="pageSuccess" bind:fail="pageFail"  /> -->

@@ -1,0 +1,134 @@
+page {
+  background: #FFFFFF;
+}
+
+.nav-area {
+  position: fixed;
+  left: 0;
+  width: 750rpx;
+  padding-bottom: 28rpx;
+  background-color: #FFFFFF;
+  z-index: 9;
+}
+
+.navs {
+  display: flex;
+  justify-content: space-between;
+  width: 750rpx;
+}
+
+.nav-items {
+  width: 50%;
+  height: 76rpx;
+  line-height: 74rpx;
+  border-bottom: 2rpx solid #FFFFFF;
+  font-size: 24rpx;
+  color: #1E1E1E;
+  text-align: center;
+}
+
+.nav-items.actives {
+  color: #FF5101;
+  border-color: #FF5101;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-around;
+  padding: 22rpx 34rpx;
+  width: 750rpx;
+  box-sizing: border-box;
+}
+
+.nav-item {
+  padding: 0 12rpx;
+  height: 32rpx;
+  line-height: 28rpx;
+  font-size: 24rpx;
+  color: #6B6969;
+  border: 2rpx solid #FFFFFF;
+  border-radius: 16rpx;
+}
+
+.nav-item.active {
+  color: #FF5201;
+  border-color: #FF5201;
+}
+
+.rechargeData {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 6rpx;
+  padding: 0 60rpx;
+  width: 750rpx;
+  box-sizing: border-box;
+}
+
+.rechargeText {
+  display: flex;
+  align-items: baseline;
+  font-size: 24rpx;
+  color: #000000;
+}
+
+.picker {
+  padding: 0 20rpx;
+  line-height: 44rpx;
+  font-size: 24rpx;
+  font-family: AlibabaPuHuiTiR;
+  color: #6B6969;
+  border-bottom: 2rpx solid #E5E5E5;
+}
+
+.line {
+  width: 100rpx;
+  height: 0;
+  border-bottom: 2rpx solid #E5E5E5;
+}
+
+.recharge-content {
+  padding: 0 34rpx;
+  width: 750rpx;
+  box-sizing: border-box;
+}
+
+.recharge-list {
+  border-top: 2rpx solid #E9E9E9;
+}
+
+.recharge-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18rpx 42rpx 18rpx 28rpx;
+  border-bottom: 2rpx solid #E9E9E9;
+}
+
+.recharge-name {
+  width: 326rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 24rpx;
+  color: #000000;
+}
+
+.recharge-time {
+  margin-top: 16rpx;
+  font-size: 20rpx;
+  color: #6B6969;
+}
+
+.recharge-amount {
+  align-self: flex-end;
+  font-size: 24rpx;
+  color: #000000;
+}
+
+.nodata {
+  padding: 50rpx 0;
+  text-align: center;
+  font-size: 28rpx;
+  color: #818181;
+}

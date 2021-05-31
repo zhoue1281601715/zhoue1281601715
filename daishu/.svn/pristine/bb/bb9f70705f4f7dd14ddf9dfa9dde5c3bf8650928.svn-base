@@ -1,0 +1,163 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<!-- 信息提示 -->
+<i-toast id="toast" />
+
+<!-- 模态框 -->
+<i-modal title="{{modal.tips}}" isHide="{{modal.ishide}}" bind:ok="{{modal.ok}}" bind:cancel="{{modal.cancel}}"
+  bind:plateBg="cancel">
+  <view>{{modal.message}}</view>
+</i-modal>
+
+<!----------------------------------------- 下面请开始你的表演 SHOW TIME ---------------------------------->
+<custom-parts isBack="{{false}}" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+  bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);"></custom-parts>
+
+<!-- banner背景 -->
+<view class="banner"></view>
+<view class="main">
+  <!-- 用户基本数据开始 -->
+  <view class="user-info">
+    <view class="user-avatar">
+      <image class="avatar" src="{{currentUserInfo.avatar}}" mode="aspectFill"></image>
+    </view>
+    <view class="login-register">
+      <!-- <view class="login-register-btn-area">
+        <url-parts url="/packageC/login/index">
+          <view>登录</view>
+        </url-parts>
+        <view>/</view>
+        <view>注册</view>
+      </view> -->
+      <view class="login-tip">{{currentUserInfo.nickname}}</view>
+      <view class="logout-area" wx:if="{{currentUserInfo.nickname.length > 0}}">
+        <view class="logout" catchtap="handleLogout">退出登录</view>
+      </view>
+    </view>
+    <view class="user-data">
+      <view class="user-data-item">公司余额{{currentUserInfo.compony_money}}</view>
+      <view class="user-data-item">可用余额{{currentUserInfo.now_money}}</view>
+      <view class="user-data-item">结算余额{{settlementBalance}}</view>
+    </view>
+  </view>
+  <!-- 用户基本数据结束 -->
+  <!-- 导航栏开始 -->
+  <view class="nav">
+    <!-- 代叔信息开始 -->
+    <view class="nav-list-content" wx:if="{{is_driver === 0}}">
+    <!-- <view class="nav-list-content"> -->
+      <view class="nav-list-title">代叔信息</view>
+      <view class="nav-list">
+        <navigator url="/pages/yuncang/index" class="nav-item" open-type="switchTab">
+          <image class="nav-item-icon" src="/images/rc.png" mode="heightFix"></image>
+          <text class="nav-item-name">入仓</text>
+        </navigator>
+        <view class="nav-item" catchtap="handleNavigatorToDelivery">
+          <image class="nav-item-icon" src="/images/cc.png" mode="heightFix"></image>
+          <text class="nav-item-name">出仓</text>
+        </view>
+        <navigator url="/packageC/inventoryQuery/index" class="nav-item">
+          <image class="nav-item-icon" src="/images/chaxun.png" mode="heightFix"></image>
+          <text class="nav-item-name">库存查询</text>
+        </navigator>
+        <navigator url="/packageC/warehouseRecords/index" class="nav-item">
+          <image class="nav-item-icon" src="/images/ckjilu.png" mode="heightFix"></image>
+          <text class="nav-item-name">仓库记录</text>
+        </navigator>
+        <navigator url="/packageC/deliveryRecord/index" class="nav-item">
+          <image class="nav-item-icon" src="/images/fhjilu.png" mode="heightFix"></image>
+          <text class="nav-item-name">发货记录</text>
+        </navigator>
+        <navigator url="/packageC/billInquiry/index" class="nav-item">
+          <image class="nav-item-icon" src="/images/zdchaxun.png" mode="heightFix"></image>
+          <text class="nav-item-name">账单查询</text>
+        </navigator>
+        <navigator url="/packageC/accessRecord/index" class="nav-item">
+          <image class="nav-item-icon" src="/images/crjilu.png" mode="heightFix"></image>
+          <text class="nav-item-name">出入记录</text>
+        </navigator>
+        <navigator url="/packageA/wallet/index" class="nav-item">
+          <image class="nav-item-icon" src="/images/qb.png" mode="heightFix"></image>
+          <text class="nav-item-name">我的钱包</text>
+        </navigator>
+        <!-- <navigator url="/packageC/dataDisplay/index" class="nav-item">
+          <image class="nav-item-icon" src="/images/guanli.png" mode="heightFix"></image>
+          <text class="nav-item-name">管理入口</text>
+        </navigator> -->
+      </view>
+    </view>
+    <!-- 代叔信息结束 -->
+    <!-- 工具与服务开始 -->
+    <view class="nav-list-content" wx:if="{{is_driver === 0}}">
+    <!-- <view class="nav-list-content"> -->
+      <view class="nav-list-title">工具与服务</view>
+      <view class="nav-second-list">
+        <navigator url="/packageC/mallOrder/index" class="nav-item">
+          <image class="nav-item-icon" src="/images/scdingdan.png" mode="heightFix"></image>
+          <text class="nav-item-name">商城订单</text>
+        </navigator>
+        <navigator url="/packageA/warehouseTicket/index" class="nav-item">
+          <image class="nav-item-icon" src="/images/cp.png" mode="heightFix"></image>
+          <text class="nav-item-name">仓票</text>
+        </navigator>
+        <navigator url="/packageC/distribution/index" class="nav-item">
+          <image class="nav-item-icon" src="/images/fenxiao.png" mode="heightFix"></image>
+          <text class="nav-item-name">分销</text>
+        </navigator>
+        <navigator url="/packageC/addressManagement/index" class="nav-item">
+          <image class="nav-item-icon" src="/images/dizhi.png" mode="heightFix"></image>
+          <text class="nav-item-name">常用地址</text>
+        </navigator>
+        <navigator url="/packageC/contact/index" class="nav-item">
+          <image class="nav-item-icon" src="/images/lianxi.png" mode="heightFix"></image>
+          <text class="nav-item-name">联系我们</text>
+        </navigator>
+        <!-- <navigator url="/packageC/taxiOrder/taxiOrder" class="nav-item">
+          <image class="nav-item-icon" src="/images/driver.png" mode="heightFix"></image>
+          <text class="nav-item-name">司机端</text>
+        </navigator> -->
+      </view>
+    </view>
+    <!-- 工具与服务结束 -->
+
+    <view class="nav-list-content" wx:if="{{is_driver === 1}}">
+    <!-- <view class="nav-list-content"> -->
+      <view class="nav-list-title">司机工具</view>
+      <view class="nav-list">
+        <navigator url="/packageC/sign_obtain_good/sign_obtain_good" class="nav-item">
+          <image class="nav-item-icon" src="/images/6.png" mode="heightFix"></image>
+          <text class="nav-item-name">提货签收</text>
+        </navigator>
+        <navigator url="/packageC/sign_give_good/sign_give_good" class="nav-item">
+          <image class="nav-item-icon" src="/images/7.png" mode="heightFix"></image>
+          <text class="nav-item-name">送货签收</text>
+        </navigator>
+        <navigator url="/packageC/delivery_goods/delivery_goods" class="nav-item">
+          <image class="nav-item-icon" src="/images/8.png" mode="heightFix"></image>
+          <text class="nav-item-name">送货收款</text>
+        </navigator>
+        <navigator url="/packageC/waybill_printing/waybill_printing" class="nav-item">
+          <image class="nav-item-icon" src="/images/10.png" mode="heightFix"></image>
+          <text class="nav-item-name">运单打印</text>
+        </navigator>
+      </view>
+    </view>
+    <view class="nav-list-content" wx:if="{{is_driver === 1}}">
+    <!-- <view class="nav-list-content"> -->
+      <view class="nav-list-title">数据统计</view>
+      <view class="nav-list">
+        <navigator url="/packageC/data_statistics/data_statistics" class="nav-item">
+          <image class="nav-item-icon" src="/images/11.png" mode="heightFix"></image>
+          <text class="nav-item-name">业绩统计</text>
+        </navigator>
+      </view>
+    </view>
+  </view>
+  <!-- 导航栏结束 -->
+</view>
+<tabbar activeIdx="{{activeIdx}}"></tabbar>
+<!------------------------------------------------ 你触碰到我的底线了  W(￣_￣)W ---------------------------------->
+
+<!-- 分页组件 -->
+<!-- <page-parts options="{{page}}" bind:start="pageStart" bind:success="pageSuccess" bind:fail="pageFail"  /> -->

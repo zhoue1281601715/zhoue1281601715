@@ -1,0 +1,52 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<!-- 信息提示 -->
+<i-toast id="toast" />
+
+<!-- 模态框 -->
+<i-modal title="{{modal.tips}}" isHide="{{modal.ishide}}" bind:ok="{{modal.ok}}" bind:cancel="{{modal.cancel}}"
+    bind:plateBg="cancel">
+    <view>{{modal.message}}</view>
+</i-modal>
+
+<!----------------------------------------- 下面请开始你的表演 SHOW TIME ---------------------------------->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}" bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">购买记录</custom-parts>
+
+<view class="main">
+    <view class="coupon-item" wx:for="{{stockList}}" wx:key="{{item.id}}">
+        <view class="coupon-item-left">
+            <view class="coupon-picture-area">
+                <image class="coupon-picture" src="/images/stock.png" mode="aspectFill"></image>
+            </view>
+            <view class="coupon-item-data">
+                <view class="coupon-item-price">{{item.get_money}}元面值</view>
+                <view class="coupon-item-tip">仅限{{item.use_month ? item.use_month : '?'}}月使用</view>
+            </view>
+        </view>
+        <view class="coupon-item-right">
+            <view class="coupon-buy-price">￥{{item.pay_money}}</view>
+            <view class="coupon-date">{{item.created_time}}</view>
+        </view>
+    </view>
+    <!-- <view class="coupon-item">
+        <view class="coupon-item-left">
+            <view class="coupon-picture-area">
+                <image class="coupon-picture" src="" mode="aspectFill"></image>
+            </view>
+            <view class="coupon-item-data">
+                <view class="coupon-item-price">10000元面值</view>
+                <view class="coupon-item-tip">仅限10月使用</view>
+            </view>
+        </view>
+        <view class="coupon-item-right">
+            <view class="coupon-buy-price">￥9500</view>
+            <view class="coupon-date">2021-10-01</view>
+        </view>
+    </view> -->
+</view>
+<tabbar activeIdx="{{activeIdx}}"></tabbar>
+<!------------------------------------------------ 你触碰到我的底线了  W(￣_￣)W ---------------------------------->
+
+<!-- 分页组件 -->
+<!-- <page-parts options="{{page}}" bind:start="pageStart" bind:success="pageSuccess" bind:fail="pageFail"  /> -->

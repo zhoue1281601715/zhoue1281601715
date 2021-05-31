@@ -1,0 +1,60 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<!-- 信息提示 -->
+<i-toast id="toast" />
+
+<!-- 模态框 -->
+<i-modal title="{{modal.tips}}" isHide="{{modal.ishide}}" bind:ok="{{modal.ok}}" bind:cancel="{{modal.cancel}}"
+    bind:plateBg="cancel">
+    <view>{{modal.message}}</view>
+</i-modal>
+
+<!----------------------------------------- 下面请开始你的表演 SHOW TIME ---------------------------------->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+    bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">代叔仓票
+</custom-parts>
+<view class="share {{showView?'header_view_show':'header_view_hide'}}">
+    <view class="shareLeft">
+        <text>点击</text>
+        <image src="/images/san.png" alt="" style="margin: 0 10rpx;width: 54rpx;" mode="widthFix"></image>
+        <text>选择“添加到我的小程序”</text>
+    </view>
+    <image src="/images/cha.png" bindtap="clickMes" mode="widthFix"></image>
+</view>
+
+<view class="wareDetails" wx:if="{{warehouseTickerList.length > 0}}">
+    <url-parts url="/packageA/warehouseTicketDetails/index?stock_id={{item.id}}" class="wareContent"
+        wx:for="{{warehouseTickerList}}" wx:key="index">
+        <image src="/images/daiq.png" mode="widthFix"></image>
+        <view class="wareText">
+            <view class="dai">
+                <view class="price">
+                    <text>￥{{item.get_money}}</text>
+                    <text class="text">袋金票</text>
+                </view>
+                <view class="title">
+                    <text>{{item.use_month}}月1日激活到结算账户<text class="longtext">长期有效</text></text>
+                </view>
+                <view class="title">
+                    可抵达扣租、服务费、运费等
+                </view>
+                <view class="title payparce">
+                    实际支付<text class="payway">￥{{item.pay_money}}</text>(省{{item.get_money-item.pay_money}}元)
+                </view>
+            </view>
+            <view class="moneth">
+                <span class="spanText">{{item.use_month}}月</span>
+                <span class="shopPay">立即购买</span>
+                <span class="shengy">剩余{{item.num}}件</span>
+            </view>
+        </view>
+    </url-parts>
+</view>
+<view class="nodata" wx:else>{{loading ? '' : '没有查找到数据'}}</view>
+<tabbar activeIdx="{{activeIdx}}"></tabbar>
+
+<!------------------------------------------------ 你触碰到我的底线了  W(￣_￣)W ---------------------------------->
+
+<!-- 分页组件 -->
+<!-- <page-parts options="{{page}}" bind:start="pageStart" bind:success="pageSuccess" bind:fail="pageFail"  /> -->

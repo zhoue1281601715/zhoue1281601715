@@ -1,0 +1,90 @@
+@import '/lib/iconfont.wxss';
+
+page {
+  background: #F2F2F2;
+}
+
+.main {
+  padding: 24rpx 18rpx 118rpx;
+  width: 750rpx;
+  box-sizing: border-box;
+}
+.queryResults {
+  margin-bottom: 24rpx;
+  padding-bottom: 36rpx;
+  width: 100%;
+  border-radius: 6rpx;
+  background-color: #FFFFFF;
+  box-sizing: border-box;
+}
+.queryTitle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12rpx 58rpx 0 36rpx;
+  height: 84rpx;
+  border-bottom: 2rpx solid #E5E5E5;
+  box-sizing: border-box;
+}
+.state {
+  font-size: 24rpx;
+  color: #FF5201;
+}
+
+
+
+
+.information {
+  padding: 24rpx 0 146rpx;
+}
+
+.warehousing-form {
+  margin: 0 auto;
+  width: 718rpx;
+  border-radius: 6rpx;
+  background-color: #FFFFFF;
+  margin-bottom: 20rpx;
+}
+
+.warehousing-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 28rpx;
+  height: 88rpx;
+  border-bottom: 2rpx solid #F2F2F2;
+  box-sizing: border-box;
+}
+
+.warehousing-item-left {
+  font-size: 28rpx;
+  color: #000000;
+  height: 86rpx;
+  line-height: 86rpx;
+}
+
+.warehousing-item-right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.warehousing-input {
+  flex: 1;
+  padding: 0 20rpx;
+  height: 86rpx;
+  font-size: 28rpx;
+  text-align: right;
+  color: #000000;
+  box-sizing: border-box;
+}
+.btnChange{
+  width: 132rpx;
+
+  font-size: 28rpx;
+  line-height: 53rpx;
+  height: 53rpx;
+  margin-right: 16rpx;
+
+}

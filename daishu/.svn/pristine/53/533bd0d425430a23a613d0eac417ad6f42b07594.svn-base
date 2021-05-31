@@ -1,0 +1,43 @@
+page {
+  background: linear-gradient(180deg, #FFFFFF, #F2F2F2);
+  padding-bottom: 94rpx;
+}
+
+.onLine {
+  padding: 20rpx 34rpx;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.fillMoney {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 14rpx 32rpx 18rpx;
+  width: 100%;
+  box-sizing: border-box;
+  border-bottom: 2rpx solid #E9E9E9;
+}
+
+.moneyText {
+  display: flex;
+  align-items: center;
+  font-size: 54rpx;
+  font-family: AlibabaPuHuiTiM;
+  font-weight: bold;
+  color: #010101;
+}
+
+.fillMoney input {
+  height: 52rpx;
+  font-size: 24rpx;
+  color: #010101;
+}
+
+.recharge {
+  margin-top: 62rpx;
+  background-image: linear-gradient(to right, #FF7900, #FF4B00);
+  font-size: 34rpx;
+  color: #FFFFFF;
+  border-radius: 42rpx;
+}

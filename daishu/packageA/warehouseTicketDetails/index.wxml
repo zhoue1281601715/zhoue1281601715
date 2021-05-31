@@ -1,0 +1,142 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<!-- 信息提示 -->
+<i-toast id="toast" />
+
+<!-- 模态框 -->
+<i-modal title="{{modal.tips}}" isHide="{{modal.ishide}}" bind:ok="{{modal.ok}}" bind:cancel="{{modal.cancel}}"
+    bind:plateBg="cancel">
+    <view>{{modal.message}}</view>
+</i-modal>
+
+<!----------------------------------------- 下面请开始你的表演 SHOW TIME ---------------------------------->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+    bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">仓票详情
+</custom-parts>
+<view class="warehouseDetails">
+    <image src="/images/djj.png" mode="scaleToFill" style="width: 696rpx;height: 372rpx;vertical-align: bottom;">
+    </image>
+    <view class="wareText">
+        <view>
+            <view class="ticket">
+                <view class="tickets">
+                    <span class="yticket">{{warehoustTicket.get_money}}</span>
+                    <span>￥金袋票</span>
+                </view>
+                <view class="purchase">{{warehoustTicket.use_month}}月</view>
+            </view>
+            <view class="useTime">
+                <view class="useTimeBan">{{warehoustTicket.use_month}}月1日后激活到结算账户，长期有效可抵扣租金、服务费、运费等</view>
+
+            </view>
+        </view>
+        <view class="money">
+            <text class="moneyPay">¥</text>
+            {{warehoustTicket.pay_money}}
+            <text
+                class="saveMoney">元（实际支付{{warehoustTicket.pay_money}}，节省{{warehoustTicket.get_money-warehoustTicket.pay_money}}元）</text>
+        </view>
+    </view>
+</view>
+<view class="surplus">
+    <view class="progress-area">
+        <view class="progress">
+            <view class="progress-ratio" style="width: {{progressRatioWidth}}rpx;"></view>
+        </view>
+        <view class="progress-value">{{warehoustTicket.sales > 0 ? warehoustTicket.sales : 0}}/{{allWarehoustTicket}}
+        </view>
+    </view>
+    <view class="surplus-value">剩余{{warehoustTicket.num}}件</view>
+</view>
+<view class="wareContent">
+    <view class="wareContent-item">
+        <view><text class="volume">￥{{warehoustTicket.get_money}}</text><text class="text">原价</text></view>
+        <view class="volumeContent">
+            <view class="volumeMoney"><text>¥ </text>{{warehoustTicket.pay_money}}<text class="text">现价</text></view>
+
+        </view>
+    </view>
+    <view class="wareContent-item">
+        <button class="rushPurchase" catchtap="handleShowPopup">立即抢购</button>
+    </view>
+</view>
+<view class="wareContent">
+    <view class="explain">
+        <view class="explainTitle">仓票说明</view>
+        <text class="explainContent">{{warehoustTicket.brief ? warehoustTicket.brief : '暂无说明'}}</text>
+        <image class="gongzhang" src="/images/gongzhang.png" mode="widthFix"></image>
+    </view>
+</view>
+
+<view class="popup-area" wx:if="{{showPopup}}">
+    <view class="popup-content">
+        <view class="popup" style="bottom: {{popupPositionBottom}}rpx;">
+            <view class="close-popup">
+                <view catchtap="handleHidePopup">
+                    <image class="close-icon" src="/images/close_icon.png" mode="widthFix"></image>
+                </view>
+            </view>
+            <view class="payment-amount">
+                <text class="yuan">￥</text>
+                <text>{{warehoustTicket.pay_money}}</text>
+            </view>
+            <view class="payment-type">
+                <view class="payment-type-item" catchtap="linePayment" data-pay_type="wxpay">
+                    <image class="payment-type-icon" src="/images/wechat.png" mode="widthFix"></image>
+                    <text class="payment-name">微信支付</text>
+                </view>
+                <view class="payment-type-item" catchtap="linePayment" data-pay_type="balance">
+                    <image class="payment-type-icon" src="/images/wallet.jpg" mode="widthFix"></image>
+                    <text class="payment-name">线下支付</text>
+                </view>
+                <!-- <view class="payment-type-item" catchtap="handlePayment" data-pay_type="offline">
+                    <image class="payment-type-icon" src="/images/wallet.jpg" mode="widthFix"></image>
+                    <text class="payment-name">线下支付</text>
+                </view> -->
+            </view>
+        </view>
+    </view>
+</view>
+<!-- 上传图片 -->
+<view class="warehousing-popup" wx:if="{{warehousingPopupShow}}">
+    <view class="warehousing-bg" style="padding-top: {{CustomBar}}px;" catchtap="handleCloseWarehousingPopup">
+        <view class="warehousing-area" catchtap="stopBubbling">
+            <view class="warehousing-title">优惠券数量</view>
+            <view class="onLine">
+                <form catchsubmit="handleOfflineRecharge">
+                    <view class="fillMoney">
+                        <input type="text" name="money" value="{{offlineMoney}}" placeholder="请输入优惠券数量"
+                            placeholder-style="color: #6B6969;" />
+                        <image src="/images/cx.png" mode="widthFix"
+                            style="margin-left: 26rpx;width: 46rpx;height: 46rpx;"></image>
+                    </view>
+                    <view class="tip">请上传证明</view>
+                    <view class="picture-area">
+                        <block wx:if="{{pay_img.length > 0}}">
+                            <view class="picture-item">
+                                <view class="remove" catchtap="handleDeleteImage" wx:if="{{removeIconFlag}}">
+                                    <image class="remove-icon" src="/images/close_white_icon.png" mode="widthFix">
+                                    </image>
+                                </view>
+                                <image class="picture" src="{{pay_img}}" mode="widthFix"></image>
+                            </view>
+                        </block>
+                        <view class="upload-picture" catchtap="handleChooseImage" wx:else>+上传图片</view>
+                    </view>
+                    <button class="submit-btn" formType="submit">提交</button>
+                </form>
+            </view>
+        </view>
+        <view class="close-popup" catchtap="handleCloseWarehousingPopup">
+            <image class="close-popup-icon" src="/images/close_white_icon.png" mode="widthFix"></image>
+        </view>
+    </view>
+</view>
+<toast parameter="{{toastParameter}}"></toast>
+<tabbar activeIdx="{{activeIdx}}"></tabbar>
+
+<!------------------------------------------------ 你触碰到我的底线了  W(￣_￣)W ---------------------------------->
+
+<!-- 分页组件 -->
+<!-- <page-parts options="{{page}}" bind:start="pageStart" bind:success="pageSuccess" bind:fail="pageFail"  /> -->

@@ -1,0 +1,84 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<!-- 信息提示 -->
+<i-toast id="toast" />
+
+<!-- 模态框 -->
+<i-modal title="{{modal.tips}}" isHide="{{modal.ishide}}" bind:ok="{{modal.ok}}" bind:cancel="{{modal.cancel}}"
+    bind:plateBg="cancel">
+    <view>{{modal.message}}</view>
+</i-modal>
+
+<!----------------------------------------- 下面请开始你的表演 SHOW TIME ---------------------------------->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+    bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">我的钱包
+</custom-parts>
+<view class="topColor"></view>
+<view class="wallet">
+    <!-- <navigator class="availableBalance" url="/packageA/record/index?index=1"> -->
+    <view class="btnvuew">
+        <view class="balance">
+            <view class="user-avatar">
+                <image class="avatar" src="{{currentUserInfo.avatar}}" mode="aspectFill"></image>
+            </view>
+        </view>
+        <view class="balance">{{nickName}}</view>
+    </view>
+    <view class="companyBalance">
+        <!-- <navigator class="companyText" url="/packageA/record/index?index=0"> -->
+        <navigator class="companyText" >
+            <!-- <view>公司余额(元)</view> -->
+            <view>结算余额(元)</view>
+            <!-- <view class="num">{{moneyBag.userInfo.compony_money}}</view> -->
+            <view class="num">{{ settlementBalance}}</view>
+        </navigator>
+        <navigator class="companyText" url="/packageA/myWarehouseTicket/index">
+            <view>我的仓票(张)</view>
+            <view class="num">{{moneyBag.stockNum}}</view>
+        </navigator>
+    </view>
+    <view class="mode">
+        <!-- <navigator class="transferOut" url="/packageA/transferOut/index?compony_money={{moneyBag.userInfo.compony_money}}">转出</navigator> -->
+        <navigator bindtap="payRecharge" class="switchTo" >充值</navigator>
+        <!-- url="/packageA/recharge/index" -->
+    </view>
+</view>
+<view class="popup-area" wx:if="{{showPopup}}">
+    <view class="popup-content">
+        <view class="popup" style="bottom: {{popupPositionBottom}}rpx;">
+            <view class="close-popup">
+                <view catchtap="handleHidePopup">
+                    <image class="close-icon" src="/images/close_icon.png" mode="widthFix"></image>
+                </view>
+            </view>
+            <!-- <view class="payment-amount">
+                <text class="yuan">￥</text>
+                <text>1000</text>
+            </view> -->
+            <view class="payment-type">
+                <view class="payment-type-item" catchtap="handleWechatPay" data-pay_type="wxpay">
+                    <image class="payment-type-icon" src="/images/wechat.png" mode="widthFix"></image>
+                    <text class="payment-name">微信支付</text>
+                </view>
+                <view class="payment-type-item" catchtap="handleWechatPay" data-pay_type="offline">
+                    <image class="payment-type-icon" src="/images/wallet.jpg" mode="widthFix"></image>
+                    <text class="payment-name">线下支付</text>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>
+
+
+
+
+
+
+
+
+
+<!------------------------------------------------ 你触碰到我的底线了  W(￣_￣)W ---------------------------------->
+
+<!-- 分页组件 -->
+<!-- <page-parts options="{{page}}" bind:start="pageStart" bind:success="pageSuccess" bind:fail="pageFail"  /> -->

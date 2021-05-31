@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "搜索设备",
+  "enablePullDownRefresh" : true,
+  "usingComponents": {
+    "van-nav-bar": "../@vant/weapp/nav-bar"
+  }
+}

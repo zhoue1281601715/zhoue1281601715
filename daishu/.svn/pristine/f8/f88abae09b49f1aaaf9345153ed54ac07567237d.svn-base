@@ -1,0 +1,20 @@
+<!-- <view class="i-toast-mask" wx:if="{{ visible && mask }}" bindtap="handleHide"></view> -->
+<plate-parts bg="{{bg}}" jStyle="z-index:600; width:100vw; height:100vh;" animateIn="{{animateIn}}" animateOut="{{animateOut}}" position="{{position}}" animateDuration="{{animateDuration}}" isHide="{{!isHide}}" bind:plateBg="plateBg">
+
+<view class="i-class i-toast">
+    <block wx:if="{{ type !== 'default' }}">
+        <view class="i-toast-type">
+            <i-icon i-class="i-toast-icon" type="success" wx:if="{{ type === 'success' }}"></i-icon>
+            <i-icon i-class="i-toast-icon" type="prompt" wx:elif="{{ type === 'warning' }}"></i-icon>
+            <i-icon i-class="i-toast-icon" type="delete" wx:elif="{{ type === 'error' }}"></i-icon>
+            <view class="i-toast-icon i-toast-loading" wx:elif="{{ type === 'loading' }}"></view>
+        </view>
+    </block>
+    <block wx:else>
+        <i-icon i-class="i-toast-icon" type="{{ icon }}" wx:if="{{ icon }}"></i-icon>
+        <image class="i-toast-image" src="{{ image }}" wx:if="{{ image }}" mode="aspectFit"></image>
+    </block>
+    <view class="i-toast-content" wx:if="{{ content }}">{{ content }}</view>
+</view>
+
+</plate-parts>

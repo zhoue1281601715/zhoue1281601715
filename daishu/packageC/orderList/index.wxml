@@ -1,0 +1,36 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+  bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">物流详情
+</custom-parts>
+<view>
+  <!-- <view class="receipt-list1">请确认运送的商品</view> -->
+  <view class="receipt-list">
+    <view class="receipt-item">
+      <view class="receipt-data">
+        <view class="receipt-data-item">
+          <view class="receipt-data-item-left">预约单号：{{deliList.code}}</view>
+          <view class="receipt-data-item-right">入仓单号：{{deliList.bill_code}}</view>
+        </view>
+        <view class="receipt-data-item">
+          <view class="receipt-data-item-left">车牌号：{{deliList.plate}}</view>
+          <view class="receipt-data-item-right">仓库：{{deliList.warehouse_name}}</view>
+        </view>
+
+        <view class="receipt-data-item">
+          <view class="receipt-data-item-left">司机：{{deliList.driver}}</view>
+          <view class="receipt-data-item-right">电话：{{deliList.phone}}</view>
+        </view>
+        <view class="receipt-data-item">
+          <view class="receipt-data-item-left">时间段：{{deliList.time}}</view>
+
+        </view>
+      </view>
+
+      <view class="receipt-remarks">备注：{{deliList.remark}}</view>
+    </view>
+  </view>
+  <view class="receipt-btn">
+    <view class="btn" bindtap="starttask">确认任务</view>
+  </view>
+</view>

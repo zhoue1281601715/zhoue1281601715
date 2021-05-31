@@ -1,0 +1,132 @@
+@import '/lib/iconfont.wxss';
+
+.main {
+  padding: 24rpx 18rpx 94rpx;
+  width: 750rpx;
+  box-sizing: border-box;
+}
+
+.condition-area {
+  padding-bottom: 30rpx;
+  width: 100%;
+  border-radius: 10rpx;
+  background-color: #FFFFFF;
+}
+
+.condition-from {
+  width: 100%;
+}
+
+.condition-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 38rpx;
+  height: 82rpx;
+  border-bottom: 2rpx solid #E5E5E5;
+  box-sizing: border-box;
+}
+
+.condition-item:last-child {
+  border: none;
+}
+
+.condition-item-name {
+  font-size: 28rpx;
+  color: #010101;
+}
+
+.condition-item-right {
+  display: flex;
+  align-items: center;
+}
+
+.picker-val {
+  padding: 0 36rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 24rpx;
+  color: #010101;
+}
+
+.condition-item-right .iconfont {
+  padding-right: 12rpx;
+  line-height: 90rpx;
+  font-size: 30rpx;
+  color: #A8A8A8;
+}
+
+.batch-num-input {
+  padding-right: 20rpx;
+  height: 80rpx;
+  font-size: 24rpx;
+  color: #010101;
+  text-align: right;
+}
+
+.batch-num-input-placeholder {
+  color: #828282;
+}
+
+.query-btn {
+  margin: 24rpx auto 0;
+  padding: 0;
+  width: 646rpx;
+  height: 84rpx;
+  line-height: 84rpx;
+  font-size: 34rpx;
+  color: #FFFFFF;
+  border-radius: 42rpx;
+  background: linear-gradient(90deg, #FF7900, #FF4B00);
+}
+
+.goods-list {
+  padding: 16rpx 0;
+}
+
+.goods-item {
+  margin-bottom: 16rpx;
+  border-radius: 10rpx;
+  background-color: #FFFFFF;
+}
+
+.goods-item:last-child {
+  margin: 0;
+}
+
+.goods-name {
+  display: flex;
+  align-items: center;
+  padding: 12rpx 36rpx 0;
+  height: 84rpx;
+  font-size: 28rpx;
+  color: #000000;
+  box-sizing: border-box;
+  border-bottom: 2rpx solid #E5E5E5;
+}
+
+.goods-data {
+  display: flex;
+  padding: 12rpx 12rpx 16rpx 32rpx;
+  box-sizing: border-box;
+}
+
+.goods-data-left {
+  width: 400rpx;
+}
+
+.goods-data-item {
+  display: flex;
+  align-items: center;
+  height: 46rpx;
+}
+
+.goods-data-name, .goods-data-val {
+  font-size: 24rpx;
+  color: #000000;
+}
+
+
+.goods-data-right {
+  flex: 1;
+}

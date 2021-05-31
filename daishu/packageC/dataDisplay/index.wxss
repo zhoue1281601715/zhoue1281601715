@@ -1,0 +1,151 @@
+.nav-area {
+  position: fixed;
+  left: 0;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  width: 750rpx;
+  background-color: #FFFFFF;
+}
+
+.default {
+  width: 266rpx;
+  height: 76rpx;
+  line-height: 74rpx;
+  font-size: 24rpx;
+  color: #000000;
+  text-align: center;
+  border-bottom: 2rpx solid #FFFFFF;
+}
+
+.red {
+  width: 266rpx;
+  height: 76rpx;
+  line-height: 74rpx;
+  font-size: 24rpx;
+  color: #FF5201;
+  text-align: center;
+  border-bottom: 2rpx solid #FF5201;
+}
+
+.total {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  padding: 0 30rpx;
+  width: 750rpx;
+  height: 106rpx;
+  background-color: #F2F2F2;
+  box-sizing: border-box;
+}
+
+.total-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.total-title {
+  font-size: 24rpx;
+  color: #6B6969;
+}
+
+.checkbox-list, .check-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.custom-checkbox {
+  width: 26rpx;
+  height: 26rpx;
+  border-radius: 50%;
+  border: 2rpx solid #A2A2A2;
+  background-color: #FFFFFF;
+  box-sizing: border-box;
+}
+
+.custom-checked {
+  border-color: #FF5201;
+  background-color: #FF5201;
+}
+
+.check-title {
+  margin: 0 46rpx 0 12rpx;
+  font-size: 24rpx;
+  color: #6B6969;
+}
+
+.title-checked {
+  color: #FF5201;
+}
+
+.totalMoney {
+  margin-top: 6rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #000000;
+}
+
+.main {
+  padding: 182rpx 0 94rpx;
+  width: 750rpx;
+}
+
+.list {
+  padding: 20rpx 0;
+  background-color: #FFFFFF;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 34rpx 24rpx 22rpx;
+}
+
+.circle {
+  width: 64rpx;
+  height: 64rpx;
+  line-height: 64rpx;
+  font-size: 42rpx;
+  color: #FFFFFF;
+  text-align: center;
+  background: #FF5101;
+  border-radius: 50%;
+  margin-right: 34rpx;
+}
+
+.item-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.item-data {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.item-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #000000;
+}
+
+.item-amount {
+  font-size: 34rpx;
+  font-weight: bold;
+  color: #000000;
+}
+
+.item-date {
+  margin-top: 12rpx;
+  font-size: 26rpx;
+  color: #6B6969;
+}

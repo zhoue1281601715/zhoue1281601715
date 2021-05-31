@@ -1,0 +1,4 @@
+<view class="print_btn" bindtap="inspectBleState" data-id="{{print}}">
+  <image src="../../images/10.png" mode="widthFix">{{print}}</image>打印
+</view>
+  

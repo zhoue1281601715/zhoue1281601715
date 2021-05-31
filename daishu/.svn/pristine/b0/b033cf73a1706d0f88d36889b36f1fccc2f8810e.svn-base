@@ -1,0 +1,56 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<!-- 信息提示 -->
+<i-toast id="toast" />
+
+<!-- 模态框 -->
+<i-modal title="{{modal.tips}}" isHide="{{modal.ishide}}" bind:ok="{{modal.ok}}" bind:cancel="{{modal.cancel}}"
+    bind:plateBg="cancel">
+    <view>{{modal.message}}</view>
+</i-modal>
+
+<!----------------------------------------- 下面请开始你的表演 SHOW TIME ---------------------------------->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+    bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">代叔仓票
+</custom-parts>
+<view class="share {{showView?'header_view_show':'header_view_hide'}}">
+    <view class="shareLeft">
+        <text>点击</text>
+        <image src="/images/san.png" alt="" style="margin: 0 10rpx;width: 54rpx;" mode="widthFix"></image>
+        <text>选择“添加到我的小程序”</text>
+    </view>
+    <image src="/images/cha.png" bindtap="clickMes" mode="widthFix"></image>
+</view>
+<scroll-view scroll-x="true" class="nav" scroll-left="{{navScrollLeft}}" scroll-with-animation="{{true}}">
+    <block wx:for="{{date_list}}" wx:for-index="idx" wx:for-item="navItem" wx:key="idx">
+        <navigator url="{{navItem.url}}" class="nav-item" wx:if="{{navItem.url.length > 0}}">{{navItem.typeof === 'number' ? (navItem.month + '月') : navItem.month}}</navigator>
+        <view class="nav-item {{currentTab == idx ? 'active' : ''}}" data-current="{{idx}}" data-month="{{navItem.month}}" data-year="{{navItem.year}}" bindtap="switchNav" wx:else>{{navItem.typeof === 'number' ? (navItem.month + '月') : navItem.month}}</view>
+    </block>
+</scroll-view>
+<view class="wareDetails" wx:if="{{warehouseTickerList.length > 0}}">
+    <url-parts url="/packageA/warehouseTicketDetails/index?stock_id={{item.id}}" class="wareContent" wx:for="{{warehouseTickerList}}" wx:key="index">
+        <image src="/images/aj.png" mode="widthFix"></image>
+        <view class="wareText">
+            <view class="wareTextTop">
+                <view class="wareMoney">{{item.get_money}}<text>¥</text></view>
+                <view class="wareName">{{item.title}}</view>
+                <view class="month">仅限{{item.use_month}}月使用</view>
+            </view>
+            <view class="wareBottom">
+                <view class="paymentMoney"><text>￥</text>{{item.pay_money}}</view>
+                <view class="surplus">
+                    <view class="surplusNum">剩余{{item.num}}件</view>
+                    <view class="clickPayment">点击支付</view>
+                </view>
+            </view>
+        </view>
+    </url-parts>
+</view>
+<view class="nodata" wx:else>{{loading ? '' : '没有查找到数据'}}</view>
+<tabbar activeIdx="{{activeIdx}}"></tabbar>
+
+<!------------------------------------------------ 你触碰到我的底线了  W(￣_￣)W ---------------------------------->
+
+<!-- 分页组件 -->
+<!-- <page-parts options="{{page}}" bind:start="pageStart" bind:success="pageSuccess" bind:fail="pageFail"  /> -->

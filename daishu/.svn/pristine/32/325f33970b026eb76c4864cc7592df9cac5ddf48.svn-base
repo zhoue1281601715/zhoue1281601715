@@ -1,0 +1,356 @@
+/**
+ * 如果位目录层数大于两级需要修改路径
+ */
+const { $Toast, $Message } = require('../../utils/iview/base/index');
+import Tools from '../../utils/modules/Tools';
+import Config from '../../config';
+import utils from '../../utils/utils';
+
+const app = getApp();
+
+Page({
+	data: {
+		modal : {
+			tips : '提示',
+			message : '模态框说明',
+			ok : 'modalOk',
+			cancel : 'modalCancel',
+			ishide : true
+		},
+	
+		// --  分页配置数据  -------- 
+		page: {
+			url: '/',
+				data: {
+				page: 1,
+			}
+		},
+		isEnd: false,
+		// ------------------------- 
+		activeIdx: -1,
+		showPopup: false, // 显示/关闭弹窗
+		popupPositionBottom: -1200, // 弹窗下定位值
+		stock_id: '', // 仓票ID
+		order_id: '', // 订单ID
+		pay_money: '', // 订单需要支付的金额
+		monthLastDate: '', // 本月最后一天
+		warehoustTicket: '', // 仓票详情
+		allWarehoustTicket: '', // 仓票总数
+		progressRatioWidth: '', // 销量进度条实际销量长度
+		toastParameter: {},
+	},
+
+	/**
+	 * 获取仓票详情
+	 */
+	getWarehoustTicketDetails () {
+		const that = this
+		const stock_id = that.data.stock_id
+		wx.showLoading()
+		app.http({
+			config: {
+				url: 'api/v1/detail_stock',
+				data: {
+					stock_id
+				},
+				method: 'POST'
+			},
+			isAuth: true
+		}).then(res => {
+			console.log(res, 'warehoustTicketDetailsRes')
+			const warehoustTicket = res.data.data // 仓票详情
+			const use_year = warehoustTicket.use_year // 仓票可使用的年份
+			const use_month = warehoustTicket.use_month - 1 // 仓票可使用的月份（这里减1是因为在js里面月份是从0开始的，后端传过来的月份是从1开始的）
+			const timeStamp = new Date(use_year, use_month, 1) // 获取仓票可使用那个月的第1天的时间戳
+			const nextMonth = use_month + 1 // 仓票过期的那个月份（即下个月）
+			const nextMonthFirstDay = new Date(timeStamp.getFullYear(), nextMonth, 1) // 仓票过期的那个月的第一天
+			const oneDayTimeStamp = 1000 * 60 * 60 * 24 // 一天的时间戳
+			const monthLastDate = new Date(nextMonthFirstDay - oneDayTimeStamp).getDate() // 仓票可使用的那个月的最后一天
+			const sales = warehoustTicket.sales > 0 ? warehoustTicket.sales : 0 // 销售数量
+			const stock = warehoustTicket.num > 0 ? warehoustTicket.num : 0 // 库存数量
+			const allWarehoustTicket = sales + stock // 仓票总数
+			const progressRatioWidth = sales / allWarehoustTicket * 168 // 销量进度条实际销量长度（168是因为CSS设置了销量进度条总长度为168rpx）
+			that.setData({
+				warehoustTicket,
+				monthLastDate,
+				allWarehoustTicket,
+				progressRatioWidth
+			}, () => {
+				wx.hideLoading()
+			})
+		}).catch(err => {
+			console.log(err, 'warehoustTicketDetailsErr')
+			wx.hideLoading()
+		})
+	},
+
+	/**
+	 * 显示弹窗
+	 */
+	handleShowPopup () {
+		const that = this
+		const showPopup = !that.data.showPopup
+		that.setData({
+			showPopup,
+		}, () => {
+			that.setData({
+				popupPositionBottom: 0
+			})
+		})
+	},
+
+	/**
+	 * 隐藏弹窗
+	 */
+	handleHidePopup () {
+		const that = this
+		const showPopup = !that.data.showPopup
+		that.setData({
+			popupPositionBottom: -1200
+		}, function () {
+			setTimeout(() => {
+				that.setData({
+					showPopup
+				})
+			}, 300)
+		})
+	},
+
+	/**
+	 * 下单
+	 */
+	handlePayment (e) {
+		const that = this
+		const token = wx.getStorageSync('token')
+		const stock_id = that.data.stock_id
+		const pay_type = e.currentTarget.dataset.pay_type
+		app.http({
+			config: {
+				url: 'api/v1/stock_order',
+				data: {
+					stock_id,
+					token,
+					pay_type
+				},
+				method: 'POST'
+			},
+			isAuth: true
+		}).then(res => {
+			console.log(res, 'paymentRes')
+			const { order_id, pay_money } = res.data.data
+			that.setData({
+				order_id,
+				pay_money
+			}, () => {
+				switch (pay_type) {
+					case 'wxpay': // 微信支付
+						that.handleWechatPay()
+						break;
+					case 'balance': // 余额支付
+						wx.showModal({
+							title: '提示',
+							content: '是否使用余额支付？',
+							success(res) {
+								if (res.confirm) {
+									that.handleBalancePay()
+								}
+							}
+						})
+						break;
+					case 'offline': // 线下支付
+						that.setData({
+							popupPositionBottom: -1200
+						}, function () {
+							setTimeout(() => {
+								that.setData({
+									showPopup: false
+								}, () => {
+									// that.getWarehoustTicketDetails()
+									wx.navigateTo({
+										url: `/packageA/offlinePay/offlinePay?order_id=${order_id}`,
+									})
+								})
+							}, 300)
+						})
+						break;
+				}
+			})
+		}).catch(err => {
+			console.log(err, 'paymentErr')
+			wx.showModal({
+				title: '提示',
+				content: err.data.msg,
+				showCancel: false
+			})
+		})
+	},
+
+	/**
+	 * 微信支付
+	 */
+  handleWechatPay () {
+    const that = this
+		const token = wx.getStorageSync('token')
+		const order_id = that.data.order_id
+		app.http({
+			config: {
+				url: 'api/v1/wxpay_stock',
+				data: {
+					token,
+					order_id
+				},
+				method: 'POST'
+			},
+			isAuth: true
+		}).then(res => {
+			console.log(res, 'wechatPayRes')
+			that.setData({
+				popupPositionBottom: -1200,
+				showPopup: false
+			}, () => {
+				wx.requestPayment({
+					timeStamp: res.data.data.timeStamp,
+					nonceStr: res.data.data.nonceStr,
+					package: res.data.data.package,
+					signType: 'MD5',
+					paySign: res.data.data.paySign,
+					success (res) {
+						console.log('paymentSuccess', res)
+						wx.navigateTo({
+							url: '/packageA/myWarehouseTicket/index',
+						})
+					},
+					fail (res) {
+						console.log('paymentFail', res)
+					}
+				})
+			})
+		}).catch(err => {
+			console.log(err, 'wechatPayErr')
+			wx.showModal({
+				title: '提示',
+				content: err.data.msg,
+				showCancel: false
+			})
+		})
+	},
+
+	handleBalancePay () {
+    const that = this
+    const { order_id } = that.data
+    app.http({
+			config: {
+				url: 'api/v1/offline_stock',
+				data: {
+					order_id
+				},
+				method: 'POST'
+			},
+			isAuth: true
+		}).then(res => {
+			console.log(res, 'submitRes')
+			that.setData({
+				popupPositionBottom: -1200,
+				showPopup: false
+			}, () => {
+				const toastParameter = {
+					icon: 'success',
+					content: res.data.msg,
+					duration: 2000,
+				}
+				that.setData({
+					toastParameter
+				}, function () {
+					setTimeout(() => {
+						wx.navigateTo({
+							url: '/packageA/myWarehouseTicket/index',
+						})
+					}, 1500)
+				})
+			})
+		}).catch(err => {
+			console.log(err, 'submitErr')
+			wx.showModal({
+				title: '提示',
+				content: err.data.msg,
+				showCancel: false
+			})
+		})
+  },
+
+	onLoad (query){
+		app.setTitle('填个标题吧')
+		const that = this
+		const stock_id = query.stock_id
+		console.log('stock_id', stock_id)
+		that.setData({
+			stock_id
+		})
+	},
+
+	onShow (){
+		this.getWarehoustTicketDetails()
+	},
+	
+
+
+	/*============================================
+	 			     以下是基本操作 				
+	==============================================*/ 
+
+	...utils,  // mixin方法
+
+	trigger (e){
+		app.trigger(e, this);
+	},
+
+	modalCancel (){
+		this.setData({
+			'modal.ishide' : true
+		})
+	},
+
+	modalOk (){
+		this.setData({
+			'modal.ishide' : true
+		})
+	},
+
+	/**
+	 * 触底分页 (需要分页的请反我牌)
+	 */
+	onReachBottom() {
+		let { page, isEnd } = this.data;
+	
+		if (!isEnd) {
+		  this.setData({
+			'page.data.page': page.data.page + 1
+		  });
+		}
+	},
+
+	/**
+	 * 分页返回数据 (需要分页的请反我牌)
+	 */
+	pageSuccess(e) {
+		this.setData({
+		  list: e.detail.list,
+		  isEnd: e.detail.isEnd
+		})
+	},
+	
+	pageFail(e) {
+		
+	},
+
+	pageStart(e) {
+		
+	},
+
+	/**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
+  }
+})

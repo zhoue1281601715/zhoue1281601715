@@ -1,0 +1,65 @@
+//Page Object
+const app = getApp()
+Page({
+  data: {
+    res: '0',
+    isOut: ''
+  },
+  mixins: [app.togerther],
+  onLoad: function (options) {
+    if (options.isOut) {
+      this.setData({
+        isOut: options.isOut
+      })
+    }
+    this.setData({
+      res: options.res
+    })
+  },
+  onReady: function () {
+
+  },
+  onShow: function () {
+
+  },
+  onHide: function () {
+
+  },
+  onUnload: function () {
+
+  },
+  onPullDownRefresh: function () {
+
+  },
+  onReachBottom: function () {
+
+  },
+  onShareAppMessage: function () {
+
+  },
+  onPageScroll: function () {
+
+  },
+  //item(index,pagePath,text)
+  onTabItemTap: function (item) {
+
+  },
+  goBack(event) {
+    let pegePath = event.currentTarget.dataset.type
+    if (pegePath == "myCenter") {
+      wx.switchTab({
+        url: '/pages/yuncang/index',
+      })
+    }
+    if (pegePath == "inStock" ||pegePath == "outStock"  ) {
+      wx.navigateBack({
+        delta: 3
+      })
+    }
+    if (pegePath == "index") {
+      wx.switchTab({
+        url: '/pages/index/index',
+      })
+    }
+  }
+});

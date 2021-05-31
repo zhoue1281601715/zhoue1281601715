@@ -1,0 +1,100 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<!-- 信息提示 -->
+<i-toast id="toast" />
+
+<!-- 模态框 -->
+<i-modal title="{{modal.tips}}" isHide="{{modal.ishide}}" bind:ok="{{modal.ok}}" bind:cancel="{{modal.cancel}}"
+    bind:plateBg="cancel">
+    <view>{{modal.message}}</view>
+</i-modal>
+
+<!----------------------------------------- 下面请开始你的表演 SHOW TIME ---------------------------------->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+    bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">出入仓订单记录
+</custom-parts>
+
+<view class="main">
+    <view class="recordsDetails">
+        <view class="select">
+            <view class="select-title">选择仓库</view>
+            <view class="selector">
+                <picker mode='selector' bindchange="handlePickerChange" value="{{warehousIndex}}" range="{{warehouse}}" range-key="name" data-id="{{warehousIndex[warehousIndex].id}}">
+                    <view class="picker-default" wx:if="{{warehousIndex==''}}">请选择仓库</view>
+                    <view class="picker-val" wx:else>{{warehouse[warehousIndex].name}}</view>
+                </picker>
+                <image class="more-icon" src="/images/right_arrow.png" mode="heightFix"></image>
+            </view>
+        </view>
+        <view class="select">
+            <view class="select-title">类型</view>
+            <view class="selector">
+                <picker mode='selector' value="{{typeIndex}}" bindchange='handerChangeType' range="{{typeName}}">
+                    <view class="picker-default" wx:if="{{typeIndex==''}}">请选择</view>
+                    <view class="picker-val" wx:else> {{typeName[typeIndex]}}</view>
+                </picker>
+                <image class="more-icon" src="/images/right_arrow.png" mode="heightFix"></image>
+            </view>
+        </view>
+        <view class="select">
+            <view class="select-title">时间段</view>
+            <view class="selector selector-no-arrow">
+                <picker class="selectText" mode="date" value="{{startTime}}" bindchange='handerChangeStartTime'>
+                    <view class="picker-default" wx:if="{{startTime==''}}">起始时间</view>
+                    <view class="picker-val" wx:else>{{startTime}}</view>
+                </picker>
+                <view class="line">——</view>
+                <picker class="selectText" mode="date" value="{{endTime}}" bindchange='handerChangeEndTime'>
+                    <view class="picker-default" wx:if="{{endTime==''}}">截止时间</view>
+                    <view class="picker-val" wx:else>{{endTime}}</view>
+                </picker>
+            </view>
+        </view>
+        <view class="select">
+            <view class="select-title">关键字</view>
+            <view class="selector selector-no-arrow">
+                <input class="keyword-input" type="text" placeholder="仓单号/车牌号" placeholder-style="color: #818181;" bindinput="getKeyword" value="{{keyword}}" />
+            </view>
+        </view>
+        <button class="query" bindtap="queryBtn">立即查询</button>
+    </view>
+    <view class="queryTitle">查询结果</view>
+    <block wx:for="{{warehouseList}}" wx:key="{{item.id}}">
+        <!-- <view class="queryResults" catchtap="handleNavigatorToDetails" data-id="{{item.id}}"> -->
+        <navigator class="queryResults" data-id="{{item.id}}" url="/packageC/orderDetails/index?id={{item.id}}">
+            <view>
+                <view class="navs" wx:if="{{item.type==0}}">入仓</view>
+                <view class="navs" wx:if="{{item.type==1}}">出仓</view>
+            </view>
+            <view class="queryContent">
+                <view class="queryText">
+                    <view>仓票单：{{item.code}}</view>
+                    <view>提货公司：{{item.delivery_company}}</view>
+                    <view>票数：{{item.count}}票</view>
+                    <view>重量：{{item.weight}}</view>
+                </view>
+                <view class="queryText">
+                    <view>仓库名称：{{item.warehouse_name}}</view>
+                    <view>提货车牌号:{{item.delivery_plate}}</view>
+                    <view>件数：{{item.quantity}}</view>
+                    <view>体积：{{item.volume}}</view>
+                </view>
+            </view>
+            <view class="remark">备注：{{item.remark}}</view>
+            <view class="queryTime">
+                <view class="queryTime-left">
+                    <image class="clock-icon" src="/images/clock.png" mode="heightFix"></image>
+                    <view>{{item.create_date}}</view>
+                </view>
+                <view class="viewDetails">查看明细</view>
+            </view>
+        </navigator>
+    </block>
+</view>
+<tabbar activeIdx="{{activeIdx}}"></tabbar>
+
+<!------------------------------------------------ 你触碰到我的底线了  W(￣_￣)W ---------------------------------->
+
+<!-- 分页组件 -->
+<!-- <page-parts options="{{page}}" bind:start="pageStart" bind:success="pageSuccess" bind:fail="pageFail"  /> -->

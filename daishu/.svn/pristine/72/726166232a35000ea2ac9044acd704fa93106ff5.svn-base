@@ -1,0 +1,29 @@
+<!--packageC/data_statistics_detail/data_statistics_detail.wxml-->
+<!-- <van-nav-bar
+  title="日统计"
+  left-arrow
+  title-class="title_bar"
+  custom-class="title_bar"
+  bind:click-left="onClickLeft"
+/> -->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+  bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">日统计
+</custom-parts>
+<view class="rewu">
+<!-- <view class="rewu" style="margin-top:calc({{statusHeight}}px + 20rpx);"> -->
+  <view class="item" wx:for="{{order}}" wx:key="index">
+    <view class="tit">
+      <view class="name">运单号：{{item.code}}</view>
+      <view class="type">类型：{{item.delivery_type}}</view>
+    </view>
+    <view class="n">
+      <view class="d2">日期：<text>{{item.date}}</text></view>
+      <view class="d2">配送专员：<text>{{item.delivery_driver || ""}}</text><text>{{item.delivery_phone || ""}}</text></view>
+      <view class="d2">司机证件：<text>{{item.delivery_idcard || ""}}</text></view>
+      <view class="d1">车牌号：<text>{{item.delivery_plate || ""}}</text></view>
+      <!--<view class="d1">车型：<text>面包车</text></view>-->
+      <view class="desc">备注：{{item.remark}}</view>
+      <view class="money">总金额：<text>￥{{item.charge_total}}</text></view>
+    </view>
+  </view>
+</view>

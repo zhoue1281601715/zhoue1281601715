@@ -1,0 +1,69 @@
+<!--packageC/waybill_printing_detail/waybill_printing_detail.wxml-->
+<!-- <van-nav-bar
+  title="运单打印-详情"
+  left-arrow
+  title-class="title_bar"
+  custom-class="title_bar"
+  bind:click-left="onClickLeft"
+/> -->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+  bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">运单打印-详情
+</custom-parts>
+<view class="rewu">
+<!-- <view class="rewu" style="margin-top:calc({{statusHeight}}px + 20rpx);"> -->
+  <view class="item">
+    <view class="tit">
+      <view class="name">运单号：{{bill.code}}</view>
+      <view class="type">类型：{{bill.delivery_type}}</view>
+    </view>
+    <view class="n">
+      <view class="d2">货物信息：<text>{{bill.quantity}}件</text><text>|</text><text>{{bill.weight}}KG</text><text>|</text><text>{{bill.volume}}m³</text></view>
+      <view class="d2">下单时间：<text>2020-12-12 18:23:24</text></view>
+    </view>
+    <view class="n" style="padding:0;">
+      <view class="site">
+        <image class="img" src="../../images/1.png" mode="widthFix"></image>
+        <view class="r">
+          <view class="t">
+            <view class="name">{{bill.shipper_contact}}</view>
+            <view class="phone">{{bill.shipper_mobile}}</view>
+          </view>
+          <view class="descs">{{bill.shipper_city + bill.shipper_area + bill.shipper_street + bill.shipper_address}}</view>
+          <view class="bPhone"><image src="../../images/16.png"></image>拨打电话</view>
+        </view>
+      </view>
+      <view class="site">
+        <image class="img" src="../../images/3.png" mode="widthFix"></image>
+        <view class="r">
+          <view class="t">
+            <view class="name">{{bill.consignee_contact}}</view>
+            <view class="phone">{{bill.consignee_mobile}}</view>
+          </view>
+          <view class="descs">{{bill.consignee_city + bill.consignee_area + bill.consignee_street + bill.consignee_address}}</view>
+          <view class="bPhone"><image src="../../images/16.png"></image>拨打电话</view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="item">
+    <view class="n">
+      <view class="d1">货物名称：<text>{{bill.goodsname}}</text></view>
+      <view class="d1">包装方式：<text>{{bill.packaging}}</text></view>
+      <view class="d1">货物数量：<text>{{bill.quantity}}</text></view>
+      <view class="d1">货物重量：<text>{{bill.weight}}KG</text></view>
+      <view class="d1">货物体积：<text>{{bill.volume}}m³</text></view>
+      <view class="d1">运费金额：<text>{{bill.charge_freight}}元</text></view>
+      <view class="d1">装卸上楼：<text>{{bill.charge_handle}}元</text></view>
+      <view class="d1">代收货款：<text>{{bill.cod}}元</text></view>
+      <view class="d2">客服：<text>{{bill.kefu}}</text></view>
+      <view class="d2">配送专员：<text>{{bill.delivery_driver}}</text><text>{{bill.delivery_phone}}</text></view>
+      <view class="d2">司机证件：<text>{{bill.delivery_idcard}}</text></view>
+      <view class="d2">车牌号：<text>{{bill.delivery_plate}}</text></view>
+      <view class="desc">备注：{{bill.remark}}</view>
+    </view>
+  </view>
+</view>
+<!--<view class="pring" bindtap="searchBLE" >
+  <image src="../../images/10.png" mode="widthFix"></image>打印
+</view>-->
+ <print print="{{id}}"></print>

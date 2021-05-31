@@ -1,0 +1,443 @@
+/**
+ * 如果位目录层数大于两级需要修改路径
+ */
+const { $Toast, $Message } = require('../../utils/iview/base/index');
+import Tools from '../../utils/modules/Tools';
+import Config from '../../config';
+import utils from '../../utils/utils';
+import regular from '../../utils/regular';
+
+
+const app = getApp();
+
+Page({
+	data: {
+		// 姓名
+		name: "",
+		// 手机号码
+		phone: "",
+		phoneFocus: false,
+		// 详细的收货地址
+		address: "",
+		// 选择城市的弹窗
+		vantPopup: false,
+		//0 选择城市 1选择片区 2选择街道
+		tabIndex: 0,
+		// 选择的城市
+		region: ['请选择城市', '选择片区', '选择街道'],
+		//选择的区域或这是街道列表
+		otherList: [],
+		// 判断是当前是编辑地址还是新增地址
+		existence: 0,
+		//newlyAdd:新增地址 editUrl：编辑地址
+		street: true,
+    text_area_obj: {
+      value: "",
+      max_length: 200,
+      word_length: 0,
+      is_show: false,
+      is_focus: false,
+      bind_input: 'bind_input',
+      bind_blur: 'bind_blur',
+      show_textarea: 'show_textarea',
+      placeholder: '请输入您的详细地址'
+    },
+
+		modal : {
+			tips : '提示',
+			message : '模态框说明',
+			ok : 'modalOk',
+			cancel : 'modalCancel',
+			ishide : true
+		},
+	
+		// --  分页配置数据  -------- 
+		page: {
+			url: '/',
+				data: {
+				page: 1,
+			}
+		},
+		isEnd: false,
+		// ------------------------- 
+		
+	},
+	mixins: [app.togerther],
+	onLoad: function (options) {
+		let existence = Object.keys(options)
+		console.log(Object.keys(options))
+    console.log('options----------', options)
+    if (existence.length != 0) {
+      console.log('1111111111111')
+      let editInfo = JSON.parse(options.edit)
+      console.log('editInfo', editInfo)
+
+      if (!editInfo.street) {
+        this.setData({
+          region: [editInfo.city, editInfo.area],
+          tabIndex: 1,
+          existence: existence,
+          id: editInfo.id,
+          name: editInfo.name,
+          phone: editInfo.phone,
+          address: editInfo.address,
+          "text_area_obj.word_length": editInfo.address.length,
+          "text_area_obj.value": editInfo.address
+        })
+      } else {
+        this.setData({
+          existence: existence,
+          id: editInfo.id,
+          name: editInfo.name,
+          phone: editInfo.phone,
+          region: [editInfo.city, editInfo.area, editInfo.street],
+          address: editInfo.address,
+          tabIndex: 2,
+          "text_area_obj.word_length": editInfo.address.length,
+          "text_area_obj.value": editInfo.address
+        })
+      }
+
+    }
+
+  },
+
+	onShow (){
+		this.city_list()
+	},
+
+	show_textarea() {
+    this.setData({
+      "text_area_obj.is_show": true,
+      "text_area_obj.is_focus": true,
+    })
+  },
+
+  bind_input(event) {
+    let get_data = event.detail
+    this.setData({
+      "text_area_obj.word_length": get_data.cursor,
+      "text_area_obj.value": get_data.value,
+      address: get_data.value
+    })
+  },
+
+  bind_blur() {
+    this.setData({
+      "text_area_obj.is_show": false
+    })
+  },
+
+  assignment(event) {
+    let type = event.currentTarget.dataset.type
+    console.log('event-*---------', event)
+    this.setData({
+      [type]: event.detail.value
+    })
+	},
+	
+	selectCity() {
+    this.setData({
+      vantPopup: true
+    })
+	},
+	
+  onClose() {
+    this.setData({
+      vantPopup: false
+    })
+	},
+	
+	// 城市列表
+	city_list() {
+		app.https({
+			config: {
+				url: 'xcx/city/list',
+				data: {},
+				method: 'POST'
+			},
+			isAuth: false
+		}).then((res) => {
+			console.log(res)
+			this.setData({
+				city: res.data.data
+			})
+		}).catch((err2) => {
+			console.log(err2)
+		})
+	},
+	// 获取片区
+	choose_area() {
+		let self = this
+		let region = this.data.region
+		app.https({
+			config: {
+				url: 'xcx/area/list',
+				data: {
+					city_name: region[0]
+				},
+				method: 'POST'
+			},
+			isAuth: false
+		}).then((res) => {
+			console.log(res)
+			self.setData({
+				otherList: res.data.data
+			})
+		}).catch((err2) => {
+			console.log(err2)
+		})
+	},
+
+	// 获取街镇
+	town_area() {
+		let self = this
+		let region = this.data.region
+		app.https({
+			config: {
+				url: 'xcx/town/list',
+				data: {
+					city_name: region[0],
+					area_name: region[1]
+				},
+				method: 'POST'
+			},
+			isAuth: false
+		}).then((res) => {
+			if (res.data.data.length == 0) {
+				region.pop()
+				self.setData({
+					street: false,
+					region: region,
+					vantPopup: false
+				})
+			} else {
+				self.setData({
+					otherList: res.data.data,
+					street: true,
+					tabIndex: 2
+				})
+			}
+		}).catch((err2) => {
+			console.log(err2)
+		})
+	},
+
+	// tab切换
+	switchTab(event) {
+		console.log('event----------', event)
+		let currentTab = event.currentTarget.dataset.tab
+		let region = this.data.region
+		let tabIndex = this.data.tabIndex
+
+		// 第一种情况 正向
+		if (tabIndex == 0 && currentTab == 1 && region[tabIndex] == "请选择城市") {
+			app.utils.wx_toast("请先选择城市")
+			return false
+		}
+		// 第二种情况 正向
+		if (tabIndex == 0 && currentTab == 2 && region[tabIndex] == "请选择城市") {
+			app.utils.wx_toast("请先选择城市")
+			return false
+		}
+		// 第三种情况 正向
+		if (tabIndex == 1 && currentTab == 2 && region[tabIndex] == "选择片区") {
+			app.utils.wx_toast("请先选择片区")
+			return false
+		}
+		//第四种情况 反向
+		if (tabIndex == 2 && currentTab == 1) {
+			this.setData({
+				"region[2]": "请选择街道",
+				"region[1]": "选择片区"
+			})
+			this.choose_area()
+		}
+		//第五种情况 反向
+		if (tabIndex == 2 && currentTab == 0) {
+			let region = ["请选择城市", "选择片区", "选择片区"]
+			this.setData({
+				region: region
+			})
+			this.city_list()
+		}
+		//第六种情况 反向
+		if (tabIndex == 1 && currentTab == 0) {
+			let region = ["请选择城市", "选择片区", "选择片区"]
+			this.setData({
+				region: region
+			})
+			this.city_list()
+		}
+		this.setData({
+			tabIndex: currentTab
+		})
+	},
+
+	// 组件选择城市
+	choose_city(event) {
+		let selectCity = event.detail
+		this.setData({
+			"region[0]": selectCity.name,
+			tabIndex: 1
+		})
+		this.choose_area()
+	},
+
+	//选择地区或者街道
+	chooseOther(event) {
+		let tabIndex = this.data.tabIndex
+		let regionName = event.currentTarget.dataset.name
+		if (tabIndex == 1) {
+			this.setData({
+				"region[1]": regionName,
+
+			})
+			this.town_area()
+		}
+		if (tabIndex == 2) {
+			this.setData({
+				"region[2]": regionName
+			})
+			// 选择完街道之后关闭弹窗
+			this.onClose()
+		}
+	},
+
+  //保存地址
+  saveAddress() {
+    let self = this
+    if (this.data.cant_click) {
+      return
+    }
+    // this.cant_click_fn()
+		let company_id = wx.getStorageSync("company_id");
+		let customer_id = wx.getStorageSync("customer_id");
+		let nickName = wx.getStorageSync("nickName");
+    let requestUrl = this.data.request
+    let existence = this.data.existence
+   
+    // 验证
+    // if (this.checkParams()) {
+    //   return
+    // }
+		// 新增地址
+		console.log(this.data.existence)
+    if (existence == 0) {
+			app.https({
+				config: {
+					url: 'xcx/buyer/save',
+					data: {
+						company_id:company_id,
+						customer_id:customer_id,
+						name: this.data.name,
+						phone: this.data.phone,
+						city: this.data.region[0],
+						area: this.data.region[1],
+						street: this.data.region[2] || "",
+						address: this.data.address,
+						createby:nickName
+					},
+					method: 'POST'
+				},
+				isAuth: false
+			}).then((res) => {
+				app.utils.wx_toast("添加成功")
+        setTimeout(() => {
+          wx.navigateBack({
+            delta: 1
+          });
+        }, 3000)
+			}).catch((err2) => {
+				console.log(err2)
+			})
+      //编辑地址
+    } else {
+			app.https({
+				config: {
+					url: 'xcx/buyer/update',
+					data: {
+						id :this.data.id,
+						name: this.data.name,
+						phone: this.data.phone,
+						city: this.data.region[0],
+						area: this.data.region[1],
+						street: this.data.region[2] || "",
+						address: this.data.address,
+						createby:nickName
+					},
+					method: 'POST'
+				},
+				isAuth: false
+			}).then((res) => {
+			  app.utils.wx_toast("修改成功")
+        setTimeout(() => {
+          wx.navigateBack({
+            delta: 1
+          });
+        }, 3000)
+			}).catch((err2) => {
+				console.log(err2)
+			})
+    }
+  },
+	/*============================================
+	 			     以下是基本操作 				
+	==============================================*/ 
+
+	...utils,  // mixin方法
+
+	trigger (e){
+		app.trigger(e, this);
+	},
+
+	modalCancel (){
+		this.setData({
+			'modal.ishide' : true
+		})
+	},
+
+	modalOk (){
+		this.setData({
+			'modal.ishide' : true
+		})
+	},
+
+	/**
+	 * 触底分页 (需要分页的请反我牌)
+	 */
+	onReachBottom() {
+		let { page, isEnd } = this.data;
+	
+		if (!isEnd) {
+		  this.setData({
+			'page.data.page': page.data.page + 1
+		  });
+		}
+	},
+
+	/**
+	 * 分页返回数据 (需要分页的请反我牌)
+	 */
+	pageSuccess(e) {
+		this.setData({
+		  list: e.detail.list,
+		  isEnd: e.detail.isEnd
+		})
+	},
+
+	pageFail(e) {
+		
+	},
+	
+	pageStart(e) {
+		
+	},
+	
+	/**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
+  }
+})

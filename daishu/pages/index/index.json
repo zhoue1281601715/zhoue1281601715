@@ -1,0 +1,6 @@
+{
+	"usingComponents" : {
+    "loading-parts" : "/pages/components/loading-parts/index",
+    "buycart-parts": "/pages/components/buycart-parts/index"
+  }
+}

@@ -1,0 +1,24 @@
+
+
+.searchWrap{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.searchWrap input{
+  display: block;
+  /* width: 240rpx; */
+  border: none;
+  transition: width .3s ease;
+}
+
+.searchWrap text{
+  display: block;
+  margin-right: 10rpx;
+}
+
+.searchWrap.active input{
+  /* width: 500rpx */
+}

@@ -1,0 +1,3 @@
+<view class="proSelect" bindtap="click" style="width : {{size}}rpx; height : {{size}}rpx; border :  {{isSelect ? '2rpx solid ' + activeColor : '2rpx solid ' + color}}">
+		<view style="background :  {{isSelect ? activeColor : color}}; width : {{isFull ? '100%' : '70%'}}; height : {{isFull ? '100%' : '70%'}}"></view>
+	</view>

@@ -1,0 +1,126 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<!-- 信息提示 -->
+<i-toast id="toast" />
+
+<!-- 模态框 -->
+<i-modal title="{{modal.tips}}" isHide="{{modal.ishide}}" bind:ok="{{modal.ok}}" bind:cancel="{{modal.cancel}}"
+    bind:plateBg="cancel">
+    <view>{{modal.message}}</view>
+</i-modal>
+
+<!----------------------------------------- 下面请开始你的表演 SHOW TIME ---------------------------------->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+    bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">出仓单
+</custom-parts>
+
+<view class="receipt-list">
+    <view class="receipt-item" wx:for="{{deliveryList}}" wx:key="{{item.id}}">
+        <view class="receipt-name-area">
+            <view class="receipt-name-area-left">
+                <!-- 自定义checkbox开始 -->
+                <view class="i-checkbox {{item.checked ? 'i-checked' : ''}}" catchtap="handleCheckboxChange" data-index="{{index}}" data-item_total_price="{{item.truePrice * item.cart_num}}"></view>
+                <!-- 自定义checkbox结束 -->
+                <view class="receipt-name">{{item.item_name}}</view>
+            </view>
+            <view class="receipt-name-area-right">
+                <view class="operate-icon-area" data-id="{{item.id}}" catchtap="handleOpenDeliveryPopup">
+                    <image class="operate-icon" src="/images/change_orange.png" mode="heightFix"></image>
+                </view>
+                <view class="operate-icon-area" data-id="{{item.id}}" catchtap="handleDeleteDeliveryReceipt">
+                    <image class="operate-icon" src="/images/delete_orange.png" mode="heightFix"></image>
+                </view>
+            </view>
+        </view>
+        <view class="receipt-data">
+            <view class="receipt-data-item">
+                <view class="receipt-data-item-left">产品编号：{{item.code}}</view>
+                <view class="receipt-data-item-right">规格：{{item.spec}}{{item.stock_unit}}</view>
+            </view>
+            <view class="receipt-data-item">
+                <view class="receipt-data-item-left">出仓数量：{{item.totalNum}}</view>
+            </view>
+            <view class="receipt-data-item">
+                <view class="receipt-data-item-left">批次号1：{{item.batch1}}</view>
+                <view class="receipt-data-item-right">批次号2：{{item.batch2}}</view>
+            </view>
+            <view class="receipt-data-item">
+                <view class="receipt-data-item-left">生产日期：{{item.production_date}}</view>
+                <view class="receipt-data-item-right">到期日期：{{item.expiration_date}}</view>
+            </view>
+        </view>
+        <view class="receipt-remarks">备注：{{item.remark}}</view>
+    </view>
+</view>
+<!-- 出仓下单 -->
+<view class="btn-area">
+    <view class="btn-area-left">
+        <view class="checkbox {{allChecked ? 'checked' : ''}}" catchtap="handleCheckedAllChange"></view>
+        <view>全选</view>
+    </view>
+    <view class="btn-area-right">
+        <image class="btn-bg" src="/images/xd.png" mode="widthFix"></image>
+        <view class="buy-btn" bindtap="handleOrderNow">{{deliveryyuy}}</view>
+    </view>
+</view>
+<!-- 出仓下单 -->
+<view class="delivery-popup" wx:if="{{deliveryPopupShow}}">
+    <view class="delivery-bg" style="padding-top: {{CustomBar}}px;" catchtap="handleCloseDeliveryPopup">
+        <view class="delivery-area" catchtap="stopBubbling">
+            <view class="delivery-title">选择出仓信息</view>
+            <view class="delivery-data">
+                <form catchsubmit="deliveryFormSubmit">
+                    <view class="delivery-item">
+                        <view class="delivery-item-left">填写出仓数量</view>
+                        <view class="delivery-item-right">
+                            <input class="delivery-input" name="totalNum" value="{{oneKindDeliveryTotal}}" type="number" bindinput="handleOneKindDeliveryTotal" />
+                        </view>
+                    </view>
+                    <view class="delivery-item">
+                        <view class="delivery-item-right">
+                            <input class="delivery-input" value="{{deliveryPackageNum}}" name="packageNum" type="number" bindinput="handleDeliveryPackageNumInput" />
+                            <text class="delivery-unit">{{deliveryDetails.item_packaging_unit}}</text>
+                            <input class="delivery-input" name="stockNum" value="{{deliveryStockNum}}" type="number" bindinput="handleDeliveryStockNumInput" />
+                            <text class="delivery-unit">{{deliveryDetails.item_stock_unit}}</text>
+                        </view>
+                    </view>
+                    <view class="delivery-item">
+                        <view class="delivery-item-left">批次号1</view>
+                        <view class="delivery-item-right">
+                            <view class="delivery-val">{{deliveryDetails.batch1}}</view>
+                        </view>
+                    </view>
+                    <view class="delivery-item">
+                        <view class="delivery-item-left">批次号2</view>
+                        <view class="delivery-item-right">
+                            <view class="delivery-val">{{deliveryDetails.batch2}}</view>
+                        </view>
+                    </view>
+                    <view class="delivery-item">
+                        <view class="delivery-item-left">生产日期</view>
+                        <view class="delivery-item-right">
+                            <view class="delivery-val">{{deliveryDetails.production_date}}</view>
+                        </view>
+                    </view>
+                    <view class="delivery-item">
+                        <view class="delivery-item-left">到期日期</view>
+                        <view class="delivery-item-right">
+                            <view class="delivery-val">{{deliveryDetails.expiration_date}}</view>
+                        </view>
+                    </view>
+                    <button class="delivery-btn" form-type="submit">添加到出仓单</button>
+                </form>
+            </view>
+        </view>
+        <view class="close-popup" catchtap="handleCloseDeliveryPopup">
+            <image class="close-popup-icon" src="/images/close_white_icon.png" mode="widthFix"></image>
+        </view>
+    </view>
+</view>
+<tabbar activeIdx="{{activeIdx}}"></tabbar>
+
+<!------------------------------------------------ 你触碰到我的底线了  W(￣_￣)W ---------------------------------->
+
+<!-- 分页组件 -->
+<!-- <page-parts options="{{page}}" bind:start="pageStart" bind:success="pageSuccess" bind:fail="pageFail"  /> -->

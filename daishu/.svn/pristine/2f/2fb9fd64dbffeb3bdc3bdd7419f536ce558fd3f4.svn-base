@@ -1,0 +1,232 @@
+/**
+ * 如果位目录层数大于两级需要修改路径
+ */
+const { $Toast, $Message } = require('../../utils/iview/base/index');
+import Tools from '../../utils/modules/Tools';
+import Config from '../../config';
+import utils from '../../utils/utils';
+
+const app = getApp();
+
+Page({
+	data: {
+		modal : {
+			tips : '提示',
+			message : '模态框说明',
+			ok : 'modalOk',
+			cancel : 'modalCancel',
+			ishide : true
+		},
+	
+		// --  分页配置数据  -------- 
+		page: {
+			url: '/',
+				data: {
+				page: 1,
+			}
+		},
+		isEnd: false,
+		// ------------------------- 
+		selectNavList: false, //展示
+		navActivityIndex: 0, // 分类导航当前分类的下标
+		navList: [], // 分类导航列表
+		pageTitle: '', // 页面标题
+		cate_id: '', // 分类ID
+		goodsList: [], // 商品列表
+		banner:'', // banner图
+	},
+
+	// 获取商城首页
+  getShoppingMallIndex () {
+    let that = this
+		let token = wx.getStorageSync('token')
+    app.http({
+      config: {
+        url: 'api/v1/shop_index',
+        data: {
+					token,
+				},
+        method: 'POST'
+      },
+      isAuth: false
+    }).then(res => {
+			console.log(res, 'shoppingMallIndexRes')
+			const resData = res.data.data
+			const banner = resData.banner
+			that.setData({
+				banner
+			})
+    }).catch(err => {
+      console.log(err, 'shoppingMallIndexErr')
+    })
+	},
+
+	/**
+	 * 用户点击导航栏
+	 */
+	handleChangeNav (e) {
+		const that= this
+		const navActivityIndex = e.currentTarget.dataset.index
+		const cate_id = e.currentTarget.dataset.cate_id
+		that.setData({
+			navActivityIndex,
+			selectNavList: false,
+			cate_id,
+		}, function () {
+			that.handleGetClassifiedGoods()
+		})
+	},
+
+	/**
+	 * 展开/关闭 导航栏
+	 */
+	handleSelectNav () {
+		let selectNavList = !this.data.selectNavList
+		this.setData({
+			selectNavList,
+		})
+	},
+
+	/**
+	 * 获取所有商品分类
+	 */
+	getAllCategories () {
+    const that = this
+		const token = wx.getStorageSync('token')
+    app.http({
+      config: {
+        url: 'api/v1/all_cate',
+        data: {
+					token
+				},
+        method: 'POST'
+      },
+      isAuth: false
+    }).then(res => {
+			console.log(res, 'allCategoriesRes')
+			const navList = res.data.data
+			const cate_id = navList[0].id
+			that.setData({
+				navList,
+				cate_id,
+			}, function () {
+				that.handleGetClassifiedGoods()
+			})
+    }).catch(err => {
+      console.log(err, 'allCategoriesErr')
+    })
+	},
+
+	/**
+	 * 获取分类的商品
+	 */
+	handleGetClassifiedGoods () {
+		const that = this
+		const token = wx.getStorageSync('token')
+		const cate_id = that.data.cate_id
+		const is_hot = that.data.is_hot
+		const is_new = that.data.is_new
+		wx.showLoading()
+		app.http({
+      config: {
+        url: 'api/v1/shop_list',
+        data: {
+					token,
+					cate_id,
+					is_hot,
+					is_new
+				},
+        method: 'POST'
+      },
+      isAuth: true
+    }).then(res => {
+			console.log(res, 'getClassifiedGoodsRes')
+			const goodsList = res.data.data.goodsList
+			that.setData({
+				goodsList,
+			}, function () {
+				wx.hideLoading()
+			})
+    }).catch(err => {
+      console.log(err, 'getClassifiedGoodsErr')
+    })
+	},
+
+	onLoad (options){
+		let that = this
+		let is_hot = options.is_hot ? options.is_hot : ''
+		let is_new = options.is_new ? options.is_new : ''
+		if (is_hot && is_hot === '1') {
+			that.setData({
+				pageTitle: '热销商品'
+			})
+		} else if (is_new && is_new === '1') {
+			that.setData({
+				pageTitle: '新品上架'
+			})
+		}
+		that.setData({
+			is_hot,
+			is_new,
+		})
+		that.getAllCategories()
+		that.getShoppingMallIndex()
+	},
+	
+	onShow (){
+		
+	},
+	
+
+
+	/*============================================
+	 			     以下是基本操作 				
+	==============================================*/ 
+
+	...utils,  // mixin方法
+
+	trigger (e){
+		app.trigger(e, this);
+	},
+
+	modalCancel (){
+		this.setData({
+			'modal.ishide' : true
+		})
+	},
+
+	modalOk (){
+		this.setData({
+			'modal.ishide' : true
+		})
+	},
+
+	/**
+	 * 触底分页 (需要分页的请反我牌)
+	 */
+	onReachBottom() {
+		let { page, isEnd } = this.data;
+	
+		if (!isEnd) {
+		  this.setData({
+			'page.data.page': page.data.page + 1
+		  });
+		}
+	},
+
+	/**
+	 * 分页返回数据 (需要分页的请反我牌)
+	 */
+	pageSuccess(e) {
+		this.setData({
+		  list: e.detail.list,
+		  isEnd: e.detail.isEnd
+		})
+	},
+	pageFail(e) {
+		
+	},
+	pageStart(e) {
+		
+	}
+})

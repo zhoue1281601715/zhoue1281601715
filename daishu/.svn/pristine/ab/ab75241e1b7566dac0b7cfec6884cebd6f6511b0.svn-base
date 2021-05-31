@@ -1,0 +1,47 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<!-- 信息提示 -->
+<i-toast id="toast" />
+
+<!-- 模态框 -->
+<i-modal title="{{modal.tips}}" isHide="{{modal.ishide}}" bind:ok="{{modal.ok}}" bind:cancel="{{modal.cancel}}"
+    bind:plateBg="cancel">
+    <view>{{modal.message}}</view>
+</i-modal>
+
+<!----------------------------------------- 下面请开始你的表演 SHOW TIME ---------------------------------->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}" bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">商城订单</custom-parts>
+
+<view class="main">
+  <view class="container">
+    <view class="goods-info">
+      <view class="goods-picture-area">
+        <image class="goods-picture" src="{{goods_picture}}" mode="aspectFill"></image>
+      </view>
+      <view class="goods-name">{{goods_name}}</view>
+    </view>
+    <view class="tip">描述商品</view>
+    <textarea class="evaluate" placeholder="请对商品进行评价" maxlength="-1" bindblur="handleChangeComment"></textarea>
+    <view class="picture-area">
+      <view class="picture-item" wx:for="{{pics}}" wx:key="index">
+        <view class="remove" data-index="{{index}}" catchtap="handleDeleteImage">
+          <image class="remove-icon" src="/images/close_white_icon.png" mode="widthFix"></image>
+        </view>
+        <image class="picture" src="{{item}}" mode="aspectFill"></image>
+      </view>
+      <view class="upload-picture" catchtap="handleChooseImage" wx:if="{{pics.length < 9}}">
+        <image class="camere-icon" src="/images/camera.png" mode="widthFix"></image>
+        <text>为商品拍照</text>
+      </view>
+      <view class="area" wx:if="{{areaShow}}"></view>
+    </view>
+    <button class="submit-btn" catchtap="handleSubmit">提交</button>
+  </view>
+</view>
+<toast parameter="{{toastParameter}}"></toast>
+
+<!------------------------------------------------ 你触碰到我的底线了  W(￣_￣)W ---------------------------------->
+
+<!-- 分页组件 -->
+<!-- <page-parts options="{{page}}" bind:start="pageStart" bind:success="pageSuccess" bind:fail="pageFail"  /> -->

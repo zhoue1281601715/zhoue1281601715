@@ -1,0 +1,28 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<!-- 信息提示 -->
+<i-toast id="toast" />
+
+<!-- 模态框 -->
+<i-modal title="{{modal.tips}}" isHide="{{modal.ishide}}" bind:ok="{{modal.ok}}" bind:cancel="{{modal.cancel}}"
+  bind:plateBg="cancel">
+  <view>{{modal.message}}</view>
+</i-modal>
+
+
+<!----------------------------------------- 下面请开始你的表演 SHOW TIME ---------------------------------->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+  bg="background: #FF4B00;" textSize="26rpx">了解代叔
+</custom-parts>
+
+<view class="notice-area">
+
+
+  
+  <!-- <block wx:for="{{getImageInfo}}" data-item="item" wx:for-index="idx" > -->
+    <image src="{{getImageData[0].value.image.value}}" mode="widthFix" style="width:100%;"></image>
+    <!-- <image src="/images/test.jpg" mode="widthFix" style="width:100%;"></image> -->
+  <!-- </block> -->
+  
+</view>

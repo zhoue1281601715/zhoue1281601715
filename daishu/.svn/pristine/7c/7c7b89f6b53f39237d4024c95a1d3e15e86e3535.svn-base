@@ -1,0 +1,74 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<!-- 信息提示 -->
+<i-toast id="toast" />
+
+<!-- 模态框 -->
+<i-modal title="{{modal.tips}}" isHide="{{modal.ishide}}" bind:ok="{{modal.ok}}" bind:cancel="{{modal.cancel}}" bind:plateBg="cancel">
+	<view>{{modal.message}}</view>
+</i-modal>
+
+<!----------------------------------------- 下面请开始你的表演 SHOW TIME ---------------------------------->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}" bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">发货记录
+</custom-parts>
+<view class="nav" style="top: {{CustomBar}}px;">
+	<block wx:for='{{ arr }}'>
+		<view class="tab {{currentTab == index ? 'red' : 'default'}}" catchtap='tabOn' data-index='{{index}}'>{{ item }}</view>
+	</block>
+</view>
+<view class="delivery">
+	<view wx:if='{{ currentTab === 0 }}'>
+		<block wx:if="{{orderList.length > 0}}">
+			<block wx:for="{{orderList}}" wx:key="index">
+				<navigator class="deliveryDetails" url="/packageA/waybill_search/waybill_search?orderNum={{item.code}}">
+					<view class="signFor"></view>
+					<view class="deliveryTop">
+						<view class="deliveryImg">
+							<image src="/images/stock.jpg" mode="widthFix"></image>
+						</view>
+						<view class="deliveryContent">
+							<view>收货公司：{{item.consignee_name}}</view>
+							<view>收货人：<text>{{item.consignee_contact}}</text><text>{{item.consignee_phone}}</text></view>
+							<view>收货地址：{{item.consignee_city}}{{item.consignee_area}}{{item.consignee_street}}{{item.consignee_address}}</view>
+							<view>单号：{{item.code}}</view>
+						</view>
+					</view>
+					<view class="deliveryNum">数量：{{item.quantity}}件</view>
+				</navigator>
+			</block>
+		</block>
+		<block wx:else>
+      <view class='nodata'>暂无记录</view>
+    </block>
+	</view>
+	<view wx:if='{{ currentTab === 1 }}'>
+		<block wx:if="{{orderList.length > 0}}">
+			<block wx:for="{{orderList}}" wx:key="index">
+				<navigator class="deliveryDetails" url="/packageA/waybill_search/waybill_search?orderNum={{item.code}}">
+					<view class="signFor">已签收</view>
+					<view class="deliveryTop">
+						<view class="deliveryImg">
+							<image src="/images/stock.jpg" mode="widthFix"></image>
+						</view>
+						<view class="deliveryContent">
+							<view>收货公司：{{item.consignee_name}}</view>
+							<view>收货人：<text>{{item.consignee_contact}}</text><text>{{item.consignee_phone}}</text></view>
+							<view>收货地址：{{item.consignee_city}}{{item.consignee_area}}{{item.consignee_street}}{{item.consignee_address}}</view>
+							<view>单号：{{item.code}}</view>
+						</view>
+					</view>
+					<view class="deliveryNum">数量：{{item.quantity}}件</view>
+				</navigator>
+			</block>
+		</block>
+		<block wx:else>
+      <view class='nodata'>暂无记录</view>
+    </block>
+	</view>
+</view>
+<tabbar activeIdx="{{activeIdx}}"></tabbar>
+<!------------------------------------------------ 你触碰到我的底线了  W(￣_￣)W ---------------------------------->
+
+<!-- 分页组件 -->
+<!-- <page-parts options="{{page}}" bind:start="pageStart" bind:success="pageSuccess" bind:fail="pageFail"  /> -->

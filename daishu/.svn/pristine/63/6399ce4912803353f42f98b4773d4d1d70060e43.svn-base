@@ -1,0 +1,139 @@
+
+{
+  "pages": [
+    "pages/index/index",
+    "pages/yuncang/index",
+    "pages/me/me",
+    "pages/components/toast/toast"
+  ],
+  "subpackages": [
+    {
+      "root": "packageA",
+      "name": "pack1",
+      "pages": [
+        "waybill_search/waybill_search",
+        "warehouseTicket/index",
+        "warehouseTicketDetails/index",
+        "offlinePay/offlinePay",
+        "purchaseRecords/index",
+        "logistics/index",
+        "shopping/index",
+        "allCategories/index",
+        "bestSellers/index",
+        "viewDetails/index",
+        "allComments/index",
+        "shoppingCar/index",
+        "orderConfirmation/index",
+        "mallAddressList/mallAddressList",
+        "addShoppingAddress/index",
+        "wallet/index",
+        "record/index",
+        "myWarehouseTicket/index",
+        "transferOut/index",
+        "recharge/index",
+        "rechargeRecord/index",
+        "recommend/recommend",
+        "poster/poster"
+      ]
+    }, {
+      "root": "packageB",
+      "name": "pack2",
+      "pages": [
+        "warehouseReceipt/index",
+        "WareInformation/index",
+        "shippingInformation/index",
+        "warehouseOutReceipt/index",
+        "deliveryShippingInformation/index",
+        "in_stock_res/in_stock_res"
+      ]
+    }, {
+      "root": "packageC",
+      "name": "pack3",
+      "pages": [
+        "login/index",
+        "inventoryQuery/index",
+        "warehouseRecords/index",
+        "orderDetails/index",
+        "deliveryRecord/index",
+        "billInquiry/index",
+        "accessRecord/index",
+        "dataDisplay/index",
+        "mallOrder/index",
+        "evaluate/evaluate",
+        "distribution/index",
+        "addressManagement/index",
+        "add_address/index",
+        "contact/index",
+        "sign_obtain_good/sign_obtain_good",
+        "sign_obtain_good_detail/sign_obtain_good_detail",
+        "sign_give_good/sign_give_good",
+        "sign_give_good_detail/sign_give_good_detail",
+        "delivery_goods/delivery_goods",
+        "delivery_goods_detail/delivery_goods_detail",
+        "waybill_printing/waybill_printing",
+        "waybill_printing_detail/waybill_printing_detail",
+        "data_statistics/data_statistics",
+        "data_statistics_detail/data_statistics_detail",
+        "data_statistics_yue/data_statistics_yue",
+        "bleConnect/bleConnect",
+        "taxiOrder/taxiOrder"
+      ]
+    }
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationStyle": "custom",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "",
+    "navigationBarTextStyle": "black"
+  },
+  "usingComponents": {
+    "i-toast": "/utils/iview/toast/index",
+    "i-modal": "/utils/iview/modal/index",
+    "url-parts": "/pages/components/url-parts/index",
+    "img-parts": "/pages/components/img-parts/index",
+    "page-parts": "/pages/components/page-parts/index",
+    "plate-parts": "/pages/components/plate-parts/index",
+    "author-parts": "/pages/components/author-parts/index",
+    "custom-parts": "/pages/components/custom-parts/index",
+    "tabbar": "/pages/components/tabbar/tabbar",
+    "toast": "/pages/components/toast/toast"
+  },
+  "tabBar": {
+    "color": "#8B8B8B",
+    "selectedColor": "#FF4B00",
+    "list": [
+      {
+        "key": "index",
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "/images/dbsy.png",
+        "selectedIconPath": "/images/dbsy.png",
+        "isShow": "0"
+      },
+      {
+        "key": "task",
+        "text": "云仓",
+        "pagePath": "pages/yuncang/index",
+        "iconPath": "/images/yc_icon.png",
+        "selectedIconPath": "/images/yc_icon.png",
+        "isShow": "0"
+      },
+      {
+        "key": "notification",
+        "text": "我的",
+        "pagePath": "pages/me/me",
+        "iconPath": "/images/dbwode.png",
+        "selectedIconPath": "/images/dbwode.png",
+        "isShow": "0"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json",
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+    }
+  }
+
+}

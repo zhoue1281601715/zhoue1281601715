@@ -1,0 +1,9 @@
+<view class="plate" hidden="{{_hidden}}" style="z-index: 500; {{jStyle}}">
+    <view style="background:{{background}};" bind:tap="hiddenPlate" class="plate-ceng j-class animated {{outAnimate}}" hidden="{{_hidden}}"></view>
+
+    <view class="plateWrap" style="position: absolute; {{_position}}; z-index:502;">
+        <view class="plateInner animated {{animate}}" hidden="{{_hidden}}" style="animation-duration:{{animateDuration}}s;">
+            <slot></slot>
+        </view>
+    </view>
+</view>

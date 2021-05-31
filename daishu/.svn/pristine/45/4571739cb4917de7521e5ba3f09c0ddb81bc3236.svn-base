@@ -1,0 +1,135 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<!-- 信息提示 -->
+<i-toast id="toast" />
+
+<!-- 模态框 -->
+<i-modal title="{{modal.tips}}" isHide="{{modal.ishide}}" bind:ok="{{modal.ok}}" bind:cancel="{{modal.cancel}}"
+    bind:plateBg="cancel">
+    <view>{{modal.message}}</view>
+</i-modal>
+
+<!----------------------------------------- 下面请开始你的表演 SHOW TIME ---------------------------------->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+    bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">代叔配送</custom-parts>
+
+<view class="main">
+    <view class="select-address-area">
+        <view class="select-address-item">
+            <view class="select-address-item-left">
+                <image class="select-address-icon" src="/images/j.png" mode="widthFix"></image>
+            </view>
+            <view class="select-address-item-middle">
+                <view class="no-select-address" wx:if="{{false}}">
+                    <view class="select-address-tip">请填写寄件人地址</view>
+                    <view class="select-address-explain">支持文字、语音识别输入</view>
+                </view>
+                <view class="address-data" wx:else>
+                    <view class="user-data">
+                        <view class="user-name">张三</view>
+                        <view class="user-tel">13012345678</view>
+                    </view>
+                    <view class="address-details">广东省广州市海珠区北岛创意园</view>
+                </view>
+                <view class="right-arrow">
+                    <image class="right-arrow-icon" src="/images/more_icon.png" mode="heightFix"></image>
+                </view>
+            </view>
+            <view class="select-address-item-right">
+                <view class="address-book">
+                    <image class="address-book-icon" src="/images/dzf.png" mode="heightFix"></image>
+                </view>
+                <view class="address-book-title">地址簿</view>
+            </view>
+        </view>
+        <view class="select-address-item">
+            <view class="select-address-item-left">
+                <image class="select-address-icon" src="/images/s.png" mode="widthFix"></image>
+            </view>
+            <view class="select-address-item-middle">
+                <view class="no-select-address" wx:if="{{true}}">
+                    <view class="select-address-tip">请填写寄件人地址</view>
+                    <view class="select-address-explain">支持文字、语音识别输入</view>
+                </view>
+                <view class="address-data" wx:else>
+                    <view class="user-data">
+                        <view class="user-name">张三</view>
+                        <view class="user-tel">13012345678</view>
+                    </view>
+                    <view class="address-details">广东省广州市海珠区北岛创意园</view>
+                </view>
+                <view class="right-arrow">
+                    <image class="right-arrow-icon" src="/images/more_icon.png" mode="heightFix"></image>
+                </view>
+            </view>
+            <view class="select-address-item-right">
+                <view class="address-book">
+                    <image class="address-book-icon" src="/images/dzf.png" mode="heightFix"></image>
+                </view>
+                <view class="address-book-title">地址簿</view>
+            </view>
+        </view>
+    </view>
+    <view class="mailing-way">
+        <view class="mailing-title">寄件方式</view>
+        <view class="mailing-way-item {{mailingIndex === index ? 'mailing-activity' : ''}}" data-index="{{index}}" wx:for="{{mailing}}" wx:key="index" catchtap="handleCheckMailingWay">{{item}}</view>
+    </view>
+    <view class="form-area">
+        <view class="form-item">
+            <view class="form-label">货物信息</view>
+            <view class="form-val-area">
+                <picker bindchange="bindCargoPickerChange" value="{{cargoIndex}}" range="{{cargoInfoArray}}">
+                    <view class="picker-default" wx:if="{{cargoIndex === ''}}">请选择货物信息</view>
+                    <view class="picker" wx:else>{{cargoInfoArray[cargoIndex]}}</view>
+                </picker>
+            </view>
+            <view class="right-arrow-small">
+                <image class="right-arrow-samll-icon" src="/images/more_icon.png" mode="heightFix"></image>
+            </view>
+        </view>
+        <view class="form-item">
+            <view class="form-label">备注</view>
+            <view class="form-val-area">
+                <input class="form-input" type="text" placeholder="请输入备注信息" placeholder-style="color: #9F9FA0;" />
+            </view>
+        </view>
+        <view class="form-item">
+            <view class="form-label">支付方式</view>
+            <view class="form-val-area">
+                <picker bindchange="bindPaymentPickerChange" value="{{payWayIndex}}" range="{{payWayArray}}">
+                    <view class="picker-default" wx:if="{{payWayIndex === ''}}">请选择支付方式</view>
+                    <view class="picker" wx:else>{{payWayArray[payWayIndex]}}</view>
+                </picker>
+            </view>
+            <view class="right-arrow-small">
+                <image class="right-arrow-samll-icon" src="/images/more_icon.png" mode="heightFix"></image>
+            </view>
+        </view>
+    </view>
+    <view class="setting">
+        <view class="setting-checkbox {{checked ? 'setting-checked' : ''}}" catchtap="handleCheckboxChange"></view>
+        <view class="setting-tip">
+            <text>我同意</text>
+            <navigator class="agreement">《代叔配送协议条款》</navigator>
+        </view>
+    </view>
+</view>
+<view class="btn-area">
+    <view class="btn-area-left">
+        <view class="evaluate-area">
+            <text class="evaluate">预估</text>
+            <text class="evaluate-val">￥--</text>
+        </view>
+        <view class="evaluate-tip">请填写寄收件人 物品信息后进行估价</view>
+    </view>
+    <view class="btn-area-right">
+        <image class="btn-bg" src="/images/xd.png" mode="widthFix"></image>
+        <view class="buy-btn" bindtap="handleWarehousingPlaceAnOrder">下单</view>
+    </view>
+</view>
+<tabbar activeIdx="{{activeIdx}}"></tabbar>
+<!------------------------------------------------ 你触碰到我的底线了  W(￣_￣)W ---------------------------------->
+
+<!-- 分页组件 -->
+<!-- <page-parts options="{{page}}" bind:start="pageStart" bind:success="pageSuccess" bind:fail="pageFail"  /> -->

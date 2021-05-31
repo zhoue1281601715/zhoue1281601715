@@ -1,0 +1,129 @@
+{
+  "description": "项目配置文件",
+  "packOptions": {
+    "ignore": []
+  },
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "enhance": false,
+    "postcss": true,
+    "preloadBackgroundData": false,
+    "minified": true,
+    "newFeature": false,
+    "coverView": true,
+    "nodeModules": false,
+    "autoAudits": false,
+    "showShadowRootInWxmlPanel": true,
+    "scopeDataCheck": false,
+    "uglifyFileName": false,
+    "checkInvalidKey": true,
+    "checkSiteMap": true,
+    "uploadWithSourceMap": true,
+    "compileHotReLoad": false,
+    "useMultiFrameRuntime": true,
+    "useApiHook": true,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    },
+    "enableEngineNative": false,
+    "useIsolateContext": true,
+    "useCompilerModule": false,
+    "userConfirmedUseCompilerModuleSwitch": false,
+    "packNpmManually": false,
+    "packNpmRelationList": [],
+    "minifyWXSS": true,
+    "useApiHostProcess": true
+  },
+  "compileType": "miniprogram",
+  "libVersion": "2.14.0",
+  "appid": "wx59f96353fd9216c2",
+  "projectname": "daishu",
+  "cloudfunctionTemplateRoot": "",
+  "watchOptions": {
+    "ignore": []
+  },
+  "debugOptions": {
+    "hidedInDevtools": []
+  },
+  "scripts": {},
+  "simulatorType": "wechat",
+  "simulatorPluginLibVersion": {},
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "name": "pages/index/index",
+          "pathName": "pages/index/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/shoppingCar/index",
+          "pathName": "pages/shoppingCar/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/WareInformation/index",
+          "pathName": "pages/WareInformation/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "packageC/login/index",
+          "pathName": "packageC/login/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "packageC/driver_verification/index",
+          "pathName": "packageC/driver_verification/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "packageC/driverOrder/index",
+          "pathName": "packageC/driverOrder/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "packageC/confirmTask/index",
+          "pathName": "packageC/confirmTask/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "packageC/confirmTask/index",
+          "pathName": "packageC/confirmTask/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "packageA/uploadImg/index",
+          "pathName": "packageA/uploadImg/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "packageA/uploadImg/index",
+          "pathName": "packageA/uploadImg/index",
+          "query": "",
+          "scene": null
+        }
+      ]
+    }
+  }
+}

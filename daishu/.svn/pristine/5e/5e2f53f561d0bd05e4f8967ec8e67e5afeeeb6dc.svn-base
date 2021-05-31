@@ -1,0 +1,98 @@
+.container{
+	padding: 0 30rpx;
+}
+
+.pull-left{
+	float: left;
+}
+
+.pull-right{
+	float: right;
+}
+
+.block{
+	display:block;
+}
+
+.text-center{
+	text-align: center;
+}
+
+.full-image image{
+	width: 100%;
+}
+
+.inlink-block{
+	display: inline-block;
+}
+
+.multiline{
+	display: -webkit-box;
+    -webkit-box-orient: vertical;
+    /*-webkit-line-clamp: 4;*/
+    overflow: hidden;
+}
+
+.clear:after{ 
+    content: ''; 
+    display: block; 
+    clear: both; 
+}
+
+.h1{
+	font-size: 64rpx;
+	font-weight: bold;
+	display: block;
+}
+
+.h2{
+	font-size: 48rpx;
+	font-weight: bold;
+	display: block;
+}
+
+.h3{
+	font-size: 37rpx;
+	font-weight: bold;
+	display: block;
+}
+
+.h4{
+	font-size: 32rpx;
+	display: block;
+	font-weight: bold;
+}
+
+.h5{
+	font-size: 26rpx;
+	display: block;
+	font-weight: bold;
+}
+
+.h6{
+	font-size: 24rpx;
+	font-weight: bold;
+	display: block;
+}
+
+.span{
+	display: inline;
+	font-size: 24rpx;
+}
+
+.small{
+	display: inline;
+	font-size: 20rpx;
+}
+
+.b{
+	display: inline;
+	font-weight: bold;
+	font-size: 24rpx;
+}
+
+.ell{ display: block;  overflow: hidden; white-space:nowrap;  text-overflow: ellipsis; }
+
+button::after{
+	border: none;
+}

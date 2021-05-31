@@ -1,0 +1,128 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<!-- 信息提示 -->
+<i-toast id="toast" />
+
+<!-- 模态框 -->
+<i-modal title="{{modal.tips}}" isHide="{{modal.ishide}}" bind:ok="{{modal.ok}}" bind:cancel="{{modal.cancel}}"
+    bind:plateBg="cancel">
+    <view>{{modal.message}}</view>
+</i-modal>
+
+<!----------------------------------------- 下面请开始你的表演 SHOW TIME ---------------------------------->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+    bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">商城</custom-parts>
+
+<view class="header">
+    <view class="banner">
+        <swiper indicator-dots="{{false}}" autoplay="{{true}}" interval="5000" loop="{{true}}" circular="{{true}}" duration="500">
+            <block wx:for="{{banner}}" wx:key="{{item.id}}">
+            <swiper-item>
+                <view class="swiper-item">
+                <image class="banner-img" src="{{item.value.pic.value}}" mode="aspectFill"></image>
+                </view>
+            </swiper-item>
+            </block>
+        </swiper>
+    </view>
+    <view class="header-position-content">
+        <view class="search-content">
+            <image class="search-icon" src="/images/search_orange_icon.png" mode="heightFix"></image>
+            <input 
+                class="search-input" 
+                placeholder="输入查找商品" 
+                placeholder-class="input-placeholder"
+                bindblur="handleSearchGoods"
+            ></input>
+        </view>
+        <url-parts url="/packageA/shoppingCar/index">
+            <view class="shopping-car">
+                <image class="shopping-car-icon" src="/images/shopping_car_icon.png" mode="widthFix"></image>
+            </view>
+        </url-parts>
+    </view>
+    <!-- <view class="choose-btn-area">
+        <button class="choose-btn">
+            <text>立即选购</text>
+            <icon class="iconfont icon-youjiantou"></icon>
+        </button>
+    </view> -->
+</view>
+<view class="main">
+    <view class="nav-content">
+        <block wx:for="{{categoryList}}" wx:key="{{item.id}}">
+            <url-parts url="/packageA/allCategories/index?id={{item.id}}&index={{index}}" >
+                <view class="nav-item">
+                    <image class="nav-icon" src="{{item.pic}}" mode="heightFix"></image>
+                <text class="nav-name">{{item.cate_name}}</text>
+                </view>
+            </url-parts >
+        </block>
+    </view>
+    <view class="goods-content">
+        <view class="goods-nav">
+            <url-parts url="/packageA/bestSellers/index?is_hot=1" class="goods-nav-item">
+                <view class="goods-nav-title">热门商品</view>
+                <view class="goods-nav-content">
+                    <image class="goods-nav-picture" src="{{hotList[0].value.img.value}}" mode="aspectFill"></image>
+                    <view class="goods-nav-position">
+                        <view>
+                            <view class="goods-nav-slogan">超值爆款</view>
+                            <view class="goods-nav-slogan">代叔力推</view>
+                        </view>
+                        <button class="goods-nav-btn">
+                            <text>立即选购</text>
+                            <icon class="iconfont icon-youjiantou"></icon>
+                        </button>
+                    </view>
+                </view>
+            </url-parts>
+            <url-parts url="/packageA/bestSellers/index?is_new=1" class="goods-nav-item">
+                <view class="goods-nav-title">新品上架</view>
+                <view class="goods-nav-content">
+                    <image class="goods-nav-picture" src="{{newList[0].value.img.value}}" mode="aspectFill"></image>
+                    <view class="goods-nav-position">
+                        <view>
+                            <view class="goods-nav-slogan">超值爆款</view>
+                            <view class="goods-nav-slogan">代叔力推</view>
+                        </view>
+                        <button class="goods-nav-btn">
+                            <text>立即选购</text>
+                            <icon class="iconfont icon-youjiantou"></icon>
+                        </button>
+                    </view>
+                </view>
+            </url-parts>
+        </view>
+        <view class="goods-list" wx:if="{{goodsList.length > 0}}">
+            <block wx:for="{{goodsList}}">
+                <url-parts url="/packageA/viewDetails/index?id={{item.id}}" class="goods-item">
+                    <view class="goods-picture-area">
+                        <image class="goods-picture" src="{{item.image}}" mode="aspectFill"></image>
+                    </view>
+                    <view class="goods-data">
+                        <view class="goods-name">
+                            <text class="goods-label">代叔力推</text>
+                            <text class="goods-name">{{item.store_name}}</text>
+                        </view>
+                        <view class="goods-price-area">
+                            <text class="yuan">￥</text>
+                            <text class="goods-price">{{item.price}}</text>
+                            <text class="payment-num">{{item.sales}}人付款</text>
+                        </view>
+                        <view class="more">
+                            <text>…</text>
+                        </view>
+                    </view>
+                </url-parts>
+            </block>
+        </view>
+        <view class="nodata" wx:else>没有查找到数据</view>
+    </view>
+</view>
+<tabbar activeIdx="{{activeIdx}}"></tabbar>
+<!------------------------------------------------ 你触碰到我的底线了  W(￣_￣)W ---------------------------------->
+
+<!-- 分页组件 -->
+<!-- <page-parts options="{{page}}" bind:start="pageStart" bind:success="pageSuccess" bind:fail="pageFail"  /> -->

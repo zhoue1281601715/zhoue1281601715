@@ -1,0 +1,97 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<!-- 信息提示 -->
+<i-toast id="toast" />
+
+<!-- 模态框 -->
+<i-modal title="{{modal.tips}}" isHide="{{modal.ishide}}" bind:ok="{{modal.ok}}" bind:cancel="{{modal.cancel}}"
+    bind:plateBg="cancel">
+    <view>{{modal.message}}</view>
+</i-modal>
+
+<!----------------------------------------- 下面请开始你的表演 SHOW TIME ---------------------------------->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+    bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">库存查询</custom-parts>
+
+<view class="main">
+    <view class="condition-area">
+        <from class="condition-from" catchsubmit="formSubmit">
+            <view class="condition-list">
+                <view class="condition-item">
+                    <view class="condition-item-name">选择仓库</view>
+                    <view class="condition-item-right">
+                        <picker mode='selector' bindchange="handlePickerChange" value="{{warehousIndex}}" range="{{warehouse}}" range-key="name" data-id="{{warehousIndex[warehousIndex].id}}">
+                            <view class="picker-val" wx:if="{{warehousIndex==''}}">请选择仓库</view>
+                            <view class="picker-val" wx:else>{{warehouse[warehousIndex].name}}</view>
+                        </picker>
+                        <icon class="iconfont icon-youjiantou"></icon>
+                    </view>
+                </view>
+                <view class="condition-item">
+                    <view class="condition-item-name">商品名称</view>
+                    <view class="condition-item-right">
+                        <input class="batch-num-input" name="batch_number" placeholder="产品名称/批次号" bindinput="getStockQueryKeyWord" value="{{stockQueryKeyWord}}" placeholder-class="batch-num-input-placeholder"></input>
+                    </view>
+                </view>
+            </view>
+            <button class="query-btn" bindtap="getStockList">立即查询</button>
+        </from>
+    </view>
+    <view class="goods-list">
+        <view class="goods-item" wx:for="{{warehouseList}}">
+            <view class="goods-name">{{item.item_name}}）</view>
+            <view class="goods-data">
+                <view class="goods-data-left">
+                    <view class="goods-data-item">
+                        <view class="goods-data-name">产品编号：</view>
+                        <view class="goods-data-val">{{item.item_code || ""}}</view>
+                    </view>
+                    <view class="goods-data-item">
+                        <view class="goods-data-name">库存数量：</view>
+                        <view class="goods-data-val">{{item.packaging}}</view>
+                    </view>
+                    <!-- <view class="goods-data-item">
+                        <view class="goods-data-name">体积：</view>
+                        <view class="goods-data-val"></view>
+                    </view> -->
+                    <view class="goods-data-item">
+                        <view class="goods-data-name">批次号1：</view>
+                        <view class="goods-data-val">{{item.batch1||""}}</view>
+                    </view>
+                    <view class="goods-data-item">
+                        <view class="goods-data-name">生产日期：</view>
+                        <view class="goods-data-val">{{item.production_date ||""}}</view>
+                    </view>
+                </view>
+                <view class="goods-data-right">
+                    <view class="goods-data-item">
+                        <view class="goods-data-name">规格：</view>
+                        <view class="goods-data-val">{{item.item_spec}}</view>
+                    </view>
+                    <view class="goods-data-item">
+                        <view class="goods-data-name">箱规：</view>
+                        <view class="goods-data-val">{{item.item_multiple}}</view>
+                    </view>
+                    <!-- <view class="goods-data-item">
+                        <view class="goods-data-name">重量：</view>
+                        <view class="goods-data-val"></view>
+                    </view> -->
+                    <view class="goods-data-item">
+                        <view class="goods-data-name">批次号2：</view>
+                        <view class="goods-data-val">{{item.batch2 ||""}}</view>
+                    </view>
+                    <view class="goods-data-item">
+                        <view class="goods-data-name">到期日期：</view>
+                        <view class="goods-data-val">{{item.expiration_date || ""}}</view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>
+<tabbar activeIdx="{{activeIdx}}"></tabbar>
+<!------------------------------------------------ 你触碰到我的底线了  W(￣_￣)W ---------------------------------->
+
+<!-- 分页组件 -->
+<!-- <page-parts options="{{page}}" bind:start="pageStart" bind:success="pageSuccess" bind:fail="pageFail"  /> -->

@@ -1,0 +1,95 @@
+.nav-area {
+  position: fixed;
+  left: 0;
+  padding: 0 30rpx 28rpx;
+  width: 750rpx;
+  box-sizing: border-box;
+  background-color: #F2F2F2;
+}
+
+.picker {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 84rpx;
+  font-size: 32rpx;
+  color: #000000;
+}
+
+.more-icon {
+  margin-left: 12rpx;
+  width: 24rpx;
+}
+
+.account {
+  display: flex;
+  align-items: center;
+}
+
+.account-item {
+  height: 32rpx;
+  line-height: 32rpx;
+  margin-right: 60rpx;
+  font-size: 24rpx;
+  color: #6B6969;
+}
+
+.main {
+  padding: 144rpx 0 94rpx;
+  width: 750rpx;
+}
+
+.list {
+  padding: 20rpx 0;
+  background-color: #FFFFFF;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 34rpx 24rpx 22rpx;
+}
+
+.circle {
+  width: 64rpx;
+  height: 64rpx;
+  line-height: 64rpx;
+  font-size: 42rpx;
+  color: #FFFFFF;
+  text-align: center;
+  background: #FF5101;
+  border-radius: 50%;
+  margin-right: 34rpx;
+}
+
+.item-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.item-data {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.item-title {
+  font-size: 30rpx;
+  /* font-weight: bold; */
+  color: #000000;
+}
+
+.item-amount {
+  font-size: 34rpx;
+  /* font-weight: bold; */
+  color: #000000;
+}
+
+.item-date {
+  margin-top: 12rpx;
+  font-size: 26rpx;
+  color: #6B6969;
+}

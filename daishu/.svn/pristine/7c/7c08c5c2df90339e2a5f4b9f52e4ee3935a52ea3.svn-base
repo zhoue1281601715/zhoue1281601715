@@ -1,0 +1,36 @@
+page{
+  height: 100%;
+}
+
+.contact {
+  position: fixed;
+  left: 0;
+  bottom: 94rpx;
+  padding: 0 16rpx 20rpx;
+  width: 750rpx;
+  border-radius: 10rpx;
+  background: linear-gradient(180deg, #FFFFFF, #F9F9F9);
+  box-shadow: 0 6rpx 10rpx 0 rgba(153, 153, 153, 0.35);
+  box-sizing: border-box;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  height: 72rpx;
+  border-bottom: 2rpx solid #F3F3F3;
+}
+
+.contact-item:last-child {
+  border: none;
+}
+
+.contact-item text {
+  font-size: 24rpx;
+  color: #1E1E1E;
+}
+
+.contact-icon {
+  margin-left: 20rpx;
+  height: 32rpx;
+}

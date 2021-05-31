@@ -1,0 +1,68 @@
+.notice-area {
+  padding-bottom: 120rpx;
+  width: 750rpx;
+  border-bottom: 4rpx dashed #FFFFFF;
+  box-sizing: border-box;
+  background: #FF4B00;
+}
+
+.notice-start {
+  padding: 0 32rpx;
+  line-height: 100rpx;
+  font-size: 40rpx;
+  letter-spacing: 4rpx;
+  color: #FFFFFF;
+  box-sizing: border-box;
+}
+
+.radial-gradient-area {
+  background: radial-gradient(circle, #F8B856 20%, #FF7B16, #FF4B00, #FF4B00);
+}
+
+.notice-content-item, .notice-end {
+  padding: 0 32rpx;
+  line-height: 62rpx;
+  font-size: 28rpx;
+  letter-spacing: 4rpx;
+  color: #FFFFFF;
+  box-sizing: border-box;
+}
+
+.notice-content-item:first-child {
+  text-indent: 2em;
+}
+
+.notice-end {
+  margin-top: 18rpx;
+}
+
+.notice-sign {
+  margin-top: 10rpx;
+  padding: 0 32rpx;
+  box-sizing: border-box;
+}
+
+.notice-sign-item{
+  line-height: 42rpx;
+  font-size: 28rpx;
+  letter-spacing: 4rpx;
+  color: #FFFFFF;
+  text-align: right;
+}
+
+.tip {
+  padding: 40rpx 24rpx;
+  font-size: 38rpx;
+  letter-spacing: 4rpx;
+  color: #EEDA9B;
+  box-sizing: border-box;
+  background-color: #FF4B00;
+}
+
+.picture {
+  width: 750rpx;
+  vertical-align: top;
+}
+.color_der {
+  text-decoration:underline;
+}

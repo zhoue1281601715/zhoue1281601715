@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "van-nav-bar": "../@vant/weapp/nav-bar",
+    "van-popup": "../@vant/weapp/popup/index",
+    "van-cell": "../@vant/weapp/cell/index"
+  }
+}

@@ -1,0 +1,59 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<!-- 信息提示 -->
+<i-toast id="toast" />
+
+<!-- 模态框 -->
+<i-modal title="{{modal.tips}}" isHide="{{modal.ishide}}" bind:ok="{{modal.ok}}" bind:cancel="{{modal.cancel}}"
+    bind:plateBg="cancel">
+    <view>{{modal.message}}</view>
+</i-modal>
+
+<!----------------------------------------- 下面请开始你的表演 SHOW TIME ---------------------------------->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+  bg="background: #FF4B00;">关于代叔小程序上线的通知
+</custom-parts>
+
+<view class="notice-area">
+  <view class="notice-start">致尊敬的客户：</view>
+  <view class="notice-content">
+    <view class="radial-gradient-area">
+      <view class="notice-content-item">
+        为了方便双方结算，提高工作效率。代叔科技产品和服务不断升级迭代，满足业务发展需要，立足客户需求和实现业务线上办理结算，线下操作运营一体化，现通知如下：
+      </view>
+      <view class="notice-content-item">
+        1、自2021年3月1日起，代叔科技实现线上进出仓办理、结算对账等服务，不再进行线下人工对账，如需对账单，可自行在系统下载。
+      </view>
+      <view class="notice-content-item">
+        2、代叔科技承诺，如客户发现系统账单多收费用，则代叔科技不但退还多收取的费用，并且给予该客户不超过多收费用2倍的仓票奖励。
+      </view>
+      <view class="notice-content-item">
+        3、代叔科技在结算账户内给予客户一定授信额度，但不超过押金金额的70%，该额度不能提现。客户充值金额优先用于抵扣已经使用的授信额度。
+      </view>
+      <view class="notice-content-item">
+        4、客户在小程序上直接充值到客户的“公司余额”，也可以线下公账转公账的形式，由我司财务代为充值到客户的“公司余额”。
+      </view>
+    </view>
+    <view class="notice-content-item">
+      5、客户可以将“公司余额”直接转入到“结算余额”，直接用于仓租、服务费、物流费等所有费用的结算。
+    </view>
+    <view class="notice-content-item">
+      6、客户可以使用“公司余额”购买优惠仓票，点击使用优惠仓票后，仓票的面额将转为“结算余额”，“结算余额”直接用于费用的结算。
+    </view>
+    <view class="notice-content-item">
+      7、客户也可以直接使用微信支付购买优惠仓票，点击使用优惠仓票后，仓票的面额将转为“结算余额”，“结算余额”直接用于费用的结算。
+    </view>
+    <view class="notice-content-item">
+      8、购买和使用仓票是客户获得优惠的唯一途径。
+    </view>
+  </view>
+  <view class="notice-end">特此通知！</view>
+  <view class="notice-sign">
+    <view class="notice-sign-item">广州代叔科技有限公司</view>
+    <view class="notice-sign-item">二〇二一年二月二十二日</view>
+  </view>
+</view>
+<view class="tip">附：充值及仓票购买流程</view>
+<image class="picture" src="/images/dssxtz.jpg" mode="widthFix"></image>
+<!------------------------------------------------ 你触碰到我的底线了  W(￣_￣)W ---------------------------------->

@@ -1,0 +1,328 @@
+/**
+ * 如果位目录层数大于两级需要修改路径
+ */
+const { $Toast, $Message } = require('../../utils/iview/base/index');
+import Tools from '../../utils/modules/Tools';
+import Config from '../../config';
+import utils from '../../utils/utils';
+
+const app = getApp();
+
+Page({
+	data: {
+		CustomBar: 0,
+		activeIdx: -1,
+		data_list: ["今天", "三天", "一周", "一个月", "一年"],
+		navItemActivityIndex: 0,
+		date: '请选择时间', // 默认起始时间  
+		date2: '请选择时间', // 默认结束时间
+		nowTimeStamp: '', // 当前时间的时间戳
+		todayStart: '', // 今天0点0时0分的时间戳
+		threeDayAgo: '', // 三天前0点0时0分的时间戳
+		thisWeekStart: '', // 本周第一天（星期天）0点0时0分的时间戳
+		thisMonthStart: '', // 本月第一天0点0时0分的时间戳
+		thisYearStart: '', // 本年第一天0点0时0分的时间戳
+		startTime: '', // 起始时间时间戳
+		endTime: '', // 结束时间时间戳
+		rechargeList: [], // 列表
+		thisPage: 1,
+		lastPage: 1,
+		showView: true,
+		modal : {
+			tips : '提示',
+			message : '模态框说明',
+			ok : 'modalOk',
+			cancel : 'modalCancel',
+			ishide : true
+		},
+	
+		// --  分页配置数据  -------- 
+		page: {
+			url: '/',
+				data: {
+				page: 1,
+			}
+		},
+		isEnd: false,
+		// ------------------------- 
+		
+	},
+
+	/**
+	 * 获取充值记录
+	 */
+	getRechargeList () {
+		const that = this
+		const token = wx.getStorageSync('token')
+		const { navItemActivityIndex, nowTimeStamp, todayStart, threeDayAgo, thisWeekStart, thisMonthStart, thisYearStart, thisPage } = that.data
+		let start_time = ''
+		let end_time = nowTimeStamp
+		if (typeof(navItemActivityIndex) === 'number') {
+			switch (navItemActivityIndex) {
+				case 0:
+					start_time = todayStart
+					break;
+				case 1:
+					start_time = threeDayAgo
+					break;
+				case 2:
+					start_time = thisWeekStart
+					break;
+				case 3:
+					start_time = thisMonthStart
+					break;
+				case 4:
+					start_time = thisYearStart
+					break;
+			}
+		} else {
+			const { startTime, endTime } = that.data
+			start_time = startTime
+			end_time = endTime
+		}
+		console.log('start_time', start_time)
+		console.log('end_time', end_time)
+		app.http({
+			config: {
+				url: 'api/v1/recharge_list',
+				data: {
+					token,
+					start_time,
+					end_time,
+					page: thisPage
+				},
+				method: 'POST'
+			},
+			isAuth: true
+		}).then(res => {
+			console.log(res, 'rechargeListRes')
+			let rechargeList = that.data.rechargeList.length > 0 ? that.data.rechargeList.concat(res.data.data.data) : res.data.data.data
+			let lastPage = res.data.data.last_page
+			that.setData({
+				rechargeList,
+				lastPage
+			})
+		}).catch(err => {
+			console.log(err, 'rechargeListErr')
+		})
+	},
+
+	onLoad (query) {
+		app.setTitle('填个标题吧');
+		const that = this
+		const CustomBar = app.store.custom.CustomBar
+		that.setData({
+			CustomBar
+		})
+		console.log('CustomBar', CustomBar)
+		const nowTimeStamp = Date.parse(new Date()) / 1000 // 当前时间的时间戳
+		const time = new Date() // 当前时间
+		const year = time.getFullYear() // 当前时间的年份
+		const month = time.getMonth() // 当前时间的月份
+		const date = time.getDate() // 当前时间的日期
+		const day = time.getDay() // 当前时间的星期数
+		const oneDayTimeStamp = 1000 * 60 * 60 * 24 // 一天的时间戳长度
+		const todayStart = Date.parse(new Date(year, month, date)) / 1000 // 今天0点0时0分的时间戳
+		const threeDayAgo = Date.parse(new Date(todayStart * 1000 - oneDayTimeStamp * 3)) / 1000 // 三天前0点0时0分的时间戳
+		const thisWeekStart = Date.parse(new Date(year, month, (date - day))) / 1000 // 本周第一天（星期天）0点0时0分的时间戳
+		const thisMonthStart = Date.parse(new Date(year, month, 1)) / 1000 // 本月第一天0点0时0分的时间戳
+		const thisYearStart = Date.parse(new Date(year, 0, 1)) / 1000 // 本年第一天0点0时0分的时间戳
+		that.setData({
+			nowTimeStamp,
+			todayStart,
+			threeDayAgo,
+			thisWeekStart,
+			thisMonthStart,
+			thisYearStart
+		}, () => {
+			that.getRechargeList()
+		})
+		/* console.log('nowTimeStamp', nowTimeStamp)
+		console.log('todayStart', todayStart)
+		console.log('year', year)
+		console.log('month', month)
+		console.log('date', date)
+		console.log('day', day)
+		console.log('threeDayAgo', threeDayAgo)
+		console.log('thisWeekStart', thisWeekStart)
+		console.log('thisMonthStart', thisMonthStart)
+		console.log('thisYearStart', thisYearStart) */
+	},
+
+	onShow () {
+		const that = this
+		wx.createSelectorQuery().selectAll('.nav-area').boundingClientRect(function (rects) {
+			console.log('rects', rects)
+			that.setData({
+				navAreaHeight: rects[0].height
+			})
+		}).exec()
+	},
+	
+	switchNav(event) {
+		const that = this
+		const cur = event.currentTarget.dataset.current
+    if (that.data.navItemActivityIndex == cur && that.data.navItemActivityIndex != '') {
+      return false;
+    } else {
+      that.setData({
+				navItemActivityIndex: cur,
+				rechargeList: [],
+				date: '请选择时间',
+				date2: '请选择时间',
+				startTime: '',
+				endTime: ''
+      }, () => {
+				that.getRechargeList()
+			})
+    }
+	},
+
+	 // 时间段选择  
+	 bindDateChange(e) {
+    const that = this
+		const date = e.detail.value
+		const { nowTimeStamp, endTime } = that.data
+		let timeArr = date.split('-')
+		timeArr[1] = timeArr[1] - 1
+		const startTime = Date.parse(new Date(timeArr[0], timeArr[1], timeArr[2])) / 1000
+    that.setData({
+			navItemActivityIndex: '',
+			date: e.detail.value,
+			startTime
+    }, () => {
+			if (startTime > nowTimeStamp) {
+				wx.showToast({
+					title: '起始时间不能大于今天',
+					icon: 'none',
+					duration: 3000
+				})
+			} else if (startTime > endTime && endTime > 0) {
+				wx.showToast({
+					title: '起始时间不能大于结束时间',
+					icon: 'none',
+					duration: 3000
+				})
+			} else {
+				if (endTime > 0) {
+					that.setData({
+						rechargeList: []
+					}, () => {
+						that.getRechargeList()
+					})
+				}
+			}
+		})
+	},
+	
+  bindDateChange2(e) {
+    const that = this
+		const date2 = e.detail.value
+		const { nowTimeStamp, todayStart, startTime } = that.data
+		let timeArr = date2.split('-')
+		timeArr[1] = timeArr[1] - 1
+		const endTime = (Date.parse(new Date(timeArr[0], timeArr[1], timeArr[2])) / 1000) === todayStart ? nowTimeStamp : Date.parse(new Date(timeArr[0], timeArr[1], timeArr[2], 23, 59, 59)) / 1000
+		console.log('nowTimeStamp', nowTimeStamp)
+		console.log('endTime', endTime)
+    that.setData({
+			navItemActivityIndex: '',
+			date2: e.detail.value,
+			endTime
+    }, () => {
+			if (endTime > nowTimeStamp) {
+				wx.showToast({
+					title: '结束时间不能大于今天',
+					icon: 'none',
+					duration: 3000
+				})
+			} else if (startTime === '') {
+				wx.showToast({
+					title: '请先选择起始时间',
+					icon: 'none',
+					duration: 3000
+				})
+			} else if (endTime < startTime) {
+				wx.showToast({
+					title: '结束时间不能小于起始时间',
+					icon: 'none',
+					duration: 3000
+				})
+			} else {
+				that.setData({
+					rechargeList: []
+				}, () => {
+					that.getRechargeList()
+				})
+			}
+		})
+  },
+
+	/*============================================
+	 			     以下是基本操作 				
+	==============================================*/ 
+
+	...utils,  // mixin方法
+
+	trigger (e){
+		app.trigger(e, this);
+	},
+
+	modalCancel (){
+		this.setData({
+			'modal.ishide' : true
+		})
+	},
+
+	modalOk (){
+		this.setData({
+			'modal.ishide' : true
+		})
+	},
+
+	/**
+	 * 触底分页 (需要分页的请反我牌)
+	 */
+	onReachBottom() {
+		const that = this
+		let { page, isEnd } = that.data;
+	
+		if (!isEnd) {
+		  that.setData({
+			'page.data.page': page.data.page + 1
+		  });
+		}
+
+		let { thisPage, lastPage, navItemsActivityIndex } = that.data
+		if (lastPage > thisPage) {
+			thisPage += 1
+			that.setData({
+				thisPage
+			}, () => {
+				switch (navItemsActivityIndex) {
+					case 0:
+						that.getCompanyMoney()
+						break;
+					case 1:
+						that.getUserMoney()
+						break;
+				}
+			})
+		}
+	},
+
+	/**
+	 * 分页返回数据 (需要分页的请反我牌)
+	 */
+	pageSuccess(e) {
+		this.setData({
+		  list: e.detail.list,
+		  isEnd: e.detail.isEnd
+		})
+	},
+	pageFail(e) {
+		
+	},
+	pageStart(e) {
+		
+	}
+})

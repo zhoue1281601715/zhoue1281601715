@@ -1,0 +1,52 @@
+
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<!-- 信息提示 -->
+<i-toast id="toast" />
+
+<!-- 模态框 -->
+<i-modal title="{{modal.tips}}" isHide="{{modal.ishide}}" bind:ok="{{modal.ok}}" bind:cancel="{{modal.cancel}}"
+    bind:plateBg="cancel">
+    <view>{{modal.message}}</view>
+</i-modal>
+
+<!----------------------------------------- 下面请开始你的表演 SHOW TIME ---------------------------------->
+<custom-parts isBack="{{true}}" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}" bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">叫车订单</custom-parts>
+
+<view class="nav-list">
+    <view class="nav-item nav-activity">新订单</view>
+    <view class="nav-item">订单记录</view>
+</view>
+<view class="order-list">
+    <view class="order-item">
+        <view class="order-title">订单信息</view>
+        <view class="order-val">寄件地址：广州市白云区</view>
+        <view class="order-val">收件地址：广州市海珠区</view>
+        <view class="order-val">商品信息：汽配，25公斤</view>
+        <view class="order-val">取件时间：2小时内</view>
+        <view class="order-btn-area">
+            <view class="order-btn">查看</view>
+        </view>
+    </view>
+    <view class="order-item">
+        <view class="order-title">订单信息</view>
+        <view class="order-val">寄件地址：广州市白云区</view>
+        <view class="order-val">收件地址：广州市海珠区</view>
+        <view class="order-val">商品信息：汽配，25公斤</view>
+        <view class="order-val">取件时间：2小时内</view>
+        <view class="order-btn-area">
+            <view class="order-btn">查看</view>
+        </view>
+    </view>
+</view>
+<view class="tabbar">
+    <view class="tabbar-item">
+        <image class="tabbar-icon" src="" mode="widthFix"></image>
+    </view>
+</view>
+<!------------------------------------------------ 你触碰到我的底线了  W(￣_￣)W ---------------------------------->
+
+<!-- 分页组件 -->
+<!-- <page-parts options="{{page}}" bind:start="pageStart" bind:success="pageSuccess" bind:fail="pageFail"  /> -->
+

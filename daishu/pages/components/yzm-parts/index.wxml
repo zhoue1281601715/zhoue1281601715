@@ -1,0 +1,1 @@
+<view class="j-class {{!yzm_status ? 'j-active-class' : ''}}" bind:tap="yzm">{{_tip}}</view>

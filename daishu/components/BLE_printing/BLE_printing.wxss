@@ -1,0 +1,19 @@
+.print_btn {
+    width: calc(100% - 40rpx);
+    margin: 0 auto;
+    height: 88rpx;
+    line-height: 88rpx;
+    text-align: center;
+    font-size: 30rpx;
+    color: #343434;
+    border-top: 1px solid #f8f8fa;
+    background: #fff;
+    border-radius: 0rpx 0rpx 10rpx 10rpx;
+
+}
+
+.print_btn image {
+    width: 26rpx;
+    display: inline-block;
+    margin-right: 15rpx;
+}

@@ -1,0 +1,88 @@
+<view class="{{!default ? 'cu-form-group' : ''}} j-class">
+    <view class="title" wx:if="{{!!title}}">{{title}}</view>
+    
+    <block wx:if="{{type == 'input'}}">
+        <input placeholder="{{placeholder}}" name="{{name}}" value="{{value}}"></input>
+    </block>
+
+    <block wx:elif="{{type == 'picker'}}">
+        <block wx:if="{{subType == 'selector'}}">
+            <picker bindchange="change" mode="selector" bindcancel="cancel" value="{{value}}" range="{{range}}" range-key="{{rangeKey}}">
+                <view class="picker">
+                   {{range[0]}}
+                </view>
+            </picker>
+        </block>
+        <block wx:elif="{{subType == 'multiSelector'}}">
+            <picker bindchange="change" mode="multiSelector" bindcancel="cancel" value="{{value}}" range="{{range}}" range-key="{{rangeKey}}">
+                <view class="picker">
+                    <block wx:for="{{value}}" wx:key="{{index}}">
+                       <block wx:if="{{index != 0}}"> ,</block>{{range[index][value[index]]}}
+                    </block>
+                </view>
+            </picker>
+        </block>
+        <block wx:elif="{{subType == 'time'}}">
+            <picker bindchange="change" mode="time" bindcancel="cancel" start="{{start}}" end="{{end}}" value="{{value}}">
+                <view class="picker">
+                    {{value}}
+                </view>
+            </picker>
+        </block>
+        <block wx:elif="{{subType == 'date'}}">
+            <picker bindchange="change" mode="date" bindcancel="cancel" start="{{start}}" end="{{end}}" value="{{value}}" fields="{{fields}}">
+                <view class="picker">
+                    {{value}}
+                </view>
+            </picker>
+        </block>
+        <block wx:elif="{{subType == 'region'}}">
+            <picker bindchange="change" mode="region" bindcancel="cancel" value="{{value}}" custom-item="{{customItem}}">
+                <view class="picker">
+                    {{value[0]}}, {{value[1]}}, {{value[2]}}
+                </view>
+            </picker>
+        </block>
+    </block>
+    <block wx:elif="{{type == 'switch'}}">
+        <switch class="i-class" wx:if="{{checked}}" checked></switch>
+        <switch class="i-class" wx:else></switch>
+    </block>
+    <block wx:elif="{{type == 'radio'}}">
+        <radio class="i-class" wx:if="{{checked}}" checked></radio>
+        <radio class="i-class" wx:else></radio>
+    </block>
+    <block wx:elif="{{type == 'radioGroup'}}">
+        <radio-group class="block">
+            <block wx:for="{{group}}" wx:key="{{index}}">
+                <label>
+                    <radio class="i-class" wx:if="{{item.checked}}" value="{{item.value}}" checked></radio>
+                    <radio class="i-class" wx:else></radio>
+                    {{item.label || ''}}
+                </label>
+            </block>
+        </radio-group>
+    </block>
+    <block wx:elif="{{type == 'checkbox'}}">
+        <checkbox class="i-class" wx:if="{{checked}}" checked></checkbox>
+        <checkbox class="i-class" wx:else></checkbox>
+    </block>
+    <block wx:elif="{{type == 'checkboxGroup'}}">
+        <checkbox-group class="block">
+            <block wx:for="{{group}}" wx:key="{{index}}">
+                <label>
+                    <checkbox class="i-class" wx:if="{{item.checked}}" value="{{item.value}}" checked></checkbox>
+                    <checkbox class="i-class" wx:else></checkbox>
+                    {{item.label || ''}}
+                </label>
+            </block>
+        </checkbox-group>
+    </block>
+    <block wx:elif="{{type == 'avatar'}}">
+        <view class="cu-avatar radius bg-gray" bind:tap="tapEvent"><img-parts url="{{img}}" width="64" height="64" /></view>
+    </block>
+    <block wx:elif="{{type == 'textarea'}}">
+            <textarea value="{{value}}" name="{{name}}" class="i-class" placeholder="{{placeholder}}" placeholder-style="{{placeholderStyle}}" placeholder-class="{{placeholderClass}}" disabled="{{disabled}}" maxlength="{{maxlength}}" auto-focus="{{autoFocus}}" bindinput="textareaAInput"></textarea>
+        </block>
+    <slot></slot>
+</view>

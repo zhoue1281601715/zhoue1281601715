@@ -1,0 +1,99 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<!-- 信息提示 -->
+<i-toast id="toast" />
+
+<!-- 模态框 -->
+<i-modal title="{{modal.tips}}" isHide="{{modal.ishide}}" bind:ok="{{modal.ok}}" bind:cancel="{{modal.cancel}}"
+    bind:plateBg="cancel">
+    <view>{{modal.message}}</view>
+</i-modal>
+
+<!----------------------------------------- 下面请开始你的表演 SHOW TIME ---------------------------------->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}" bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">全部分类</custom-parts>
+
+<!-- 头部导航栏开始 -->
+<view class="nav-list" wx:if="{{!selectNavList}}">
+    <swiper 
+        indicator-dots="{{false}}" 
+        display-multiple-items="{{navList.length > 6 ? 6 : navList.length}}" 
+        class="swiper-nav-list" 
+    >
+        <swiper-item 
+            class="swiper-nav-item {{navActivityIndex === index ? 'nav-activity' : ''}}" 
+            wx:for="{{navList}}" 
+            wx:key="{{item.id}}" 
+            data-index="{{index}}" 
+            data-cate_id="{{item.id}}" 
+            catchtap="handleChangeNav" 
+        >{{item.cate_name}}</swiper-item>
+    </swiper>
+    <view class="nav-more" catchtap="handleSelectNav">
+        <image class="arrow-icon" src="/images/xjt_h.png" mode="widthFix"></image>
+    </view>
+</view>
+<!-- 头部导航栏结束 -->
+
+<!-- 头部导航栏展开列表开始 -->
+<view class="nav-select-content" wx:else>
+    <view class="nav-select-bg">
+        <view class="nav-select">
+            <view class="nav-select-top">
+                <text>全部分类</text>
+                <view catchtap="handleSelectNav">
+                    <image class="arrow-icon" src="/images/sjt_b.png" mode="widthFix"></image>
+                </view>
+            </view>
+            <view class="nav-select-list">
+                <view 
+                    class="nav-select-item {{navActivityIndex === index ? 'nav-select-activity' : ''}}" 
+                    wx:for="{{navList}}" 
+                    wx:key="{{item.id}}" 
+                    data-index="{{index}}" 
+                    data-cate_id="{{item.id}}" 
+                    catchtap="handleChangeNav" 
+                >{{item.cate_name}}</view>
+            </view>
+        </view>
+    </view>
+</view>
+<!-- 头部导航栏展开列表结束 -->
+
+<!-- 商品列表开始 -->
+<view class="main">
+    <view class="goods-list" wx:if="{{goodsList.length > 0}}">
+        <block wx:for="{{goodsList}}" wx:key="{{item.id}}">
+            <url-parts url="/packageA/viewDetails/index?id={{item.id}}" class="goods-item">
+                <view class="goods-picture-area">
+                    <image class="goods-picture" src="{{item.image}}" mode="aspectFill"></image>
+                </view>
+                <view class="goods-data">
+                    <view class="goods-name">
+                        <text class="goods-label">代叔力推</text>
+                        <text class="goods-name">{{item.store_name}}</text>
+                    </view>
+                    <view class="goods-price-area">
+                        <text class="yuan">￥</text>
+                        <text class="goods-price">{{item.price}}</text>
+                        <text class="payment-num">{{item.sales}}人付款</text>
+                    </view>
+                    <view class="more">
+                        <text>…</text>
+                    </view>
+                </view>
+            </url-parts>
+        </block>
+    </view>
+    <view class="nodata" wx:else>没有查找到数据</view>
+</view>
+<!-- 商品列表结束 -->
+
+
+
+
+
+<!------------------------------------------------ 你触碰到我的底线了  W(￣_￣)W ---------------------------------->
+
+<!-- 分页组件 -->
+<!-- <page-parts options="{{page}}" bind:start="pageStart" bind:success="pageSuccess" bind:fail="pageFail"  /> -->

@@ -1,0 +1,24 @@
+<view class="cu-custom" style="height:{{isFull ? 0 : CustomBar}}px; color:{{tc}}; transition: color .3s ease; opacity : {{end ? '1' : '0'}};">
+  <view class="cu-bar fixed j-class" style="height:{{CustomBar}}px; padding-top:{{StatusBar}}px; z-index:499; padding-right: {{Custom.width + (System.screenWidth - Custom.right) * 2}}px;">
+    <view style="{{bg}} opacity : {{opacity ? opacityVlue : '1'}}; transition:background .1s ease; position: absolute; top:0;left:0; width:100%; height:100%;"></view>
+    <view class="content" style="top:{{StatusBar}}px; height:{{Custom.height}}px; line-height:{{Custom.height}}px; z-index:10;">
+
+      <!-- 左 -->
+      <view class="leftContent {{!!textCenter ? '' : 'nomiddle'}}" style="width:{{Custom.width + (System.screenWidth - Custom.right) * 2}}px;">
+        <view class="backBtn" bindtap="BackPage" wx:if="{{isBack}}">
+          <text class="cuIcon-back" />
+          <slot name="backText"></slot>
+        </view>
+        <slot name="left"></slot>
+      </view>
+
+      <!-- 中 -->
+      <view style="font-size:{{textSize}}" class="middleContent  {{!!textCenter ? 'iamCenter' : ''}}">
+        <slot></slot>
+      
+      </view>
+    </view>
+  </view>
+  
+</view>
+

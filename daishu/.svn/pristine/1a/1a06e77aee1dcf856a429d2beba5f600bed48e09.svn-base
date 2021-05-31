@@ -1,0 +1,122 @@
+<!--packageC/sign_give_good_detail/sign_give_good_detail.wxml-->
+<!-- <van-nav-bar
+  title="送货签收"
+  left-arrow
+  title-class="title_bar"
+  custom-class="title_bar"
+  bind:click-left="onClickLeft"
+/> -->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+  bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">送货签收
+</custom-parts>
+<view class="rewu">
+  <!-- <view class="rewu" style="margin-top:calc({{statusHeight}}px + 20rpx);"> -->
+  <view class="item">
+    <view class="tit">
+      <view class="name">运单号：{{bill.code}}</view>
+      <view class="type">类型：{{bill.delivery_type}}</view>
+    </view>
+    <view class="n">
+      <view class="d2">
+        货物信息：<text>{{bill.quantity}}件</text><text>|</text><text>{{bill.weight}}KG</text><text>|</text><text>{{bill.volume}}m³</text>
+      </view>
+      <view class="d2">下单时间：<text>{{bill.date}}</text></view>
+      <view class="desc">备注：{{bill.remark}}</view>
+    </view>
+    <view class="n" style="padding:0;">
+      <view class="site">
+        <image class="img" src="../../images/1.png" mode="widthFix"></image>
+        <view class="r">
+          <view class="t">
+            <view class="name">{{bill.shipper_name}}</view>
+            <view class="phone">{{bill.shipper_phone}}</view>
+          </view>
+          <view class="descs">
+            {{bill.shipper_warehouse + bill.shipper_city + bill.shipper_area + bill.shipper_street + bill.shipper_address}}
+          </view>
+          <view class="bPhone" data-phone="{{bill.shipper_phone}}" catchtap="getPhoneNum">
+            <image src="../../images/16.png"></image>拨打电话
+          </view>
+        </view>
+      </view>
+      <view class="site">
+        <image class="img" src="../../images/3.png" mode="widthFix"></image>
+        <view class="r">
+          <view class="t">
+            <view class="name">{{bill.consignee_contact}}</view>
+            <view class="phone">{{bill.consignee_phone}}</view>
+          </view>
+          <view class="descs">
+            {{bill.consignee_city + bill.consignee_area + bill.consignee_street + bill.consignee_address}}</view>
+          <view class="bPhone" data-phone="{{bill.consignee_phone}}" catchtap="getPhoneNum">
+            <image src="../../images/16.png"></image>拨打电话
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="item">
+    <view class="n">
+      <view class="d1">货物名称：<text>{{bill.goodsname}}</text></view>
+      <view class="d1">包装方式：<text>{{bill.packaging}}</text></view>
+      <view class="d1">货物数量：<text>{{bill.quantity}}</text></view>
+      <view class="d1">货物重量：<text>{{bill.weight}}KG</text></view>
+      <view class="d1">货物体积：<text>{{bill.volume}}m³</text></view>
+      <view class="d1">运费金额：<text>{{bill.charge_freight}}元</text></view>
+      <view class="d1">装卸上楼：<text>{{bill.charge_handle}}元</text></view>
+      <view class="d1">代收货款：<text>{{bill.cod}}元</text></view>
+      <view class="d2">客服：<text>{{bill.kefu}}</text></view>
+      <view class="d2">配送专员：<text>{{bill.delivery_driver}}</text><text>{{bill.delivery_phone}}</text></view>
+      <view class="d2">司机证件：<text>{{bill.delivery_idcard}}</text></view>
+      <view class="d2">车牌号：<text>{{bill.delivery_plate}}</text></view>
+      <!-- <view class="imgList">
+        <image src="../../images/1.png" mode="aspectFill"></image>
+        <image src="../../images/1.png" mode="aspectFill"></image>
+        <image src="../../images/1.png" mode="aspectFill"></image>
+      </view> -->
+      <view class="picture-area">
+        <view class="picture-item" wx:for="{{pics}}" wx:key="index">
+          <view class="remove" data-index="{{index}}" catchtap="handleDeleteImage">
+            <image class="remove-icon" src="/images/close_white_icon.png" mode="widthFix"></image>
+          </view>
+          <image class="picture" src="{{item}}" mode="aspectFill"></image>
+        </view>
+        <view class="upload-picture" catchtap="handleChooseImage" wx:if="{{pics.length < 27}}">
+          <image class="camere-icon" src="/images/camera.png" mode="widthFix"></image>
+          <text>上传图片凭证</text>
+        </view>
+        <view class="area" wx:if="{{areaShow}}"></view>
+      </view>
+    </view>
+    <view class="n" style="border-top:1px solid #F7F7F7;">
+      <view class="d2">选择付款方式
+        <view class="flo_r">
+          <picker bindchange="bindPickerChange" value="{{payIndex}}" range="{{payList}}">
+            <view class="picker">
+              {{payList[payIndex]}}
+            </view>
+          </picker>
+          <image src="../../images/icon_more.png" mode="widthFix"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="bott">
+  <view class="bth" bindtap="showVantPopup">确认签收</view>
+</view>
+
+<van-popup show="true" wx:if="{{show}}" bind:close="onClose"
+  custom-style="width: calc(100% - 190rpx);background-color: #ffffff;border-radius: 10rpx;padding-top: 50rpx;">
+  <view class="tips_title">确认签收</view>
+  <!-- <view class="tips_content">确认删除后无法恢复</view>-->
+  <view class="btn_wrap">
+    <view class="btn" bindtap="closeVantPopup">再想想</view>
+    <view class="btn" bindtap="confirmSignFor">确认签收</view>
+  </view>
+</van-popup>
+
+<van-popup class="phone_pop" show="{{ choosePhonePopup }}" round position="bottom" bind:close="closePopup_2">
+  <van-cell is-link link-type="navigateTo" wx:for="{{phoneList}}" wx:key="index" data-phone="{{item}}" value="{{item}}"
+    bindtap="choosePhoneNum" />
+</van-popup>

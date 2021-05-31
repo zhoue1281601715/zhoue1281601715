@@ -1,0 +1,67 @@
+<import src="../../utils/tpl/template.wxml" />
+<wxs src="../../utils/utils.wxs" module="utils" />
+
+<!-- 信息提示 -->
+<i-toast id="toast" />
+
+<!-- 模态框 -->
+<i-modal title="{{modal.tips}}" isHide="{{modal.ishide}}" bind:ok="{{modal.ok}}" bind:cancel="{{modal.cancel}}"
+  bind:plateBg="cancel">
+  <view>{{modal.message}}</view>
+</i-modal>
+
+<!----------------------------------------- 下面请开始你的表演 SHOW TIME ---------------------------------->
+<custom-parts isBack="true" isFull="{{false}}" textColor="#fff" scrollTop="{{scrollTop}}"
+  bg="background-image: linear-gradient(to right, #FF7900 , #FF4B00);">消费记录
+</custom-parts>
+<view class="nav-area" style="top: {{CustomBar}}px;">
+  <view class="navs">
+    <block wx:for="{{data_lists}}" wx:for-index="index" wx:for-item="navItem" wx:key="index">
+      <view class="nav-items {{navItemsActivityIndex === index ? 'actives' : '' }}" data-current="{{index}}" bindtap="switchNavs">
+        {{navItem}}
+      </view>
+    </block>
+  </view>
+  <view class="nav">
+    <block wx:for="{{data_list}}" wx:for-index="idx" wx:for-item="navItem" wx:key="idx">
+      <view class="nav-item {{navItemActivityIndex === idx ?'active':''}}" data-current="{{idx}}" bindtap="switchNav">{{navItem}}
+      </view>
+    </block>
+  </view>
+  <view class="rechargeData">
+    <view class="rechargeText">
+      <text>起始：</text>
+      <picker mode="date" value="{{date}}" start="2000-01-01" end="{{date2}}" bindchange="bindDateChange">
+        <view class="picker">
+          {{date}}
+        </view>
+      </picker>
+    </view>
+    <view class="line"></view>
+    <view class="rechargeText">
+      <text>结束：</text>
+      <picker mode="date" value="{{date2}}" start="{{date}}" end="2120-12-01" bindchange="bindDateChange2">
+        <view class="picker">
+          {{date2}}
+        </view>
+      </picker>
+    </view>
+  </view>
+</view>
+<view class="recharge-content" style="padding-top: {{navHeight}}px;">
+  <view class="recharge-list" wx:if="{{rechargeList.length > 0}}">
+    <view class="recharge-item" wx:for="{{rechargeList}}" wx:key="{{item.id}}">
+      <view>
+        <view class="recharge-name">{{item.title}}-{{item.mark}}</view>
+        <view class="recharge-time">{{item.add_time}}</view>
+      </view>
+      <view class="recharge-amount">{{item.pm === 0 ? '-' : '+'}}{{item.number}}</view>
+    </view>
+  </view>
+  <view class="nodata" wx:else>没有查找到数据</view>
+</view>
+<tabbar activeIdx="{{activeIdx}}"></tabbar>
+<!------------------------------------------------ 你触碰到我的底线了  W(￣_￣)W ---------------------------------->
+
+<!-- 分页组件 -->
+<!-- <page-parts options="{{page}}" bind:start="pageStart" bind:success="pageSuccess" bind:fail="pageFail"  /> -->
